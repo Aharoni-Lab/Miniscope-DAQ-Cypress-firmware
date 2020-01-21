@@ -527,26 +527,7 @@ CyFxUvcApplnDmaCallback (
         	// Read BNO
         	if (bnoEnabled)
         		readBNO();
-        	// Toggle GPO output sync signal
-        	if (recording == 1) {
-				CyU3PReturnStatus_t status;
-				CyBool_t pinState;
-				CyU3PGpioGetValue(FRAME_OUT,&pinState);
-				if (pinState == CyTrue) {
-					status = CyU3PGpioSetValue(FRAME_OUT, CyFalse);
-					if (status != CY_U3P_SUCCESS) {
-						CyU3PDebugPrint(4, "GPIO Set Value Error, Error Code = %d\n",
-								status);
-					}
-				}
-				else {
-					status = CyU3PGpioSetValue(FRAME_OUT, CyTrue);
-					if (status != CY_U3P_SUCCESS) {
-						CyU3PDebugPrint(4, "GPIO Set Value Error, Error Code = %d\n",
-								status);
-					}
-				}
-			}
+        	// TODO: Toggle GPO output sync signal
         	// TODO: handle external record trigger
 
         	endOfFrame = CyFalse;

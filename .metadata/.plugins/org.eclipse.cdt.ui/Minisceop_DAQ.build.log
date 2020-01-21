@@ -1,4 +1,4 @@
-23:12:41 **** Incremental Build of configuration Release for project Minisceop_DAQ ****
+09:58:28 **** Incremental Build of configuration Release for project Minisceop_DAQ ****
 cs-make all 
 'Building file: ../cyfx_gcc_startup.S'
 'Invoking: Cross ARM GNU Assembler'
@@ -38,5 +38,5 @@ Note: 256 bytes of interrupt vector code have been removed from the image.
 
 ' '
 
-23:12:44 Build Finished (took 3s.113ms)
+09:58:32 Build Finished (took 4s.576ms)
 
