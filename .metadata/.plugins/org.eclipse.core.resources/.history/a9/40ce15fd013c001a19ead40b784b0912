@@ -1,0 +1,28 @@
+/*
+ * miniscope.h
+ *
+ *  Created on: Jan 20, 2020
+ *      Author: DBAharoni
+ */
+
+#ifndef MINISCOPE_H_
+#define MINISCOPE_H_
+
+#include "definitions.h"
+#include <cyu3types.h>
+
+// ------- Globals ---------------------
+
+// Holds generic I2C commands waiting to be sent
+#define			I2C_PACKET_BUFFER_SIZE	64
+extern static uint8_t 	pendingI2CPacket[I2C_PACKET_BUFFER_SIZE][6]; //circular buffer
+extern uint8_t			I2CNumPacketsPending = 0;
+extern uint8_t			I2CPacketNextReadIdx = 0;
+extern uint8_t			I2CPacketNextWriteIdx = 0;
+extern uint8_t			I2CPacketState = 0; // 0 is no no packet incoming. 5 is full packet to trigger packetsPending++
+//----------------------------------
+
+// Handles the processing and sending of generic I2C packets that have built up since previous End of Frame event
+extern void I2CProcessAndSendPendingPacket (void);
+
+#endif /* MINISCOPE_H_ */

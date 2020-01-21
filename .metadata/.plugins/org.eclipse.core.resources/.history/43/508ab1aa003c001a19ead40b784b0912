@@ -1,0 +1,23 @@
+/*
+ * miniscope.c
+ *
+ *  Created on: Jan 20, 2020
+ *      Author: DBAharoni
+ */
+
+#include <cyu3system.h>
+#include <cyu3os.h>
+#include <cyu3dma.h>
+#include <cyu3error.h>
+#include <cyu3uart.h>
+#include <cyu3i2c.h>
+#include <cyu3types.h>
+#include <cyu3gpio.h>
+#include <cyu3utils.h>
+
+#include "miniscope.h"
+
+
+void SensorInit (void) {
+
+}

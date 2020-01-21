@@ -8,16 +8,30 @@
 #ifndef DEFINITIONS_H_
 #define DEFINITIONS_H_
 
-//Define which imaging sensors is being used.
-//#define MT9V032
-//#define MT9M001
-#define V4_PYTHON480
-//#define V4_PYTHON480_2C
-//#define MT9P031_FULL_RES
-//#define MT9P031_2x_BIN
+/* ========= Pick your image sensor for the list below ====== */
+#define MINISCOPE_V4_606X606
+//#define MINISCOPE_V3_752X480
+/* ========================================================== */
 
-//Define if we are using a BNO055 IMU
-#define BNO055_ENABLED
+//Sets specs of image sensor being use sensors is being used.
+#ifdef MINISCOPE_V4_606X606
+	#define X_ASPECT_RATIO	1
+	#define Y_ASPECT_RATIO	1
+	#define WIDTH			608
+	#define HEIGHT			608
+#endif
+#ifdef MINISCOPE_V3_752X480
+	#define X_ASPECT_RATIO	0x2F
+	#define Y_ASPECT_RATIO	0x1E
+	#define WIDTH			752
+	#define HEIGHT			480
+#endif
+
+#define WIDTH_L			(uint8_t)(WIDTH&0xFF)
+#define WIDTH_H			(uint8_t)((WIDTH>>8)&0xFF)
+#define HEIGHT_L		(uint8_t)(HEIGHT&0xFF)
+#define HEIGHT_H		(uint8_t)((HEIGHT>>8)&0xFF)
+
 
 //Communication over saturation channel
 #define RECORD_START		0x01
@@ -37,8 +51,10 @@
 
 #define CONFIG_BNO055_TO_NDOF	0xF0
 
+// DAQ GPIO
+#define FRAME_OUT			20
+#define TRIG_RECORD_EXT		21
 
-#define TRIG_RECORD_EXT	21
 #define GPIO_SHIFT		20
 #define GPIO_MASK		0b00000111
 

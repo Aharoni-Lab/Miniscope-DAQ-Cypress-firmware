@@ -250,3 +250,570 @@ Copying data from program header:
 Copying data from program header:
 	Addr=0x40030000 Size(words)=0x000007bd FileSize=0x00000182 Offset=0x00020000 Flags=0x00000006
 ' '
+20:47:23 **** Incremental Build of configuration Release for project Minisceop_DAQ ****
+cs-make all 
+'Building file: ../miniscope.c'
+'Invoking: Cross ARM C Compiler'
+arm-none-eabi-gcc -mcpu=arm926ej-s -marm -mthumb-interwork -O3 -fmessage-length=0 -fsigned-char -ffunction-sections -fdata-sections -Wall  -g -D__CYU3P_TX__=1 -I"C:\Program Files (x86)\Cypress\EZ-USB FX3 SDK\1.3\/fw_lib/1_3_3/inc" -std=gnu11 -MMD -MP -MF"miniscope.d" -MT"miniscope.o" -c -o "miniscope.o" "../miniscope.c"
+In file included from ../miniscope.c:18:0:
+../miniscope.h:21:1: error: multiple storage classes in declaration specifiers
+ extern static uint8_t  pendingI2CPacket[I2C_PACKET_BUFFER_SIZE][6]; //circular buffer
+ ^
+../miniscope.h:22:18: warning: 'I2CNumPacketsPending' initialized and declared 'extern' [enabled by default]
+ extern uint8_t   I2CNumPacketsPending = 0;
+                  ^
+../miniscope.h:23:18: warning: 'I2CPacketNextReadIdx' initialized and declared 'extern' [enabled by default]
+ extern uint8_t   I2CPacketNextReadIdx = 0;
+                  ^
+../miniscope.h:24:18: warning: 'I2CPacketNextWriteIdx' initialized and declared 'extern' [enabled by default]
+ extern uint8_t   I2CPacketNextWriteIdx = 0;
+                  ^
+../miniscope.h:25:18: warning: 'I2CPacketState' initialized and declared 'extern' [enabled by default]
+ extern uint8_t   I2CPacketState = 0; // 0 is no no packet incoming. 5 is full packet to trigger packetsPending++
+                  ^
+../miniscope.c:29:17: error: static declaration of 'pendingI2CPacket' follows non-static declaration
+ static uint8_t  pendingI2CPacket[I2C_PACKET_BUFFER_SIZE][6]; //circular buffer
+                 ^
+In file included from ../miniscope.c:18:0:
+../miniscope.h:21:24: note: previous declaration of 'pendingI2CPacket' was here
+ extern static uint8_t  pendingI2CPacket[I2C_PACKET_BUFFER_SIZE][6]; //circular buffer
+                        ^
+../miniscope.c:30:11: error: redefinition of 'I2CNumPacketsPending'
+ uint8_t   I2CNumPacketsPending = 0;
+           ^
+In file included from ../miniscope.c:18:0:
+../miniscope.h:22:18: note: previous definition of 'I2CNumPacketsPending' was here
+ extern uint8_t   I2CNumPacketsPending = 0;
+                  ^
+../miniscope.c:31:11: error: redefinition of 'I2CPacketNextReadIdx'
+ uint8_t   I2CPacketNextReadIdx = 0;
+           ^
+In file included from ../miniscope.c:18:0:
+../miniscope.h:23:18: note: previous definition of 'I2CPacketNextReadIdx' was here
+ extern uint8_t   I2CPacketNextReadIdx = 0;
+                  ^
+../miniscope.c:32:11: error: redefinition of 'I2CPacketNextWriteIdx'
+ uint8_t   I2CPacketNextWriteIdx = 0;
+           ^
+In file included from ../miniscope.c:18:0:
+../miniscope.h:24:18: note: previous definition of 'I2CPacketNextWriteIdx' was here
+ extern uint8_t   I2CPacketNextWriteIdx = 0;
+                  ^
+../miniscope.c:33:11: error: redefinition of 'I2CPacketState'
+ uint8_t   I2CPacketState = 0; // 0 is no no packet incoming. 5 is full packet to trigger packetsPending++
+           ^
+In file included from ../miniscope.c:18:0:
+../miniscope.h:25:18: note: previous definition of 'I2CPacketState' was here
+ extern uint8_t   I2CPacketState = 0; // 0 is no no packet incoming. 5 is full packet to trigger packetsPending++
+                  ^
+cs-make: *** [miniscope.o] Error 1
+21:40:20 **** Incremental Build of configuration Release for project Minisceop_DAQ ****
+cs-make all 
+'Building file: ../miniscope.c'
+'Invoking: Cross ARM C Compiler'
+arm-none-eabi-gcc -mcpu=arm926ej-s -marm -mthumb-interwork -O3 -fmessage-length=0 -fsigned-char -ffunction-sections -fdata-sections -Wall  -g -D__CYU3P_TX__=1 -I"C:\Program Files (x86)\Cypress\EZ-USB FX3 SDK\1.3\/fw_lib/1_3_3/inc" -std=gnu11 -MMD -MP -MF"miniscope.d" -MT"miniscope.o" -c -o "miniscope.o" "../miniscope.c"
+../miniscope.c: In function 'readBNO':
+../miniscope.c:96:6: error: 'status' undeclared (first use in this function)
+  if (status == CY_U3P_SUCCESS)
+      ^
+../miniscope.c:96:6: note: each undeclared identifier is reported only once for each function it appears in
+cs-make: *** [miniscope.o] Error 1
+21:40:41 **** Incremental Build of configuration Release for project Minisceop_DAQ ****
+cs-make all 
+'Building file: ../miniscope.c'
+'Invoking: Cross ARM C Compiler'
+arm-none-eabi-gcc -mcpu=arm926ej-s -marm -mthumb-interwork -O3 -fmessage-length=0 -fsigned-char -ffunction-sections -fdata-sections -Wall  -g -D__CYU3P_TX__=1 -I"C:\Program Files (x86)\Cypress\EZ-USB FX3 SDK\1.3\/fw_lib/1_3_3/inc" -std=gnu11 -MMD -MP -MF"miniscope.d" -MT"miniscope.o" -c -o "miniscope.o" "../miniscope.c"
+'Finished building: ../miniscope.c'
+' '
+'Building file: ../uvc.c'
+'Invoking: Cross ARM C Compiler'
+arm-none-eabi-gcc -mcpu=arm926ej-s -marm -mthumb-interwork -O3 -fmessage-length=0 -fsigned-char -ffunction-sections -fdata-sections -Wall  -g -D__CYU3P_TX__=1 -I"C:\Program Files (x86)\Cypress\EZ-USB FX3 SDK\1.3\/fw_lib/1_3_3/inc" -std=gnu11 -MMD -MP -MF"uvc.d" -MT"uvc.o" -c -o "uvc.o" "../uvc.c"
+In file included from ../uvc.c:66:0:
+../uvc.c: In function 'UVCHandleProcessingUnitRqts':
+../uvc.c:1287:62: error: 'dframeNumber' undeclared (first use in this function)
+                      glEp0Buffer[0] = CY_U3P_DWORD_GET_BYTE0(dframeNumber);
+                                                              ^
+C:\Program Files (x86)\Cypress\EZ-USB FX3 SDK\1.3\/fw_lib/1_3_3/inc/cyu3utils.h:86:54: note: in definition of macro 'CY_U3P_DWORD_GET_BYTE0'
+ #define CY_U3P_DWORD_GET_BYTE0(d)        ((uint8_t)((d) & 0xFF))
+                                                      ^
+../uvc.c:1287:62: note: each undeclared identifier is reported only once for each function it appears in
+                      glEp0Buffer[0] = CY_U3P_DWORD_GET_BYTE0(dframeNumber);
+                                                              ^
+C:\Program Files (x86)\Cypress\EZ-USB FX3 SDK\1.3\/fw_lib/1_3_3/inc/cyu3utils.h:86:54: note: in definition of macro 'CY_U3P_DWORD_GET_BYTE0'
+ #define CY_U3P_DWORD_GET_BYTE0(d)        ((uint8_t)((d) & 0xFF))
+                                                      ^
+../uvc.c:1259:25: warning: unused variable 'brightnessVal' [-Wunused-variable]
+     uint16_t readCount, brightnessVal;
+                         ^
+../uvc.c: In function 'UVCHandleVideoStreamingRqts':
+../uvc.c:1716:29: warning: implicit declaration of function 'SensorScaling_HD720p_30fps' [-Wimplicit-function-declaration]
+                             SensorScaling_HD720p_30fps ();
+                             ^
+../uvc.c:1725:29: warning: implicit declaration of function 'SensorScaling_VGA' [-Wimplicit-function-declaration]
+                             SensorScaling_VGA ();
+                             ^
+cs-make: *** [uvc.o] Error 1
+21:41:55 **** Incremental Build of configuration Release for project Minisceop_DAQ ****
+cs-make all 
+'Building file: ../uvc.c'
+'Invoking: Cross ARM C Compiler'
+arm-none-eabi-gcc -mcpu=arm926ej-s -marm -mthumb-interwork -O3 -fmessage-length=0 -fsigned-char -ffunction-sections -fdata-sections -Wall  -g -D__CYU3P_TX__=1 -I"C:\Program Files (x86)\Cypress\EZ-USB FX3 SDK\1.3\/fw_lib/1_3_3/inc" -std=gnu11 -MMD -MP -MF"uvc.d" -MT"uvc.o" -c -o "uvc.o" "../uvc.c"
+In file included from ../uvc.c:66:0:
+../uvc.c: In function 'UVCHandleProcessingUnitRqts':
+../uvc.c:1287:62: error: 'dframeNumber' undeclared (first use in this function)
+                      glEp0Buffer[0] = CY_U3P_DWORD_GET_BYTE0(dframeNumber);
+                                                              ^
+C:\Program Files (x86)\Cypress\EZ-USB FX3 SDK\1.3\/fw_lib/1_3_3/inc/cyu3utils.h:86:54: note: in definition of macro 'CY_U3P_DWORD_GET_BYTE0'
+ #define CY_U3P_DWORD_GET_BYTE0(d)        ((uint8_t)((d) & 0xFF))
+                                                      ^
+../uvc.c:1287:62: note: each undeclared identifier is reported only once for each function it appears in
+                      glEp0Buffer[0] = CY_U3P_DWORD_GET_BYTE0(dframeNumber);
+                                                              ^
+C:\Program Files (x86)\Cypress\EZ-USB FX3 SDK\1.3\/fw_lib/1_3_3/inc/cyu3utils.h:86:54: note: in definition of macro 'CY_U3P_DWORD_GET_BYTE0'
+ #define CY_U3P_DWORD_GET_BYTE0(d)        ((uint8_t)((d) & 0xFF))
+                                                      ^
+../uvc.c: In function 'UVCHandleVideoStreamingRqts':
+../uvc.c:1716:29: warning: implicit declaration of function 'SensorScaling_HD720p_30fps' [-Wimplicit-function-declaration]
+                             SensorScaling_HD720p_30fps ();
+                             ^
+../uvc.c:1725:29: warning: implicit declaration of function 'SensorScaling_VGA' [-Wimplicit-function-declaration]
+                             SensorScaling_VGA ();
+                             ^
+cs-make: *** [uvc.o] Error 1
+21:43:26 **** Incremental Build of configuration Release for project Minisceop_DAQ ****
+cs-make all 
+'Building file: ../uvc.c'
+'Invoking: Cross ARM C Compiler'
+arm-none-eabi-gcc -mcpu=arm926ej-s -marm -mthumb-interwork -O3 -fmessage-length=0 -fsigned-char -ffunction-sections -fdata-sections -Wall  -g -D__CYU3P_TX__=1 -I"C:\Program Files (x86)\Cypress\EZ-USB FX3 SDK\1.3\/fw_lib/1_3_3/inc" -std=gnu11 -MMD -MP -MF"uvc.d" -MT"uvc.o" -c -o "uvc.o" "../uvc.c"
+In file included from ../uvc.c:66:0:
+../uvc.c: In function 'UVCHandleProcessingUnitRqts':
+../uvc.c:1288:62: error: 'dframeNumber' undeclared (first use in this function)
+                      glEp0Buffer[0] = CY_U3P_DWORD_GET_BYTE0(dframeNumber);
+                                                              ^
+C:\Program Files (x86)\Cypress\EZ-USB FX3 SDK\1.3\/fw_lib/1_3_3/inc/cyu3utils.h:86:54: note: in definition of macro 'CY_U3P_DWORD_GET_BYTE0'
+ #define CY_U3P_DWORD_GET_BYTE0(d)        ((uint8_t)((d) & 0xFF))
+                                                      ^
+../uvc.c:1288:62: note: each undeclared identifier is reported only once for each function it appears in
+                      glEp0Buffer[0] = CY_U3P_DWORD_GET_BYTE0(dframeNumber);
+                                                              ^
+C:\Program Files (x86)\Cypress\EZ-USB FX3 SDK\1.3\/fw_lib/1_3_3/inc/cyu3utils.h:86:54: note: in definition of macro 'CY_U3P_DWORD_GET_BYTE0'
+ #define CY_U3P_DWORD_GET_BYTE0(d)        ((uint8_t)((d) & 0xFF))
+                                                      ^
+../uvc.c: In function 'UVCHandleVideoStreamingRqts':
+../uvc.c:1717:29: warning: implicit declaration of function 'SensorScaling_HD720p_30fps' [-Wimplicit-function-declaration]
+                             SensorScaling_HD720p_30fps ();
+                             ^
+../uvc.c:1726:29: warning: implicit declaration of function 'SensorScaling_VGA' [-Wimplicit-function-declaration]
+                             SensorScaling_VGA ();
+                             ^
+cs-make: *** [uvc.o] Error 1
+21:44:46 **** Incremental Build of configuration Release for project Minisceop_DAQ ****
+cs-make all 
+'Building file: ../miniscope.c'
+'Invoking: Cross ARM C Compiler'
+arm-none-eabi-gcc -mcpu=arm926ej-s -marm -mthumb-interwork -O3 -fmessage-length=0 -fsigned-char -ffunction-sections -fdata-sections -Wall  -g -D__CYU3P_TX__=1 -I"C:\Program Files (x86)\Cypress\EZ-USB FX3 SDK\1.3\/fw_lib/1_3_3/inc" -std=gnu11 -MMD -MP -MF"miniscope.d" -MT"miniscope.o" -c -o "miniscope.o" "../miniscope.c"
+../miniscope.c:36:19: error: conflicting type qualifiers for 'dFrameNumber'
+ volatile uint32_t dFrameNumber = 0;
+                   ^
+In file included from ../miniscope.c:18:0:
+../miniscope.h:36:17: note: previous declaration of 'dFrameNumber' was here
+ extern uint32_t dFrameNumber;
+                 ^
+cs-make: *** [miniscope.o] Error 1
+21:45:05 **** Incremental Build of configuration Release for project Minisceop_DAQ ****
+cs-make all 
+'Building file: ../miniscope.c'
+'Invoking: Cross ARM C Compiler'
+arm-none-eabi-gcc -mcpu=arm926ej-s -marm -mthumb-interwork -O3 -fmessage-length=0 -fsigned-char -ffunction-sections -fdata-sections -Wall  -g -D__CYU3P_TX__=1 -I"C:\Program Files (x86)\Cypress\EZ-USB FX3 SDK\1.3\/fw_lib/1_3_3/inc" -std=gnu11 -MMD -MP -MF"miniscope.d" -MT"miniscope.o" -c -o "miniscope.o" "../miniscope.c"
+../miniscope.c:36:10: error: conflicting type qualifiers for 'dFrameNumber'
+ uint32_t dFrameNumber = 0;
+          ^
+In file included from ../miniscope.c:18:0:
+../miniscope.h:36:26: note: previous declaration of 'dFrameNumber' was here
+ extern volatile uint32_t dFrameNumber;
+                          ^
+cs-make: *** [miniscope.o] Error 1
+21:45:53 **** Incremental Build of configuration Release for project Minisceop_DAQ ****
+cs-make all 
+'Building file: ../miniscope.c'
+'Invoking: Cross ARM C Compiler'
+arm-none-eabi-gcc -mcpu=arm926ej-s -marm -mthumb-interwork -O3 -fmessage-length=0 -fsigned-char -ffunction-sections -fdata-sections -Wall  -g -D__CYU3P_TX__=1 -I"C:\Program Files (x86)\Cypress\EZ-USB FX3 SDK\1.3\/fw_lib/1_3_3/inc" -std=gnu11 -MMD -MP -MF"miniscope.d" -MT"miniscope.o" -c -o "miniscope.o" "../miniscope.c"
+'Finished building: ../miniscope.c'
+' '
+'Building file: ../uvc.c'
+'Invoking: Cross ARM C Compiler'
+arm-none-eabi-gcc -mcpu=arm926ej-s -marm -mthumb-interwork -O3 -fmessage-length=0 -fsigned-char -ffunction-sections -fdata-sections -Wall  -g -D__CYU3P_TX__=1 -I"C:\Program Files (x86)\Cypress\EZ-USB FX3 SDK\1.3\/fw_lib/1_3_3/inc" -std=gnu11 -MMD -MP -MF"uvc.d" -MT"uvc.o" -c -o "uvc.o" "../uvc.c"
+In file included from ../uvc.c:66:0:
+../uvc.c: In function 'UVCHandleProcessingUnitRqts':
+../uvc.c:1292:62: error: 'dframeNumber' undeclared (first use in this function)
+                      glEp0Buffer[0] = CY_U3P_DWORD_GET_BYTE0(dframeNumber);
+                                                              ^
+C:\Program Files (x86)\Cypress\EZ-USB FX3 SDK\1.3\/fw_lib/1_3_3/inc/cyu3utils.h:86:54: note: in definition of macro 'CY_U3P_DWORD_GET_BYTE0'
+ #define CY_U3P_DWORD_GET_BYTE0(d)        ((uint8_t)((d) & 0xFF))
+                                                      ^
+../uvc.c:1292:62: note: each undeclared identifier is reported only once for each function it appears in
+                      glEp0Buffer[0] = CY_U3P_DWORD_GET_BYTE0(dframeNumber);
+                                                              ^
+C:\Program Files (x86)\Cypress\EZ-USB FX3 SDK\1.3\/fw_lib/1_3_3/inc/cyu3utils.h:86:54: note: in definition of macro 'CY_U3P_DWORD_GET_BYTE0'
+ #define CY_U3P_DWORD_GET_BYTE0(d)        ((uint8_t)((d) & 0xFF))
+                                                      ^
+../uvc.c: In function 'UVCHandleVideoStreamingRqts':
+../uvc.c:1721:29: warning: implicit declaration of function 'SensorScaling_HD720p_30fps' [-Wimplicit-function-declaration]
+                             SensorScaling_HD720p_30fps ();
+                             ^
+../uvc.c:1730:29: warning: implicit declaration of function 'SensorScaling_VGA' [-Wimplicit-function-declaration]
+                             SensorScaling_VGA ();
+                             ^
+cs-make: *** [uvc.o] Error 1
+21:46:44 **** Clean-only build of configuration Release for project Minisceop_DAQ ****
+cs-make clean 
+cs-rm -rf  ./camera_ptzcontrol.o ./cyfx_gcc_startup.o ./cyfxtx.o ./cyfxuvcdscr.o ./miniscope.o ./uvc.o  ./camera_ptzcontrol.d ./cyfxtx.d ./cyfxuvcdscr.d ./miniscope.d ./uvc.d  ./cyfx_gcc_startup.d  Minisceop_DAQ.elf
+' '
+21:46:49 **** Build of configuration Release for project Minisceop_DAQ ****
+cs-make all 
+'Building file: ../camera_ptzcontrol.c'
+'Invoking: Cross ARM C Compiler'
+arm-none-eabi-gcc -mcpu=arm926ej-s -marm -mthumb-interwork -O3 -fmessage-length=0 -fsigned-char -ffunction-sections -fdata-sections -Wall  -g -D__CYU3P_TX__=1 -I"C:\Program Files (x86)\Cypress\EZ-USB FX3 SDK\1.3\/fw_lib/1_3_3/inc" -std=gnu11 -MMD -MP -MF"camera_ptzcontrol.d" -MT"camera_ptzcontrol.o" -c -o "camera_ptzcontrol.o" "../camera_ptzcontrol.c"
+'Finished building: ../camera_ptzcontrol.c'
+' '
+'Building file: ../cyfx_gcc_startup.S'
+'Invoking: Cross ARM GNU Assembler'
+arm-none-eabi-gcc -mcpu=arm926ej-s -marm -mthumb-interwork -O3 -fmessage-length=0 -fsigned-char -ffunction-sections -fdata-sections -Wall  -g -x assembler-with-cpp -I"C:\Program Files (x86)\Cypress\EZ-USB FX3 SDK\1.3\/fw_lib/1_3_3/inc" -MMD -MP -MF"cyfx_gcc_startup.d" -MT"cyfx_gcc_startup.o" -c -o "cyfx_gcc_startup.o" "../cyfx_gcc_startup.S"
+'Finished building: ../cyfx_gcc_startup.S'
+' '
+'Building file: ../cyfxtx.c'
+'Invoking: Cross ARM C Compiler'
+arm-none-eabi-gcc -mcpu=arm926ej-s -marm -mthumb-interwork -O3 -fmessage-length=0 -fsigned-char -ffunction-sections -fdata-sections -Wall  -g -D__CYU3P_TX__=1 -I"C:\Program Files (x86)\Cypress\EZ-USB FX3 SDK\1.3\/fw_lib/1_3_3/inc" -std=gnu11 -MMD -MP -MF"cyfxtx.d" -MT"cyfxtx.o" -c -o "cyfxtx.o" "../cyfxtx.c"
+'Finished building: ../cyfxtx.c'
+' '
+'Building file: ../cyfxuvcdscr.c'
+'Invoking: Cross ARM C Compiler'
+arm-none-eabi-gcc -mcpu=arm926ej-s -marm -mthumb-interwork -O3 -fmessage-length=0 -fsigned-char -ffunction-sections -fdata-sections -Wall  -g -D__CYU3P_TX__=1 -I"C:\Program Files (x86)\Cypress\EZ-USB FX3 SDK\1.3\/fw_lib/1_3_3/inc" -std=gnu11 -MMD -MP -MF"cyfxuvcdscr.d" -MT"cyfxuvcdscr.o" -c -o "cyfxuvcdscr.o" "../cyfxuvcdscr.c"
+'Finished building: ../cyfxuvcdscr.c'
+' '
+'Building file: ../miniscope.c'
+'Invoking: Cross ARM C Compiler'
+arm-none-eabi-gcc -mcpu=arm926ej-s -marm -mthumb-interwork -O3 -fmessage-length=0 -fsigned-char -ffunction-sections -fdata-sections -Wall  -g -D__CYU3P_TX__=1 -I"C:\Program Files (x86)\Cypress\EZ-USB FX3 SDK\1.3\/fw_lib/1_3_3/inc" -std=gnu11 -MMD -MP -MF"miniscope.d" -MT"miniscope.o" -c -o "miniscope.o" "../miniscope.c"
+'Finished building: ../miniscope.c'
+' '
+'Building file: ../uvc.c'
+'Invoking: Cross ARM C Compiler'
+arm-none-eabi-gcc -mcpu=arm926ej-s -marm -mthumb-interwork -O3 -fmessage-length=0 -fsigned-char -ffunction-sections -fdata-sections -Wall  -g -D__CYU3P_TX__=1 -I"C:\Program Files (x86)\Cypress\EZ-USB FX3 SDK\1.3\/fw_lib/1_3_3/inc" -std=gnu11 -MMD -MP -MF"uvc.d" -MT"uvc.o" -c -o "uvc.o" "../uvc.c"
+In file included from ../uvc.c:66:0:
+../uvc.c: In function 'UVCHandleProcessingUnitRqts':
+../uvc.c:1292:62: error: 'dframeNumber' undeclared (first use in this function)
+                      glEp0Buffer[0] = CY_U3P_DWORD_GET_BYTE0(dframeNumber);
+                                                              ^
+C:\Program Files (x86)\Cypress\EZ-USB FX3 SDK\1.3\/fw_lib/1_3_3/inc/cyu3utils.h:86:54: note: in definition of macro 'CY_U3P_DWORD_GET_BYTE0'
+ #define CY_U3P_DWORD_GET_BYTE0(d)        ((uint8_t)((d) & 0xFF))
+                                                      ^
+../uvc.c:1292:62: note: each undeclared identifier is reported only once for each function it appears in
+                      glEp0Buffer[0] = CY_U3P_DWORD_GET_BYTE0(dframeNumber);
+                                                              ^
+C:\Program Files (x86)\Cypress\EZ-USB FX3 SDK\1.3\/fw_lib/1_3_3/inc/cyu3utils.h:86:54: note: in definition of macro 'CY_U3P_DWORD_GET_BYTE0'
+ #define CY_U3P_DWORD_GET_BYTE0(d)        ((uint8_t)((d) & 0xFF))
+                                                      ^
+../uvc.c: In function 'UVCHandleVideoStreamingRqts':
+../uvc.c:1721:29: warning: implicit declaration of function 'SensorScaling_HD720p_30fps' [-Wimplicit-function-declaration]
+                             SensorScaling_HD720p_30fps ();
+                             ^
+../uvc.c:1730:29: warning: implicit declaration of function 'SensorScaling_VGA' [-Wimplicit-function-declaration]
+                             SensorScaling_VGA ();
+                             ^
+cs-make: *** [uvc.o] Error 1
+21:48:45 **** Incremental Build of configuration Release for project Minisceop_DAQ ****
+cs-make all 
+'Building file: ../miniscope.c'
+'Invoking: Cross ARM C Compiler'
+arm-none-eabi-gcc -mcpu=arm926ej-s -marm -mthumb-interwork -O3 -fmessage-length=0 -fsigned-char -ffunction-sections -fdata-sections -Wall  -g -D__CYU3P_TX__=1 -I"C:\Program Files (x86)\Cypress\EZ-USB FX3 SDK\1.3\/fw_lib/1_3_3/inc" -std=gnu11 -MMD -MP -MF"miniscope.d" -MT"miniscope.o" -c -o "miniscope.o" "../miniscope.c"
+'Finished building: ../miniscope.c'
+' '
+'Building file: ../uvc.c'
+'Invoking: Cross ARM C Compiler'
+arm-none-eabi-gcc -mcpu=arm926ej-s -marm -mthumb-interwork -O3 -fmessage-length=0 -fsigned-char -ffunction-sections -fdata-sections -Wall  -g -D__CYU3P_TX__=1 -I"C:\Program Files (x86)\Cypress\EZ-USB FX3 SDK\1.3\/fw_lib/1_3_3/inc" -std=gnu11 -MMD -MP -MF"uvc.d" -MT"uvc.o" -c -o "uvc.o" "../uvc.c"
+In file included from ../uvc.c:66:0:
+../uvc.c: In function 'UVCHandleProcessingUnitRqts':
+../uvc.c:1292:62: error: 'dframeNumber' undeclared (first use in this function)
+                      glEp0Buffer[0] = CY_U3P_DWORD_GET_BYTE0(dframeNumber);
+                                                              ^
+C:\Program Files (x86)\Cypress\EZ-USB FX3 SDK\1.3\/fw_lib/1_3_3/inc/cyu3utils.h:86:54: note: in definition of macro 'CY_U3P_DWORD_GET_BYTE0'
+ #define CY_U3P_DWORD_GET_BYTE0(d)        ((uint8_t)((d) & 0xFF))
+                                                      ^
+../uvc.c:1292:62: note: each undeclared identifier is reported only once for each function it appears in
+                      glEp0Buffer[0] = CY_U3P_DWORD_GET_BYTE0(dframeNumber);
+                                                              ^
+C:\Program Files (x86)\Cypress\EZ-USB FX3 SDK\1.3\/fw_lib/1_3_3/inc/cyu3utils.h:86:54: note: in definition of macro 'CY_U3P_DWORD_GET_BYTE0'
+ #define CY_U3P_DWORD_GET_BYTE0(d)        ((uint8_t)((d) & 0xFF))
+                                                      ^
+../uvc.c: In function 'UVCHandleVideoStreamingRqts':
+../uvc.c:1721:29: warning: implicit declaration of function 'SensorScaling_HD720p_30fps' [-Wimplicit-function-declaration]
+                             SensorScaling_HD720p_30fps ();
+                             ^
+../uvc.c:1730:29: warning: implicit declaration of function 'SensorScaling_VGA' [-Wimplicit-function-declaration]
+                             SensorScaling_VGA ();
+                             ^
+cs-make: *** [uvc.o] Error 1
+21:49:29 **** Incremental Build of configuration Release for project Minisceop_DAQ ****
+cs-make all 
+'Building file: ../miniscope.c'
+'Invoking: Cross ARM C Compiler'
+arm-none-eabi-gcc -mcpu=arm926ej-s -marm -mthumb-interwork -O3 -fmessage-length=0 -fsigned-char -ffunction-sections -fdata-sections -Wall  -g -D__CYU3P_TX__=1 -I"C:\Program Files (x86)\Cypress\EZ-USB FX3 SDK\1.3\/fw_lib/1_3_3/inc" -std=gnu11 -MMD -MP -MF"miniscope.d" -MT"miniscope.o" -c -o "miniscope.o" "../miniscope.c"
+'Finished building: ../miniscope.c'
+' '
+'Building file: ../uvc.c'
+'Invoking: Cross ARM C Compiler'
+arm-none-eabi-gcc -mcpu=arm926ej-s -marm -mthumb-interwork -O3 -fmessage-length=0 -fsigned-char -ffunction-sections -fdata-sections -Wall  -g -D__CYU3P_TX__=1 -I"C:\Program Files (x86)\Cypress\EZ-USB FX3 SDK\1.3\/fw_lib/1_3_3/inc" -std=gnu11 -MMD -MP -MF"uvc.d" -MT"uvc.o" -c -o "uvc.o" "../uvc.c"
+../uvc.c: In function 'UVCHandleVideoStreamingRqts':
+../uvc.c:1721:29: warning: implicit declaration of function 'SensorScaling_HD720p_30fps' [-Wimplicit-function-declaration]
+                             SensorScaling_HD720p_30fps ();
+                             ^
+../uvc.c:1730:29: warning: implicit declaration of function 'SensorScaling_VGA' [-Wimplicit-function-declaration]
+                             SensorScaling_VGA ();
+                             ^
+'Finished building: ../uvc.c'
+' '
+'Building target: Minisceop_DAQ.elf'
+'Invoking: Cross ARM C Linker'
+arm-none-eabi-gcc -mcpu=arm926ej-s -marm -mthumb-interwork -O3 -fmessage-length=0 -fsigned-char -ffunction-sections -fdata-sections -Wall  -g -T "C:\Program Files (x86)\Cypress\EZ-USB FX3 SDK\1.3\/fw_build/fx3_fw/fx3.ld" -nostartfiles -Xlinker --gc-sections -L"C:\Program Files (x86)\Cypress\EZ-USB FX3 SDK\1.3\/fw_lib/1_3_3/fx3_release" -L"C:\Program Files (x86)\Cypress\EZ-USB FX3 SDK\1.3\ARM GCC\/lib/gcc/arm-none-eabi/4.8.1" -L"C:\Program Files (x86)\Cypress\EZ-USB FX3 SDK\1.3\ARM GCC\/arm-none-eabi/lib" -Wl,-Map,"Minisceop_DAQ.map" -Wl,-d  -Wl,--no-wchar-size-warning -Wl,--entry,CyU3PFirmwareEntry -o "Minisceop_DAQ.elf"  ./camera_ptzcontrol.o ./cyfx_gcc_startup.o ./cyfxtx.o ./cyfxuvcdscr.o ./miniscope.o ./uvc.o   -lcyu3lpp -lcyfxapi -lcyu3threadx -lc -lgcc
+./uvc.o: In function `UVCHandleVideoStreamingRqts':
+C:\Users\DBAharoni\Documents\Projects\Miniscope-DAQ-Cypress-firmware\Minisceop_DAQ\Release/../uvc.c:1730: undefined reference to `SensorScaling_VGA'
+C:\Users\DBAharoni\Documents\Projects\Miniscope-DAQ-Cypress-firmware\Minisceop_DAQ\Release/../uvc.c:1721: undefined reference to `SensorScaling_HD720p_30fps'
+collect2.exe: error: ld returned 1 exit status
+cs-make: *** [Minisceop_DAQ.elf] Error 1
+21:52:18 **** Incremental Build of configuration Release for project Minisceop_DAQ ****
+cs-make all 
+'Building file: ../uvc.c'
+'Invoking: Cross ARM C Compiler'
+arm-none-eabi-gcc -mcpu=arm926ej-s -marm -mthumb-interwork -O3 -fmessage-length=0 -fsigned-char -ffunction-sections -fdata-sections -Wall  -g -D__CYU3P_TX__=1 -I"C:\Program Files (x86)\Cypress\EZ-USB FX3 SDK\1.3\/fw_lib/1_3_3/inc" -std=gnu11 -MMD -MP -MF"uvc.d" -MT"uvc.o" -c -o "uvc.o" "../uvc.c"
+../uvc.c: In function 'UVCHandleVideoStreamingRqts':
+../uvc.c:1725:26: error: expected expression before '/' token
+                          / MINISCOPE: use to set sensor resolution in demo project
+                          ^
+cs-make: *** [uvc.o] Error 1
+21:52:26 **** Incremental Build of configuration Release for project Minisceop_DAQ ****
+cs-make all 
+'Building file: ../uvc.c'
+'Invoking: Cross ARM C Compiler'
+arm-none-eabi-gcc -mcpu=arm926ej-s -marm -mthumb-interwork -O3 -fmessage-length=0 -fsigned-char -ffunction-sections -fdata-sections -Wall  -g -D__CYU3P_TX__=1 -I"C:\Program Files (x86)\Cypress\EZ-USB FX3 SDK\1.3\/fw_lib/1_3_3/inc" -std=gnu11 -MMD -MP -MF"uvc.d" -MT"uvc.o" -c -o "uvc.o" "../uvc.c"
+'Finished building: ../uvc.c'
+' '
+'Building target: Minisceop_DAQ.elf'
+'Invoking: Cross ARM C Linker'
+arm-none-eabi-gcc -mcpu=arm926ej-s -marm -mthumb-interwork -O3 -fmessage-length=0 -fsigned-char -ffunction-sections -fdata-sections -Wall  -g -T "C:\Program Files (x86)\Cypress\EZ-USB FX3 SDK\1.3\/fw_build/fx3_fw/fx3.ld" -nostartfiles -Xlinker --gc-sections -L"C:\Program Files (x86)\Cypress\EZ-USB FX3 SDK\1.3\/fw_lib/1_3_3/fx3_release" -L"C:\Program Files (x86)\Cypress\EZ-USB FX3 SDK\1.3\ARM GCC\/lib/gcc/arm-none-eabi/4.8.1" -L"C:\Program Files (x86)\Cypress\EZ-USB FX3 SDK\1.3\ARM GCC\/arm-none-eabi/lib" -Wl,-Map,"Minisceop_DAQ.map" -Wl,-d  -Wl,--no-wchar-size-warning -Wl,--entry,CyU3PFirmwareEntry -o "Minisceop_DAQ.elf"  ./camera_ptzcontrol.o ./cyfx_gcc_startup.o ./cyfxtx.o ./cyfxuvcdscr.o ./miniscope.o ./uvc.o   -lcyu3lpp -lcyfxapi -lcyu3threadx -lc -lgcc
+'Finished building target: Minisceop_DAQ.elf'
+' '
+cs-make --no-print-directory post-build
+'Generate boot-loadable binary image'
+'C:\Program Files (x86)\Cypress\EZ-USB FX3 SDK\1.3\/util/elf2img/elf2img.exe' -i Minisceop_DAQ.elf -o Minisceop_DAQ.img -v
+Note: 256 bytes of interrupt vector code have been removed from the image.
+Endian-ness    : Little
+      Use the "-vectorload yes" option to retain this code.
+Entry point    : 0x40008190
+
+Program header table offset: 0x00000034
+Program header count       : 3
+Program header entry size  : 0x0020
+Copying data from program header:
+	Addr=0x00000100 Size(words)=0x0000088a FileSize=0x0000088a Offset=0x00000100 Flags=0x00000005
+Copying data from program header:
+	Addr=0x40003000 Size(words)=0x00004000 FileSize=0x00004000 Offset=0x00003000 Flags=0x00000005
+Copying data from program header:
+	Addr=0x40013000 Size(words)=0x00001f58 FileSize=0x00001f58 Offset=0x00013000 Flags=0x00000005
+Copying data from program header:
+	Addr=0x40030000 Size(words)=0x00000825 FileSize=0x00000182 Offset=0x00020000 Flags=0x00000006
+' '
+21:59:46 **** Incremental Build of configuration Release for project Minisceop_DAQ ****
+cs-make all 
+cs-make: Nothing to be done for `all'.
+21:59:53 **** Incremental Build of configuration Release for project Minisceop_DAQ ****
+cs-make all 
+'Building file: ../uvc.c'
+'Invoking: Cross ARM C Compiler'
+arm-none-eabi-gcc -mcpu=arm926ej-s -marm -mthumb-interwork -O3 -fmessage-length=0 -fsigned-char -ffunction-sections -fdata-sections -Wall  -g -D__CYU3P_TX__=1 -I"C:\Program Files (x86)\Cypress\EZ-USB FX3 SDK\1.3\/fw_lib/1_3_3/inc" -std=gnu11 -MMD -MP -MF"uvc.d" -MT"uvc.o" -c -o "uvc.o" "../uvc.c"
+'Finished building: ../uvc.c'
+' '
+'Building target: Minisceop_DAQ.elf'
+'Invoking: Cross ARM C Linker'
+arm-none-eabi-gcc -mcpu=arm926ej-s -marm -mthumb-interwork -O3 -fmessage-length=0 -fsigned-char -ffunction-sections -fdata-sections -Wall  -g -T "C:\Program Files (x86)\Cypress\EZ-USB FX3 SDK\1.3\/fw_build/fx3_fw/fx3.ld" -nostartfiles -Xlinker --gc-sections -L"C:\Program Files (x86)\Cypress\EZ-USB FX3 SDK\1.3\/fw_lib/1_3_3/fx3_release" -L"C:\Program Files (x86)\Cypress\EZ-USB FX3 SDK\1.3\ARM GCC\/lib/gcc/arm-none-eabi/4.8.1" -L"C:\Program Files (x86)\Cypress\EZ-USB FX3 SDK\1.3\ARM GCC\/arm-none-eabi/lib" -Wl,-Map,"Minisceop_DAQ.map" -Wl,-d  -Wl,--no-wchar-size-warning -Wl,--entry,CyU3PFirmwareEntry -o "Minisceop_DAQ.elf"  ./camera_ptzcontrol.o ./cyfx_gcc_startup.o ./cyfxtx.o ./cyfxuvcdscr.o ./miniscope.o ./uvc.o   -lcyu3lpp -lcyfxapi -lcyu3threadx -lc -lgcc
+'Finished building target: Minisceop_DAQ.elf'
+' '
+cs-make --no-print-directory post-build
+'Generate boot-loadable binary image'
+'C:\Program Files (x86)\Cypress\EZ-USB FX3 SDK\1.3\/util/elf2img/elf2img.exe' -i Minisceop_DAQ.elf -o Minisceop_DAQ.img -i2cconf 0x1E
+Note: 256 bytes of interrupt vector code have been removed from the image.
+      Use the "-vectorload yes" option to retain this code.
+
+' '
+22:01:19 **** Incremental Build of configuration Release for project Minisceop_DAQ ****
+cs-make all 
+'Building file: ../uvc.c'
+'Invoking: Cross ARM C Compiler'
+arm-none-eabi-gcc -mcpu=arm926ej-s -marm -mthumb-interwork -O3 -fmessage-length=0 -fsigned-char -ffunction-sections -fdata-sections -Wall  -g -D__CYU3P_TX__=1 -I"C:\Program Files (x86)\Cypress\EZ-USB FX3 SDK\1.3\/fw_lib/1_3_3/inc" -std=gnu11 -MMD -MP -MF"uvc.d" -MT"uvc.o" -c -o "uvc.o" "../uvc.c"
+'Finished building: ../uvc.c'
+' '
+'Building target: Minisceop_DAQ.elf'
+'Invoking: Cross ARM C Linker'
+arm-none-eabi-gcc -mcpu=arm926ej-s -marm -mthumb-interwork -O3 -fmessage-length=0 -fsigned-char -ffunction-sections -fdata-sections -Wall  -g -T "C:\Program Files (x86)\Cypress\EZ-USB FX3 SDK\1.3\/fw_build/fx3_fw/fx3.ld" -nostartfiles -Xlinker --gc-sections -L"C:\Program Files (x86)\Cypress\EZ-USB FX3 SDK\1.3\/fw_lib/1_3_3/fx3_release" -L"C:\Program Files (x86)\Cypress\EZ-USB FX3 SDK\1.3\ARM GCC\/lib/gcc/arm-none-eabi/4.8.1" -L"C:\Program Files (x86)\Cypress\EZ-USB FX3 SDK\1.3\ARM GCC\/arm-none-eabi/lib" -Wl,-Map,"Minisceop_DAQ.map" -Wl,-d  -Wl,--no-wchar-size-warning -Wl,--entry,CyU3PFirmwareEntry -o "Minisceop_DAQ.elf"  ./camera_ptzcontrol.o ./cyfx_gcc_startup.o ./cyfxtx.o ./cyfxuvcdscr.o ./miniscope.o ./uvc.o   -lcyu3lpp -lcyfxapi -lcyu3threadx -lc -lgcc
+'Finished building target: Minisceop_DAQ.elf'
+' '
+cs-make --no-print-directory post-build
+'Generate boot-loadable binary image'
+'C:\Program Files (x86)\Cypress\EZ-USB FX3 SDK\1.3\/util/elf2img/elf2img.exe' -i Minisceop_DAQ.elf -o Minisceop_DAQ.img -i2cconf 0x1E
+Note: 256 bytes of interrupt vector code have been removed from the image.
+      Use the "-vectorload yes" option to retain this code.
+
+' '
+22:02:14 **** Incremental Build of configuration Release for project Minisceop_DAQ ****
+cs-make all 
+'Building file: ../cyfx_gcc_startup.S'
+'Invoking: Cross ARM GNU Assembler'
+arm-none-eabi-gcc -mcpu=arm926ej-s -marm -mthumb-interwork -O3 -fmessage-length=0 -fsigned-char -ffunction-sections -fdata-sections -Wall  -g -x assembler-with-cpp -I"C:\Program Files (x86)\Cypress\EZ-USB FX3 SDK\1.3\/fw_lib/1_3_3/inc" -MMD -MP -MF"cyfx_gcc_startup.d" -MT"cyfx_gcc_startup.o" -c -o "cyfx_gcc_startup.o" "../cyfx_gcc_startup.S"
+'Finished building: ../cyfx_gcc_startup.S'
+' '
+'Building file: ../cyfxtx.c'
+'Invoking: Cross ARM C Compiler'
+arm-none-eabi-gcc -mcpu=arm926ej-s -marm -mthumb-interwork -O3 -fmessage-length=0 -fsigned-char -ffunction-sections -fdata-sections -Wall  -g -D__CYU3P_TX__=1 -I"C:\Program Files (x86)\Cypress\EZ-USB FX3 SDK\1.3\/fw_lib/1_3_3/inc" -std=gnu11 -MMD -MP -MF"cyfxtx.d" -MT"cyfxtx.o" -c -o "cyfxtx.o" "../cyfxtx.c"
+'Finished building: ../cyfxtx.c'
+' '
+'Building file: ../cyfxuvcdscr.c'
+'Invoking: Cross ARM C Compiler'
+arm-none-eabi-gcc -mcpu=arm926ej-s -marm -mthumb-interwork -O3 -fmessage-length=0 -fsigned-char -ffunction-sections -fdata-sections -Wall  -g -D__CYU3P_TX__=1 -I"C:\Program Files (x86)\Cypress\EZ-USB FX3 SDK\1.3\/fw_lib/1_3_3/inc" -std=gnu11 -MMD -MP -MF"cyfxuvcdscr.d" -MT"cyfxuvcdscr.o" -c -o "cyfxuvcdscr.o" "../cyfxuvcdscr.c"
+../cyfxuvcdscr.c:29:31: fatal error: camera_ptzcontrol.h: No such file or directory
+ #include "camera_ptzcontrol.h"
+                               ^
+compilation terminated.
+cs-make: *** [cyfxuvcdscr.o] Error 1
+22:02:31 **** Incremental Build of configuration Release for project Minisceop_DAQ ****
+cs-make all 
+'Building file: ../cyfxuvcdscr.c'
+'Invoking: Cross ARM C Compiler'
+arm-none-eabi-gcc -mcpu=arm926ej-s -marm -mthumb-interwork -O3 -fmessage-length=0 -fsigned-char -ffunction-sections -fdata-sections -Wall  -g -D__CYU3P_TX__=1 -I"C:\Program Files (x86)\Cypress\EZ-USB FX3 SDK\1.3\/fw_lib/1_3_3/inc" -std=gnu11 -MMD -MP -MF"cyfxuvcdscr.d" -MT"cyfxuvcdscr.o" -c -o "cyfxuvcdscr.o" "../cyfxuvcdscr.c"
+'Finished building: ../cyfxuvcdscr.c'
+' '
+'Building file: ../miniscope.c'
+'Invoking: Cross ARM C Compiler'
+arm-none-eabi-gcc -mcpu=arm926ej-s -marm -mthumb-interwork -O3 -fmessage-length=0 -fsigned-char -ffunction-sections -fdata-sections -Wall  -g -D__CYU3P_TX__=1 -I"C:\Program Files (x86)\Cypress\EZ-USB FX3 SDK\1.3\/fw_lib/1_3_3/inc" -std=gnu11 -MMD -MP -MF"miniscope.d" -MT"miniscope.o" -c -o "miniscope.o" "../miniscope.c"
+'Finished building: ../miniscope.c'
+' '
+'Building file: ../uvc.c'
+'Invoking: Cross ARM C Compiler'
+arm-none-eabi-gcc -mcpu=arm926ej-s -marm -mthumb-interwork -O3 -fmessage-length=0 -fsigned-char -ffunction-sections -fdata-sections -Wall  -g -D__CYU3P_TX__=1 -I"C:\Program Files (x86)\Cypress\EZ-USB FX3 SDK\1.3\/fw_lib/1_3_3/inc" -std=gnu11 -MMD -MP -MF"uvc.d" -MT"uvc.o" -c -o "uvc.o" "../uvc.c"
+'Finished building: ../uvc.c'
+' '
+'Building target: Minisceop_DAQ.elf'
+'Invoking: Cross ARM C Linker'
+arm-none-eabi-gcc -mcpu=arm926ej-s -marm -mthumb-interwork -O3 -fmessage-length=0 -fsigned-char -ffunction-sections -fdata-sections -Wall  -g -T "C:\Program Files (x86)\Cypress\EZ-USB FX3 SDK\1.3\/fw_build/fx3_fw/fx3.ld" -nostartfiles -Xlinker --gc-sections -L"C:\Program Files (x86)\Cypress\EZ-USB FX3 SDK\1.3\/fw_lib/1_3_3/fx3_release" -L"C:\Program Files (x86)\Cypress\EZ-USB FX3 SDK\1.3\ARM GCC\/lib/gcc/arm-none-eabi/4.8.1" -L"C:\Program Files (x86)\Cypress\EZ-USB FX3 SDK\1.3\ARM GCC\/arm-none-eabi/lib" -Wl,-Map,"Minisceop_DAQ.map" -Wl,-d  -Wl,--no-wchar-size-warning -Wl,--entry,CyU3PFirmwareEntry -o "Minisceop_DAQ.elf"  ./cyfx_gcc_startup.o ./cyfxtx.o ./cyfxuvcdscr.o ./miniscope.o ./uvc.o   -lcyu3lpp -lcyfxapi -lcyu3threadx -lc -lgcc
+./uvc.o: In function `CyFxUVCAppLPMRqtCB':
+C:\Users\DBAharoni\Documents\Projects\Miniscope-DAQ-Cypress-firmware\Minisceop_DAQ\Release/../uvc.c:717: multiple definition of `currentTime'
+./miniscope.o:C:\Users\DBAharoni\Documents\Projects\Miniscope-DAQ-Cypress-firmware\Minisceop_DAQ\Release/../miniscope.c:40: first defined here
+./uvc.o: In function `CyFxUVCAppLPMRqtCB':
+C:\Users\DBAharoni\Documents\Projects\Miniscope-DAQ-Cypress-firmware\Minisceop_DAQ\Release/../uvc.c:717: multiple definition of `dFrameNumber'
+./miniscope.o:C:\Users\DBAharoni\Documents\Projects\Miniscope-DAQ-Cypress-firmware\Minisceop_DAQ\Release/../miniscope.c:40: first defined here
+collect2.exe: error: ld returned 1 exit status
+cs-make: *** [Minisceop_DAQ.elf] Error 1
+22:03:03 **** Incremental Build of configuration Release for project Minisceop_DAQ ****
+cs-make all 
+'Building file: ../uvc.c'
+'Invoking: Cross ARM C Compiler'
+arm-none-eabi-gcc -mcpu=arm926ej-s -marm -mthumb-interwork -O3 -fmessage-length=0 -fsigned-char -ffunction-sections -fdata-sections -Wall  -g -D__CYU3P_TX__=1 -I"C:\Program Files (x86)\Cypress\EZ-USB FX3 SDK\1.3\/fw_lib/1_3_3/inc" -std=gnu11 -MMD -MP -MF"uvc.d" -MT"uvc.o" -c -o "uvc.o" "../uvc.c"
+'Finished building: ../uvc.c'
+' '
+'Building target: Minisceop_DAQ.elf'
+'Invoking: Cross ARM C Linker'
+arm-none-eabi-gcc -mcpu=arm926ej-s -marm -mthumb-interwork -O3 -fmessage-length=0 -fsigned-char -ffunction-sections -fdata-sections -Wall  -g -T "C:\Program Files (x86)\Cypress\EZ-USB FX3 SDK\1.3\/fw_build/fx3_fw/fx3.ld" -nostartfiles -Xlinker --gc-sections -L"C:\Program Files (x86)\Cypress\EZ-USB FX3 SDK\1.3\/fw_lib/1_3_3/fx3_release" -L"C:\Program Files (x86)\Cypress\EZ-USB FX3 SDK\1.3\ARM GCC\/lib/gcc/arm-none-eabi/4.8.1" -L"C:\Program Files (x86)\Cypress\EZ-USB FX3 SDK\1.3\ARM GCC\/arm-none-eabi/lib" -Wl,-Map,"Minisceop_DAQ.map" -Wl,-d  -Wl,--no-wchar-size-warning -Wl,--entry,CyU3PFirmwareEntry -o "Minisceop_DAQ.elf"  ./cyfx_gcc_startup.o ./cyfxtx.o ./cyfxuvcdscr.o ./miniscope.o ./uvc.o   -lcyu3lpp -lcyfxapi -lcyu3threadx -lc -lgcc
+'Finished building target: Minisceop_DAQ.elf'
+' '
+cs-make --no-print-directory post-build
+'Generate boot-loadable binary image'
+'C:\Program Files (x86)\Cypress\EZ-USB FX3 SDK\1.3\/util/elf2img/elf2img.exe' -i Minisceop_DAQ.elf -o Minisceop_DAQ.img -i2cconf 0x1E
+Note: 256 bytes of interrupt vector code have been removed from the image.
+      Use the "-vectorload yes" option to retain this code.
+
+' '
+22:31:26 **** Incremental Build of configuration Release for project Minisceop_DAQ ****
+cs-make all 
+'Building file: ../cyfxuvcdscr.c'
+'Invoking: Cross ARM C Compiler'
+arm-none-eabi-gcc -mcpu=arm926ej-s -marm -mthumb-interwork -O3 -fmessage-length=0 -fsigned-char -ffunction-sections -fdata-sections -Wall  -g -D__CYU3P_TX__=1 -I"C:\Program Files (x86)\Cypress\EZ-USB FX3 SDK\1.3\/fw_lib/1_3_3/inc" -std=gnu11 -MMD -MP -MF"cyfxuvcdscr.d" -MT"cyfxuvcdscr.o" -c -o "cyfxuvcdscr.o" "../cyfxuvcdscr.c"
+'Finished building: ../cyfxuvcdscr.c'
+' '
+'Building file: ../miniscope.c'
+'Invoking: Cross ARM C Compiler'
+arm-none-eabi-gcc -mcpu=arm926ej-s -marm -mthumb-interwork -O3 -fmessage-length=0 -fsigned-char -ffunction-sections -fdata-sections -Wall  -g -D__CYU3P_TX__=1 -I"C:\Program Files (x86)\Cypress\EZ-USB FX3 SDK\1.3\/fw_lib/1_3_3/inc" -std=gnu11 -MMD -MP -MF"miniscope.d" -MT"miniscope.o" -c -o "miniscope.o" "../miniscope.c"
+'Finished building: ../miniscope.c'
+' '
+'Building file: ../uvc.c'
+'Invoking: Cross ARM C Compiler'
+arm-none-eabi-gcc -mcpu=arm926ej-s -marm -mthumb-interwork -O3 -fmessage-length=0 -fsigned-char -ffunction-sections -fdata-sections -Wall  -g -D__CYU3P_TX__=1 -I"C:\Program Files (x86)\Cypress\EZ-USB FX3 SDK\1.3\/fw_lib/1_3_3/inc" -std=gnu11 -MMD -MP -MF"uvc.d" -MT"uvc.o" -c -o "uvc.o" "../uvc.c"
+'Finished building: ../uvc.c'
+' '
+'Building target: Minisceop_DAQ.elf'
+'Invoking: Cross ARM C Linker'
+arm-none-eabi-gcc -mcpu=arm926ej-s -marm -mthumb-interwork -O3 -fmessage-length=0 -fsigned-char -ffunction-sections -fdata-sections -Wall  -g -T "C:\Program Files (x86)\Cypress\EZ-USB FX3 SDK\1.3\/fw_build/fx3_fw/fx3.ld" -nostartfiles -Xlinker --gc-sections -L"C:\Program Files (x86)\Cypress\EZ-USB FX3 SDK\1.3\/fw_lib/1_3_3/fx3_release" -L"C:\Program Files (x86)\Cypress\EZ-USB FX3 SDK\1.3\ARM GCC\/lib/gcc/arm-none-eabi/4.8.1" -L"C:\Program Files (x86)\Cypress\EZ-USB FX3 SDK\1.3\ARM GCC\/arm-none-eabi/lib" -Wl,-Map,"Minisceop_DAQ.map" -Wl,-d  -Wl,--no-wchar-size-warning -Wl,--entry,CyU3PFirmwareEntry -o "Minisceop_DAQ.elf"  ./cyfx_gcc_startup.o ./cyfxtx.o ./cyfxuvcdscr.o ./miniscope.o ./uvc.o   -lcyu3lpp -lcyfxapi -lcyu3threadx -lc -lgcc
+'Finished building target: Minisceop_DAQ.elf'
+' '
+cs-make --no-print-directory post-build
+'Generate boot-loadable binary image'
+'C:\Program Files (x86)\Cypress\EZ-USB FX3 SDK\1.3\/util/elf2img/elf2img.exe' -i Minisceop_DAQ.elf -o Minisceop_DAQ.img -i2cconf 0x1E
+Note: 256 bytes of interrupt vector code have been removed from the image.
+      Use the "-vectorload yes" option to retain this code.
+
+' '
+22:34:36 **** Incremental Build of configuration Release for project Minisceop_DAQ ****
+cs-make all 
+'Building file: ../cyfxuvcdscr.c'
+'Invoking: Cross ARM C Compiler'
+arm-none-eabi-gcc -mcpu=arm926ej-s -marm -mthumb-interwork -O3 -fmessage-length=0 -fsigned-char -ffunction-sections -fdata-sections -Wall  -g -D__CYU3P_TX__=1 -I"C:\Program Files (x86)\Cypress\EZ-USB FX3 SDK\1.3\/fw_lib/1_3_3/inc" -std=gnu11 -MMD -MP -MF"cyfxuvcdscr.d" -MT"cyfxuvcdscr.o" -c -o "cyfxuvcdscr.o" "../cyfxuvcdscr.c"
+'Finished building: ../cyfxuvcdscr.c'
+' '
+'Building file: ../miniscope.c'
+'Invoking: Cross ARM C Compiler'
+arm-none-eabi-gcc -mcpu=arm926ej-s -marm -mthumb-interwork -O3 -fmessage-length=0 -fsigned-char -ffunction-sections -fdata-sections -Wall  -g -D__CYU3P_TX__=1 -I"C:\Program Files (x86)\Cypress\EZ-USB FX3 SDK\1.3\/fw_lib/1_3_3/inc" -std=gnu11 -MMD -MP -MF"miniscope.d" -MT"miniscope.o" -c -o "miniscope.o" "../miniscope.c"
+'Finished building: ../miniscope.c'
+' '
+'Building file: ../uvc.c'
+'Invoking: Cross ARM C Compiler'
+arm-none-eabi-gcc -mcpu=arm926ej-s -marm -mthumb-interwork -O3 -fmessage-length=0 -fsigned-char -ffunction-sections -fdata-sections -Wall  -g -D__CYU3P_TX__=1 -I"C:\Program Files (x86)\Cypress\EZ-USB FX3 SDK\1.3\/fw_lib/1_3_3/inc" -std=gnu11 -MMD -MP -MF"uvc.d" -MT"uvc.o" -c -o "uvc.o" "../uvc.c"
+'Finished building: ../uvc.c'
+' '
+'Building target: Minisceop_DAQ.elf'
+'Invoking: Cross ARM C Linker'
+arm-none-eabi-gcc -mcpu=arm926ej-s -marm -mthumb-interwork -O3 -fmessage-length=0 -fsigned-char -ffunction-sections -fdata-sections -Wall  -g -T "C:\Program Files (x86)\Cypress\EZ-USB FX3 SDK\1.3\/fw_build/fx3_fw/fx3.ld" -nostartfiles -Xlinker --gc-sections -L"C:\Program Files (x86)\Cypress\EZ-USB FX3 SDK\1.3\/fw_lib/1_3_3/fx3_release" -L"C:\Program Files (x86)\Cypress\EZ-USB FX3 SDK\1.3\ARM GCC\/lib/gcc/arm-none-eabi/4.8.1" -L"C:\Program Files (x86)\Cypress\EZ-USB FX3 SDK\1.3\ARM GCC\/arm-none-eabi/lib" -Wl,-Map,"Minisceop_DAQ.map" -Wl,-d  -Wl,--no-wchar-size-warning -Wl,--entry,CyU3PFirmwareEntry -o "Minisceop_DAQ.elf"  ./cyfx_gcc_startup.o ./cyfxtx.o ./cyfxuvcdscr.o ./miniscope.o ./uvc.o   -lcyu3lpp -lcyfxapi -lcyu3threadx -lc -lgcc
+'Finished building target: Minisceop_DAQ.elf'
+' '
+cs-make --no-print-directory post-build
+'Generate boot-loadable binary image'
+'C:\Program Files (x86)\Cypress\EZ-USB FX3 SDK\1.3\/util/elf2img/elf2img.exe' -i Minisceop_DAQ.elf -o Minisceop_DAQ.img -i2cconf 0x1E
+Note: 256 bytes of interrupt vector code have been removed from the image.
+      Use the "-vectorload yes" option to retain this code.
+
+' '
+22:39:34 **** Incremental Build of configuration Release for project Minisceop_DAQ ****
+cs-make all 
+'Building file: ../cyfxuvcdscr.c'
+'Invoking: Cross ARM C Compiler'
+arm-none-eabi-gcc -mcpu=arm926ej-s -marm -mthumb-interwork -O3 -fmessage-length=0 -fsigned-char -ffunction-sections -fdata-sections -Wall  -g -D__CYU3P_TX__=1 -I"C:\Program Files (x86)\Cypress\EZ-USB FX3 SDK\1.3\/fw_lib/1_3_3/inc" -std=gnu11 -MMD -MP -MF"cyfxuvcdscr.d" -MT"cyfxuvcdscr.o" -c -o "cyfxuvcdscr.o" "../cyfxuvcdscr.c"
+'Finished building: ../cyfxuvcdscr.c'
+' '
+'Building file: ../miniscope.c'
+'Invoking: Cross ARM C Compiler'
+arm-none-eabi-gcc -mcpu=arm926ej-s -marm -mthumb-interwork -O3 -fmessage-length=0 -fsigned-char -ffunction-sections -fdata-sections -Wall  -g -D__CYU3P_TX__=1 -I"C:\Program Files (x86)\Cypress\EZ-USB FX3 SDK\1.3\/fw_lib/1_3_3/inc" -std=gnu11 -MMD -MP -MF"miniscope.d" -MT"miniscope.o" -c -o "miniscope.o" "../miniscope.c"
+'Finished building: ../miniscope.c'
+' '
+'Building file: ../uvc.c'
+'Invoking: Cross ARM C Compiler'
+arm-none-eabi-gcc -mcpu=arm926ej-s -marm -mthumb-interwork -O3 -fmessage-length=0 -fsigned-char -ffunction-sections -fdata-sections -Wall  -g -D__CYU3P_TX__=1 -I"C:\Program Files (x86)\Cypress\EZ-USB FX3 SDK\1.3\/fw_lib/1_3_3/inc" -std=gnu11 -MMD -MP -MF"uvc.d" -MT"uvc.o" -c -o "uvc.o" "../uvc.c"
+'Finished building: ../uvc.c'
+' '
+'Building target: Minisceop_DAQ.elf'
+'Invoking: Cross ARM C Linker'
+arm-none-eabi-gcc -mcpu=arm926ej-s -marm -mthumb-interwork -O3 -fmessage-length=0 -fsigned-char -ffunction-sections -fdata-sections -Wall  -g -T "C:\Program Files (x86)\Cypress\EZ-USB FX3 SDK\1.3\/fw_build/fx3_fw/fx3.ld" -nostartfiles -Xlinker --gc-sections -L"C:\Program Files (x86)\Cypress\EZ-USB FX3 SDK\1.3\/fw_lib/1_3_3/fx3_release" -L"C:\Program Files (x86)\Cypress\EZ-USB FX3 SDK\1.3\ARM GCC\/lib/gcc/arm-none-eabi/4.8.1" -L"C:\Program Files (x86)\Cypress\EZ-USB FX3 SDK\1.3\ARM GCC\/arm-none-eabi/lib" -Wl,-Map,"Minisceop_DAQ.map" -Wl,-d  -Wl,--no-wchar-size-warning -Wl,--entry,CyU3PFirmwareEntry -o "Minisceop_DAQ.elf"  ./cyfx_gcc_startup.o ./cyfxtx.o ./cyfxuvcdscr.o ./miniscope.o ./uvc.o   -lcyu3lpp -lcyfxapi -lcyu3threadx -lc -lgcc
+'Finished building target: Minisceop_DAQ.elf'
+' '
+cs-make --no-print-directory post-build
+'Generate boot-loadable binary image'
+'C:\Program Files (x86)\Cypress\EZ-USB FX3 SDK\1.3\/util/elf2img/elf2img.exe' -i Minisceop_DAQ.elf -o Minisceop_DAQ.img -i2cconf 0x1E
+Note: 256 bytes of interrupt vector code have been removed from the image.
+      Use the "-vectorload yes" option to retain this code.
+
+' '

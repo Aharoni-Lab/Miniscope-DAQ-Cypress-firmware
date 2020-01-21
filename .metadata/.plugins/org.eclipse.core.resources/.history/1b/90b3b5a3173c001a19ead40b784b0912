@@ -1,0 +1,49 @@
+/*
+ * definitions.h
+ *
+ *  Created on: Jan 20, 2020
+ *      Author: DBAharoni
+ */
+
+#ifndef DEFINITIONS_H_
+#define DEFINITIONS_H_
+
+// DAQ GPIO
+#define FRAME_OUT			20
+#define TRIG_RECORD_EXT		21
+
+//Define which imaging sensors is being used.
+#define X_ASPECT_RATIO	1
+#define Y_ASPECT_RATIO	1
+#define WIDTH_L			(uint8_t)(WIDTH&0xFF)
+#define WIDTH_H			(uint8_t)((WIDTH>>8)&0xFF)
+#define HEIGHT_L		1
+#define HEIGHT_H		1
+
+
+//Communication over saturation channel
+#define RECORD_START		0x01
+#define RECORD_END			0x02
+#define SET_CMOS_SETTINGS	0x03
+     //For setting MS FPS
+#define FPS5				0x11
+#define FPS10				0x12
+#define	FPS15				0x13
+#define	FPS20				0x14
+#define FPS30				0x15
+#define	FPS60				0x16
+
+#define MODE_V4_MINISCOPE	0x20
+#define MODE_DEMO_2_COLOR	0x21
+#define MODE_2_COLOR		0x22
+
+#define CONFIG_BNO055_TO_NDOF	0xF0
+
+
+
+#define GPIO_SHIFT		20
+#define GPIO_MASK		0b00000111
+
+#define MCU_SET_MODE 0x04
+
+#endif /* DEFINITIONS_H_ */

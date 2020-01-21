@@ -1,0 +1,20 @@
+/*
+ * miniscope.h
+ *
+ *  Created on: Jan 20, 2020
+ *      Author: DBAharoni
+ */
+
+#ifndef MINISCOPE_H_
+#define MINISCOPE_H_
+
+#include "definitions.h"
+#include <cyu3types.h>
+
+// Globals
+extern int I2CNumPacketsPending;
+
+// Handles the processing and sending of generic I2C packets that have built up since previous End of Frame event
+extern void I2CProcessAndSendPendingPacket (void);
+
+#endif /* MINISCOPE_H_ */

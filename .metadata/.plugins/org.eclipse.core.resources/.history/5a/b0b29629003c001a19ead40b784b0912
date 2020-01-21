@@ -1,0 +1,14 @@
+/*
+ * miniscope.c
+ *
+ *  Created on: Jan 20, 2020
+ *      Author: DBAharoni
+ */
+
+#include "miniscope.h"
+
+#include <cyu3i2c.h>
+
+void SensorInit (void) {
+
+}
