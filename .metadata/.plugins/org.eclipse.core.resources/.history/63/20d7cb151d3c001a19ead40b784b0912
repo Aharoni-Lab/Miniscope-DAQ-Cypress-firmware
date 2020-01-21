@@ -19,7 +19,7 @@ extern CyBool_t recording;
 
 extern CyBool_t endOfFrame;
 
-extern CyBool_t bnoEnabled;
+extern CyBool_t bnoEnabled;// TODO: Enable this var when bnoEnable command gets sent
 
 // Holds generic I2C commands waiting to be sent
 
@@ -39,7 +39,6 @@ extern uint32_t currentTime;
 
 // Handles the processing and sending of generic I2C packets that have built up since previous End of Frame event
 extern void I2CProcessAndSendPendingPacket (void);
-extern void handleDAQConfigCommand (uint8_t);
 
 extern CyU3PReturnStatus_t readBNO(void);
 

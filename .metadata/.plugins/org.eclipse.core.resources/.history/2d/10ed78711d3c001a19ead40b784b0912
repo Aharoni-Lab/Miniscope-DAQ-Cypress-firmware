@@ -19,7 +19,7 @@ extern CyBool_t recording;
 
 extern CyBool_t endOfFrame;
 
-extern CyBool_t bnoEnabled;
+extern CyBool_t bnoEnabled;// TODO: Enable this var when bnoEnable command gets sent
 
 // Holds generic I2C commands waiting to be sent
 

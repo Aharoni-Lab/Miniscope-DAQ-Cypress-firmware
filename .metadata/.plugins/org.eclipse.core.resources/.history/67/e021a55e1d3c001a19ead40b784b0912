@@ -89,13 +89,7 @@ void I2CProcessAndSendPendingPacket (void) {
 }
 
 void handleDAQConfigCommand(uint8_t command) {
-	switch(command) {
-		case(0x00):
-			bnoEnabled = CyTrue;
-			break;
-		default:
-			break;
-	}
+
 }
 CyU3PReturnStatus_t readBNO(void) {
 	CyU3PReturnStatus_t apiRetStatus = CY_U3P_SUCCESS;

@@ -91,7 +91,7 @@ void I2CProcessAndSendPendingPacket (void) {
 void handleDAQConfigCommand(uint8_t command) {
 	switch(command) {
 		case(0x00):
-			bnoEnabled = CyTrue;
+			bnoEnabled= CyTrue;
 			break;
 		default:
 			break;

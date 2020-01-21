@@ -47,7 +47,8 @@ void I2CProcessAndSendPendingPacket (void) {
 	while (I2CNumPacketsPending > 0) {
 		if (pendingI2CPacket[I2CPacketNextReadIdx][0] == 0xFE) {
 			// User for configuring DAQ and not as I2C pass through
-			handleDAQConfigCommand(pendingI2CPacket[I2CPacketNextReadIdx][2]);
+			handleInteralCommand(pendingI2CPacket[I2CPacketNextReadIdx][2]);
+
 		}
 		else {
 			if (pendingI2CPacket[I2CPacketNextReadIdx][0]&0x01) {
@@ -88,15 +89,6 @@ void I2CProcessAndSendPendingPacket (void) {
 	}
 }
 
-void handleDAQConfigCommand(uint8_t command) {
-	switch(command) {
-		case(0x00):
-			bnoEnabled = CyTrue;
-			break;
-		default:
-			break;
-	}
-}
 CyU3PReturnStatus_t readBNO(void) {
 	CyU3PReturnStatus_t apiRetStatus = CY_U3P_SUCCESS;
 	CyU3PI2cPreamble_t preamble;
