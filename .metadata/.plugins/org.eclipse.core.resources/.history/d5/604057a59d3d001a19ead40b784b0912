@@ -1312,7 +1312,6 @@ UVCHandleProcessingUnitRqts (
                     	CyU3PUsbSendEP0Data (2, (uint8_t *)glEp0Buffer);
                     }
                     else if (wValue == CY_FX_UVC_PU_GAMMA_CONTROL) {
-                    	// Handles external trigger
                     	CyU3PGpioSimpleGetValue(TRIG_RECORD_EXT,&GPIOState);
 						glEp0Buffer[0] = GPIOState;
 						glEp0Buffer[1] = 0;

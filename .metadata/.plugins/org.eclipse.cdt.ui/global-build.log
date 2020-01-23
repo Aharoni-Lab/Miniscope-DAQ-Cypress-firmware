@@ -963,3 +963,42 @@ Note: 256 bytes of interrupt vector code have been removed from the image.
       Use the "-vectorload yes" option to retain this code.
 
 ' '
+21:06:57 **** Incremental Build of configuration Release for project Minisceop_DAQ ****
+cs-make all 
+'Building file: ../cyfx_gcc_startup.S'
+'Invoking: Cross ARM GNU Assembler'
+arm-none-eabi-gcc -mcpu=arm926ej-s -marm -mthumb-interwork -O3 -fmessage-length=0 -fsigned-char -ffunction-sections -fdata-sections -Wall  -g -x assembler-with-cpp -I"C:\Program Files (x86)\Cypress\EZ-USB FX3 SDK\1.3\/fw_lib/1_3_3/inc" -MMD -MP -MF"cyfx_gcc_startup.d" -MT"cyfx_gcc_startup.o" -c -o "cyfx_gcc_startup.o" "../cyfx_gcc_startup.S"
+'Finished building: ../cyfx_gcc_startup.S'
+' '
+'Building file: ../cyfxtx.c'
+'Invoking: Cross ARM C Compiler'
+arm-none-eabi-gcc -mcpu=arm926ej-s -marm -mthumb-interwork -O3 -fmessage-length=0 -fsigned-char -ffunction-sections -fdata-sections -Wall  -g -D__CYU3P_TX__=1 -I"C:\Program Files (x86)\Cypress\EZ-USB FX3 SDK\1.3\/fw_lib/1_3_3/inc" -std=gnu11 -MMD -MP -MF"cyfxtx.d" -MT"cyfxtx.o" -c -o "cyfxtx.o" "../cyfxtx.c"
+'Finished building: ../cyfxtx.c'
+' '
+'Building file: ../cyfxuvcdscr.c'
+'Invoking: Cross ARM C Compiler'
+arm-none-eabi-gcc -mcpu=arm926ej-s -marm -mthumb-interwork -O3 -fmessage-length=0 -fsigned-char -ffunction-sections -fdata-sections -Wall  -g -D__CYU3P_TX__=1 -I"C:\Program Files (x86)\Cypress\EZ-USB FX3 SDK\1.3\/fw_lib/1_3_3/inc" -std=gnu11 -MMD -MP -MF"cyfxuvcdscr.d" -MT"cyfxuvcdscr.o" -c -o "cyfxuvcdscr.o" "../cyfxuvcdscr.c"
+'Finished building: ../cyfxuvcdscr.c'
+' '
+'Building file: ../miniscope.c'
+'Invoking: Cross ARM C Compiler'
+arm-none-eabi-gcc -mcpu=arm926ej-s -marm -mthumb-interwork -O3 -fmessage-length=0 -fsigned-char -ffunction-sections -fdata-sections -Wall  -g -D__CYU3P_TX__=1 -I"C:\Program Files (x86)\Cypress\EZ-USB FX3 SDK\1.3\/fw_lib/1_3_3/inc" -std=gnu11 -MMD -MP -MF"miniscope.d" -MT"miniscope.o" -c -o "miniscope.o" "../miniscope.c"
+'Finished building: ../miniscope.c'
+' '
+'Building file: ../uvc.c'
+'Invoking: Cross ARM C Compiler'
+arm-none-eabi-gcc -mcpu=arm926ej-s -marm -mthumb-interwork -O3 -fmessage-length=0 -fsigned-char -ffunction-sections -fdata-sections -Wall  -g -D__CYU3P_TX__=1 -I"C:\Program Files (x86)\Cypress\EZ-USB FX3 SDK\1.3\/fw_lib/1_3_3/inc" -std=gnu11 -MMD -MP -MF"uvc.d" -MT"uvc.o" -c -o "uvc.o" "../uvc.c"
+'Finished building: ../uvc.c'
+' '
+'Building target: Minisceop_DAQ.elf'
+'Invoking: Cross ARM C Linker'
+arm-none-eabi-gcc -mcpu=arm926ej-s -marm -mthumb-interwork -O3 -fmessage-length=0 -fsigned-char -ffunction-sections -fdata-sections -Wall  -g -T "C:\Program Files (x86)\Cypress\EZ-USB FX3 SDK\1.3\/fw_build/fx3_fw/fx3.ld" -nostartfiles -Xlinker --gc-sections -L"C:\Program Files (x86)\Cypress\EZ-USB FX3 SDK\1.3\/fw_lib/1_3_3/fx3_release" -L"C:\Program Files (x86)\Cypress\EZ-USB FX3 SDK\1.3\ARM GCC\/lib/gcc/arm-none-eabi/4.8.1" -L"C:\Program Files (x86)\Cypress\EZ-USB FX3 SDK\1.3\ARM GCC\/arm-none-eabi/lib" -Wl,-Map,"Minisceop_DAQ.map" -Wl,-d  -Wl,--no-wchar-size-warning -Wl,--entry,CyU3PFirmwareEntry -o "Minisceop_DAQ.elf"  ./cyfx_gcc_startup.o ./cyfxtx.o ./cyfxuvcdscr.o ./miniscope.o ./uvc.o   -lcyu3lpp -lcyfxapi -lcyu3threadx -lc -lgcc
+'Finished building target: Minisceop_DAQ.elf'
+' '
+cs-make --no-print-directory post-build
+'Generate boot-loadable binary image'
+'C:\Program Files (x86)\Cypress\EZ-USB FX3 SDK\1.3\/util/elf2img/elf2img.exe' -i Minisceop_DAQ.elf -o Minisceop_DAQ.img -i2cconf 0x1E
+Note: 256 bytes of interrupt vector code have been removed from the image.
+      Use the "-vectorload yes" option to retain this code.
+
+' '

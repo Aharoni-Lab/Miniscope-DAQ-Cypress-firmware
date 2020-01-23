@@ -1279,7 +1279,6 @@ UVCHandleProcessingUnitRqts (
 {
     CyU3PReturnStatus_t apiRetStatus = CY_U3P_SUCCESS;
     uint16_t readCount;
-    CyBool_t GPIOState;
 
     switch (wValue)
     {
@@ -1311,13 +1310,6 @@ UVCHandleProcessingUnitRqts (
 						glEp0Buffer[1] = CY_U3P_DWORD_GET_BYTE1(dFrameNumber);
                     	CyU3PUsbSendEP0Data (2, (uint8_t *)glEp0Buffer);
                     }
-                    else if (wValue == CY_FX_UVC_PU_GAMMA_CONTROL) {
-                    	// Handles external trigger
-                    	CyU3PGpioSimpleGetValue(TRIG_RECORD_EXT,&GPIOState);
-						glEp0Buffer[0] = GPIOState;
-						glEp0Buffer[1] = 0;
-						CyU3PUsbSendEP0Data (2, (uint8_t *)glEp0Buffer);
-					}
                     else {
                     	// Not used
                     	glEp0Buffer[0] = 0;
