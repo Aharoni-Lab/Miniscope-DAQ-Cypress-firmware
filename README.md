@@ -1,5 +1,7 @@
 # Miniscope-DAQ-Cypress-firmware
-Firmware for Cypress USB Host Controller DAQ
+Firmware for the UCLA Miniscope DAQ Box.
+
+The Minsicope DAQ Firmware has been rewritten to both support the new [Miniscope DAQ Software](https://github.com/Aharoni-Lab/Miniscope-DAQ-QT-Software) and to increase its stability and performance. It is based off the [Cypress AN75779](https://www.cypress.com/documentation/application-notes/an75779-how-implement-image-sensor-interface-using-ez-usb-fx3-usb) UVC example project where the generic camera interface has been replaced with a flexible Minsicope interface. This firmware will only work with the new Miniscope Software so make sure to use the latet software release.
 
 ## Setting up the source code and building the firmware
 
