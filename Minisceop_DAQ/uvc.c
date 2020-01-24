@@ -528,7 +528,7 @@ CyFxUvcApplnDmaCallback (
         	if (bnoEnabled)
         		readBNO();
         	// Toggle GPO output sync signal
-        	if (recording == 1) {
+        	if (recording == CyTrue) {
 				CyU3PReturnStatus_t status;
 				CyBool_t pinState;
 				CyU3PGpioGetValue(FRAME_OUT,&pinState);
@@ -1378,6 +1378,9 @@ UVCHandleProcessingUnitRqts (
 								I2CNumPacketsPending++;
 							}
 						}
+                    	else if (wValue == CY_FX_UVC_PU_SATURATION_CONTROL) {
+                    		recording = ((glEp0Buffer[0]&RECORD_STATUS_MASK) == 1);
+                    	}
                     	else {
                     		// Not used
                     	}

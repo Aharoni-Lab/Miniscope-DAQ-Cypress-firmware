@@ -9,8 +9,8 @@
 #define DEFINITIONS_H_
 
 /* ========= Pick your image sensor for the list below ====== */
-//#define MINISCOPE_V4_606X606
-#define MINISCOPE_V3_752X480
+#define MINISCOPE_V4_606X606
+//#define MINISCOPE_V3_752X480
 /* ========================================================== */
 
 //Sets specs of image sensor being use sensors is being used.
