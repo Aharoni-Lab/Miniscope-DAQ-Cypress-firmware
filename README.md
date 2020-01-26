@@ -39,7 +39,7 @@ With the DAQ's jumpers configured correctly and the DAQ plugged in over USB, it 
 
 ### Step 4: Select "Cypress USB Bootloader" then "Program" then "I2C EEPROM" and then select the firmware .img file you want to upload
 
-TODO: Add gif
+![](img/Control_Center.gif)
 
 ### Step 5: Wait about 10 seconds for the message at the bottom of the Cypress COntrol Center to say the the programming was successful
 
