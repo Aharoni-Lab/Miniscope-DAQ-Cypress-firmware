@@ -9,9 +9,7 @@
 #define DEFINITIONS_H_
 
 /* ========= Pick your image sensor for the list below ====== */
-//#define MINISCOPE_V4_606X606
-#define SIMINISCOPE_2592_1944
-//#define SIMINISCOPE_2XBIN_1296_972
+#define MINISCOPE_V4_606X606
 //#define MINISCOPE_V3_752X480
 /* ========================================================== */
 
@@ -21,18 +19,6 @@
 	#define Y_ASPECT_RATIO	1
 	#define WIDTH			608
 	#define HEIGHT			608
-#endif
-#ifdef SIMINISCOPE_2592_1944
-	#define X_ASPECT_RATIO	0x04
-	#define Y_ASPECT_RATIO	0x03
-	#define WIDTH			2592
-	#define HEIGHT			1944
-#endif
-#ifdef SIMINISCOPE_2XBIN_1296_972
-	#define X_ASPECT_RATIO	0x04
-	#define Y_ASPECT_RATIO	0x03
-	#define WIDTH			1296
-	#define HEIGHT			972
 #endif
 #ifdef MINISCOPE_V3_752X480
 	#define X_ASPECT_RATIO	0x2F
