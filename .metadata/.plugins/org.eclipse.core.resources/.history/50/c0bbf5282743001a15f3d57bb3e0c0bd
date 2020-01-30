@@ -9,8 +9,8 @@
 #define DEFINITIONS_H_
 
 /* ========= Pick your image sensor for the list below ====== */
-#define MINISCOPE_V4_606X606
-//#define SIMINISCOPE_2592_1944
+//#define MINISCOPE_V4_606X606
+#define SIMINISCOPE_2592_1944
 //#define SIMINISCOPE_2XBIN_1296_972
 //#define MINISCOPE_V3_752X480
 /* ========================================================== */

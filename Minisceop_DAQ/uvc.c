@@ -661,7 +661,7 @@ CyFxUVCApplnI2CInit (void)
     /*  Set I2C Configuration */
     // MINISCOPE
     // TODO: Consider speeding up i2c
-    i2cConfig.bitRate    = 100000;      /*  100 KHz */
+    i2cConfig.bitRate    = 400000;      /*  400 KHz */
     i2cConfig.isDma      = CyFalse;
     i2cConfig.busTimeout = 0xffffffffU;
     i2cConfig.dmaTimeout = 0xffff;
@@ -1318,6 +1318,20 @@ UVCHandleProcessingUnitRqts (
 						glEp0Buffer[1] = 0;
 						CyU3PUsbSendEP0Data (2, (uint8_t *)glEp0Buffer);
 					}
+                    else if (wValue == CY_FX_UVC_PU_SHARPNESS_CONTROL) {
+                    	// Checks the calibration status of the BNO
+                    	CyU3PI2cPreamble_t preamble;
+
+						preamble.buffer[0] = BNO055_ADDR & 0xFE; /*  Mask out the transfer type bit. */
+						preamble.buffer[1] = 0x35;
+						preamble.buffer[2] = BNO055_ADDR | 0x01;
+						preamble.length    = 3;
+						preamble.ctrlMask  = 0x0002;                                /*  Send start bit after third byte of preamble. */
+
+						CyU3PI2cReceiveBytes (&preamble, glEp0Buffer, 1, 0);
+						glEp0Buffer[1] = 0;
+						CyU3PUsbSendEP0Data (2, (uint8_t *)glEp0Buffer);
+                    }
                     else {
                     	// Not used
                     	glEp0Buffer[0] = 0;
