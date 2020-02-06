@@ -41,6 +41,9 @@ With the DAQ's jumpers configured correctly and the DAQ plugged in over USB, it 
 
 ![](img/Control_Center.gif)
 
+* For use with the V4 Miniscope, you want to select "Minisceop_DAQ_V4_608X608_128K_EEPROM.img".
+* For use with the V3 Miniscope, you want to select "Minisceop_DAQ_V3_752x480_128K_EEPROM.img".
+
 ### Step 5: Wait about 10 seconds for the message at the bottom of the Cypress COntrol Center to say the the programming was successful
 
 TODO: Add image
