@@ -1,5 +1,15 @@
-15:43:08 **** Incremental Build of configuration Release for project Minisceop_DAQ ****
+20:18:20 **** Incremental Build of configuration Release for project Minisceop_DAQ ****
 cs-make all 
+'Building file: ../cyfxuvcdscr.c'
+'Invoking: Cross ARM C Compiler'
+arm-none-eabi-gcc -mcpu=arm926ej-s -marm -mthumb-interwork -O3 -fmessage-length=0 -fsigned-char -ffunction-sections -fdata-sections -Wall  -g -D__CYU3P_TX__=1 -I"C:\Program Files (x86)\Cypress\EZ-USB FX3 SDK\1.3\/fw_lib/1_3_3/inc" -std=gnu11 -MMD -MP -MF"cyfxuvcdscr.d" -MT"cyfxuvcdscr.o" -c -o "cyfxuvcdscr.o" "../cyfxuvcdscr.c"
+'Finished building: ../cyfxuvcdscr.c'
+' '
+'Building file: ../miniscope.c'
+'Invoking: Cross ARM C Compiler'
+arm-none-eabi-gcc -mcpu=arm926ej-s -marm -mthumb-interwork -O3 -fmessage-length=0 -fsigned-char -ffunction-sections -fdata-sections -Wall  -g -D__CYU3P_TX__=1 -I"C:\Program Files (x86)\Cypress\EZ-USB FX3 SDK\1.3\/fw_lib/1_3_3/inc" -std=gnu11 -MMD -MP -MF"miniscope.d" -MT"miniscope.o" -c -o "miniscope.o" "../miniscope.c"
+'Finished building: ../miniscope.c'
+' '
 'Building file: ../uvc.c'
 'Invoking: Cross ARM C Compiler'
 arm-none-eabi-gcc -mcpu=arm926ej-s -marm -mthumb-interwork -O3 -fmessage-length=0 -fsigned-char -ffunction-sections -fdata-sections -Wall  -g -D__CYU3P_TX__=1 -I"C:\Program Files (x86)\Cypress\EZ-USB FX3 SDK\1.3\/fw_lib/1_3_3/inc" -std=gnu11 -MMD -MP -MF"uvc.d" -MT"uvc.o" -c -o "uvc.o" "../uvc.c"
@@ -18,5 +28,5 @@ Note: 256 bytes of interrupt vector code have been removed from the image.
 
 ' '
 
-15:43:12 Build Finished (took 4s.772ms)
+20:18:22 Build Finished (took 2s.553ms)
 
