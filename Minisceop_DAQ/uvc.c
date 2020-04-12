@@ -1339,14 +1339,26 @@ UVCHandleProcessingUnitRqts (
 						CyU3PUsbSendEP0Data (2, (uint8_t *)glEp0Buffer);
                     }
                     break;
-                case CY_FX_USB_UVC_GET_MIN_REQ: /* Minimum brightness = 0. */
-                    glEp0Buffer[0] = 0;
-                    glEp0Buffer[1] = 0;
+                case CY_FX_USB_UVC_GET_MIN_REQ:
+                    if ((wValue == CY_FX_UVC_PU_HUE_CONTROL) || (wValue == CY_FX_UVC_PU_BRIGHTNESS_CONTROL)) {
+                        /* these values are signed, so we sent the lower signed integer limit */
+                        glEp0Buffer[0] = 0x00;
+                        glEp0Buffer[1] = 0x80;
+		    } else {
+                       glEp0Buffer[0] = 0;
+                       glEp0Buffer[1] = 0;
+		    }
                     CyU3PUsbSendEP0Data (2, (uint8_t *)glEp0Buffer);
                     break;
-                case CY_FX_USB_UVC_GET_MAX_REQ: /* Maximum brightness = 255. */
-                    glEp0Buffer[0] = 255;
-                    glEp0Buffer[1] = 255;
+                case CY_FX_USB_UVC_GET_MAX_REQ:
+                    if ((wValue == CY_FX_UVC_PU_HUE_CONTROL) || (wValue == CY_FX_UVC_PU_BRIGHTNESS_CONTROL)) {
+                        /* these values are signed, so we sent the upper signed integer limit */
+                        glEp0Buffer[0] = 0xFF;
+                        glEp0Buffer[1] = 0x7F;
+		    } else {
+                       glEp0Buffer[0] = 0xFF;
+                       glEp0Buffer[1] = 0xFF;
+		    }
                     CyU3PUsbSendEP0Data (2, (uint8_t *)glEp0Buffer);
                     break;
                 case CY_FX_USB_UVC_GET_RES_REQ: /* Resolution = 1. */
