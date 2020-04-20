@@ -81,6 +81,7 @@ static CyU3PThread   uvcAppThread;                      /* UVC video streaming t
 static CyU3PThread   uvcAppEP0Thread;                   /* UVC control request handling thread. */
 static CyU3PEvent    glFxUVCEvent;                      /* Event group used to signal threads. */
 CyU3PDmaMultiChannel glChHandleUVCStream;               /* DMA multi-channel handle. */
+I2CPacketQueue       i2cPQueue;                         /* pending I2C packet ringbuffer */
 
 /* Current UVC control request fields. See USB specification for definition. */
 uint8_t  bmReqType, bRequest;                           /* bmReqType and bRequest fields. */
@@ -522,8 +523,10 @@ CyFxUvcApplnDmaCallback (
         	// Run code at end of each frame
         	dFrameNumber++;
         	currentTime = CyU3PGetTime();
+
         	// Send I2C packets
-        	I2CProcessAndSendPendingPacket();
+        	I2CProcessAndSendPendingPacket(&i2cPQueue);
+
         	// Read BNO
         	if (bnoEnabled)
         		readBNO();
@@ -1274,8 +1277,7 @@ UVCAppThread_Entry (
  * Handler for control requests addressed to the Processing Unit.
  */
 static void
-UVCHandleProcessingUnitRqts (
-        void)
+UVCHandleProcessingUnitRqts (void)
 {
     CyU3PReturnStatus_t apiRetStatus = CY_U3P_SUCCESS;
     uint16_t readCount;
@@ -1290,14 +1292,15 @@ UVCHandleProcessingUnitRqts (
         case CY_FX_UVC_PU_CONTRAST_CONTROL:
         case CY_FX_UVC_PU_GAMMA_CONTROL:
         case CY_FX_UVC_PU_SHARPNESS_CONTROL:
+
             switch (bRequest)
             {
-                case CY_FX_USB_UVC_GET_LEN_REQ: /* Length of brightness data = 2 byte. */
+                case CY_FX_USB_UVC_GET_LEN_REQ: /* Length of data = 2 byte. */
                     glEp0Buffer[0] = 2;
                     glEp0Buffer[1] = 0;
                     CyU3PUsbSendEP0Data (2, (uint8_t *)glEp0Buffer);
                     break;
-                case CY_FX_USB_UVC_GET_CUR_REQ: /* Current brightness value. */
+                case CY_FX_USB_UVC_GET_CUR_REQ: /* Current value. */
                     if (wValue == CY_FX_UVC_PU_SATURATION_CONTROL)
 						CyU3PUsbSendEP0Data (2, &quatBNO[0]);
                     else if (wValue == CY_FX_UVC_PU_HUE_CONTROL)
@@ -1366,50 +1369,53 @@ UVCHandleProcessingUnitRqts (
                     glEp0Buffer[1] = 0;
                     CyU3PUsbSendEP0Data (2, (uint8_t *)glEp0Buffer);
                     break;
-                case CY_FX_USB_UVC_GET_INFO_REQ: /* Both GET and SET requests are supported, auto modes not supported */
+                case CY_FX_USB_UVC_GET_INFO_REQ:
                     glEp0Buffer[0] = 3;
                     glEp0Buffer[1] = 0;
                     CyU3PUsbSendEP0Data (2, (uint8_t *)glEp0Buffer);
                     break;
-                case CY_FX_USB_UVC_GET_DEF_REQ: /* Default brightness value = 55. */
+                case CY_FX_USB_UVC_GET_DEF_REQ:
                     glEp0Buffer[0] = 0;
                     glEp0Buffer[1] = 0;
                     CyU3PUsbSendEP0Data (2, (uint8_t *)glEp0Buffer);
                     break;
-                case CY_FX_USB_UVC_SET_CUR_REQ: /* Update brightness value. */
+                case CY_FX_USB_UVC_SET_CUR_REQ:
                     apiRetStatus = CyU3PUsbGetEP0Data (CY_FX_UVC_MAX_PROBE_SETTING_ALIGNED,
                             glEp0Buffer, &readCount);
-                    if (apiRetStatus == CY_U3P_SUCCESS)
-                    {
-                    	if (wValue == CY_FX_UVC_PU_CONTRAST_CONTROL) {
-                    		I2CPacketState = 0;
-							pendingI2CPacket[I2CPacketNextWriteIdx][0] = (glEp0Buffer[0]);
-							pendingI2CPacket[I2CPacketNextWriteIdx][1] = (glEp0Buffer[1]);
-							I2CPacketState = 2;
-                    	}
-                    	else if (wValue == CY_FX_UVC_PU_GAMMA_CONTROL) {
-                    		if (I2CPacketState == 2) {
-								pendingI2CPacket[I2CPacketNextWriteIdx][2] = (glEp0Buffer[0]);
-								pendingI2CPacket[I2CPacketNextWriteIdx][3] = (glEp0Buffer[1]);
-								I2CPacketState = 4;
-							}
-                    	}
-                    	else if (wValue == CY_FX_UVC_PU_SHARPNESS_CONTROL) {
-                    		if (I2CPacketState == 4) {
-								pendingI2CPacket[I2CPacketNextWriteIdx][4] = (glEp0Buffer[0]);
-								pendingI2CPacket[I2CPacketNextWriteIdx][5] = (glEp0Buffer[1]);
-								I2CPacketState = 6;
 
-								I2CPacketNextWriteIdx = (I2CPacketNextWriteIdx + 1) % I2C_PACKET_BUFFER_SIZE;
-								I2CNumPacketsPending++;
-							}
-						}
-                    	else if (wValue == CY_FX_UVC_PU_SATURATION_CONTROL) {
-                    		recording = ((glEp0Buffer[0]&RECORD_STATUS_MASK) == 1);
-                    	}
-                    	else {
-                    		// Not used
-                    	}
+                    if (apiRetStatus == CY_U3P_SUCCESS) {
+                        i2c_packet_queue_lock (&i2cPQueue);
+
+                        if (wValue == CY_FX_UVC_PU_CONTRAST_CONTROL) {
+                            i2cPQueue.buffer[i2cPQueue.idxWR][0] = glEp0Buffer[0];
+                            i2cPQueue.buffer[i2cPQueue.idxWR][1] = glEp0Buffer[1];
+
+                            /* we use the first packet part as "reset" for the whole command */
+                            i2cPQueue.curPacketParts = I2C_PACKET_PART_NONE;
+                            /* now actually set the packet part */
+                            i2c_packet_queue_wrnext_if_complete(&i2cPQueue, I2C_PACKET_PART_HEAD);
+                        }
+
+                        else if (wValue == CY_FX_UVC_PU_GAMMA_CONTROL) {
+                            i2cPQueue.buffer[i2cPQueue.idxWR][2] = glEp0Buffer[0];
+                            i2cPQueue.buffer[i2cPQueue.idxWR][3] = glEp0Buffer[1];
+
+                            i2c_packet_queue_wrnext_if_complete(&i2cPQueue, I2C_PACKET_PART_BODY);
+                        }
+
+                        else if (wValue == CY_FX_UVC_PU_SHARPNESS_CONTROL) {
+                            i2cPQueue.buffer[i2cPQueue.idxWR][4] = glEp0Buffer[0];
+                            i2cPQueue.buffer[i2cPQueue.idxWR][5] = glEp0Buffer[1];
+
+                            i2c_packet_queue_wrnext_if_complete(&i2cPQueue, I2C_PACKET_PART_TAIL);
+                        }
+
+                        else if (wValue == CY_FX_UVC_PU_SATURATION_CONTROL) {
+                            recording = ((glEp0Buffer[0]&RECORD_STATUS_MASK) == 1);
+                        }
+
+                        /* release the queue mutex */
+                        i2c_packet_queue_unlock (&i2cPQueue);
                     }
 
                     break;
@@ -1804,8 +1810,7 @@ UVCHandleVideoStreamingRqts (
  * Entry function for the UVC control request processing thread.
  */
 void
-UVCAppEP0Thread_Entry (
-        uint32_t input)
+UVCAppEP0Thread_Entry (uint32_t input)
 {
     uint32_t eventMask = (CY_FX_UVC_VIDEO_CONTROL_REQUEST_EVENT | CY_FX_UVC_VIDEO_STREAM_REQUEST_EVENT);
     uint32_t eventFlag;
@@ -1959,8 +1964,7 @@ UVCAppEP0Thread_Entry (
  * The application specific threads and other OS resources are created and initialized here.
  */
 void
-CyFxApplicationDefine (
-        void)
+CyFxApplicationDefine (void)
 {
     void *ptr1, *ptr2;
     uint32_t retThrdCreate;
@@ -1969,6 +1973,10 @@ CyFxApplicationDefine (
     ptr1 = CyU3PMemAlloc (UVC_APP_THREAD_STACK);
     ptr2 = CyU3PMemAlloc (UVC_APP_THREAD_STACK);
     if ((ptr1 == 0) || (ptr2 == 0))
+        goto fatalErrorHandler;
+
+    /* initialize the pending I2C packet queue */
+    if (i2c_packet_queue_init (&i2cPQueue) != 0)
         goto fatalErrorHandler;
 
     /* Create the UVC application thread. */
@@ -2017,8 +2025,7 @@ fatalErrorHandler:
  * the ThreadX RTOS here.
  */
 int
-main (
-        void)
+main (void)
 {
     CyU3PReturnStatus_t apiRetStatus;
     CyU3PIoMatrixConfig_t io_cfg;
