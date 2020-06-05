@@ -386,7 +386,7 @@ const uint8_t CyFxUSBHSConfigDscr[] =
                                          * D18: Contrast, Auto
                                          * D19 � D23: Reserved. Set to zero.
                                          */
-        0x01,0x00,0x00,                 /* bmControls field of processing unit: Brightness control supported */
+        0x3F,0x02,0x00,                 /* bmControls field of processing unit, Supported: Brightness; Contrast; Hue; Saturation; Sharpness; Gamma; Gain */
         0x00,                           /* String desc index : Not used */
 #ifndef FX3_UVC_1_0_SUPPORT
         0x00,                           /* Analog Video Standards Supported: None */
@@ -716,7 +716,7 @@ const uint8_t CyFxUSBSSConfigDscr[] =
         0x01,                           /* Source ID : 1 : Connected to input terminal */
         0x00,0x40,                      /* Digital multiplier */
         0x03,                           /* Size of controls field for this terminal : 3 bytes */
-        0xFF,0x02,0x00,                 /* bmControls field of processing unit: Brightness control supported */
+        0x3F,0x02,0x00,                 /* bmControls field of processing unit, Supported: Brightness; Contrast; Hue; Saturation; Sharpness; Gamma; Gain */
         0x00,                           /* String desc index : Not used */
 #ifndef FX3_UVC_1_0_SUPPORT
         0x00,                           /* Analog Video Standards Supported: None */
@@ -754,7 +754,7 @@ const uint8_t CyFxUSBSSConfigDscr[] =
         0x01,                           /* Number of input pins in this terminal */
         0x02,                           /* Source ID : 2 : Connected to Proc Unit */
         0x03,                           /* Size of controls field for this terminal : 3 bytes */
-        0xFF,0x02,0x00,                 /* No controls supported */ //MINISCOPE: Maybe can be set to all 0x00
+        0x3F,0x02,0x00,                 /* Supported controls: Brightness; Contrast; Hue; Saturation; Sharpness; Gamma; Gain */
         0x00,                           /* String desc index : Not used */
 #endif
 
