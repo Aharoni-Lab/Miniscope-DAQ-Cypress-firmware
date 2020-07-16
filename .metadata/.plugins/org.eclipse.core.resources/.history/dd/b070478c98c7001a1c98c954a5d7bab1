@@ -101,6 +101,7 @@ CyU3PReturnStatus_t readBNO(void) {
 	CyU3PReturnStatus_t apiRetStatus = CY_U3P_SUCCESS;
 	CyU3PI2cPreamble_t preamble;
 
+	uint8_t tempQuatBNO[8];
 
 	preamble.buffer[0] = BNO055_ADDR & 0xFE; /*  Mask out the transfer type bit. */
 	preamble.buffer[1] = 0x20; // We can use 0x00 here for testing I2C communication stability

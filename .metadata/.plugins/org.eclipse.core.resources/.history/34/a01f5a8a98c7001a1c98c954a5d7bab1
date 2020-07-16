@@ -101,6 +101,7 @@ CyU3PReturnStatus_t readBNO(void) {
 	CyU3PReturnStatus_t apiRetStatus = CY_U3P_SUCCESS;
 	CyU3PI2cPreamble_t preamble;
 
+	uint8_t tempQuatBNO[8];
 
 	preamble.buffer[0] = BNO055_ADDR & 0xFE; /*  Mask out the transfer type bit. */
 	preamble.buffer[1] = 0x20; // We can use 0x00 here for testing I2C communication stability
@@ -108,9 +109,18 @@ CyU3PReturnStatus_t readBNO(void) {
 	preamble.length    = 3;
 	preamble.ctrlMask  = 0x0002;                                /*  Send start bit after third byte of preamble. */
 
-	apiRetStatus = CyU3PI2cReceiveBytes (&preamble, (uint8_t *)quatBNO, 8, 0);
+	apiRetStatus = CyU3PI2cReceiveBytes (&preamble, (uint8_t *)tempQuatBNO, 8, 0);
 
 	if (apiRetStatus == CY_U3P_SUCCESS) {
+		// tempQuatBNO is used here since the I2C transfer might be locking access to the array used in the transfer.
+			quatBNO[0] = tempQuatBNO[0];
+			quatBNO[1] = tempQuatBNO[1];
+			quatBNO[2] = tempQuatBNO[2];
+			quatBNO[3] = tempQuatBNO[3];
+			quatBNO[4] = tempQuatBNO[4];
+			quatBNO[5] = tempQuatBNO[5];
+			quatBNO[6] = tempQuatBNO[6];
+			quatBNO[7] = tempQuatBNO[7];
 	        CyU3PBusyWait (200); //in us
 	}
 

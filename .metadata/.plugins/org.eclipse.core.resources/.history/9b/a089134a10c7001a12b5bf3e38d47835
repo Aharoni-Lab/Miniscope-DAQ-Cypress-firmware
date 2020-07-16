@@ -268,7 +268,7 @@ CyFxUVCApplnAbortHandler (
         void)
 {
     /* Set Video Stream Abort Event */
-    CyU3PEventSet (&glFxUVCEvent, CY_FX_UVC_STREAM_ABORT_EVENT, CYU3P_EVENT_OR);
+    CyU3PEventSet (&glFxUVCEvent, CY_FX_UVC_STREAM_ABORT_EVENT, CYU3P_EVENT_OR) ;
 }
 
 /* This is the Callback function to handle the USB Events */

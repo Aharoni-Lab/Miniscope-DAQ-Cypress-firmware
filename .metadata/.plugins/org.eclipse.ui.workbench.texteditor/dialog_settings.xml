@@ -1,28 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog_dialogBounds">
-		<item value="353" key="DIALOG_WIDTH"/>
-		<item value="604" key="DIALOG_Y_ORIGIN"/>
-		<item value="513" key="DIALOG_HEIGHT"/>
-		<item value="387" key="DIALOG_X_ORIGIN"/>
-		<item value="1|Segoe UI|9.0|0|WINDOWS|1|-18|0|0|0|400|0|0|0|1|0|0|5|0|Segoe UI" key="DIALOG_FONT_NAME"/>
+		<item value="453" key="DIALOG_WIDTH"/>
+		<item value="876" key="DIALOG_Y_ORIGIN"/>
+		<item value="1668" key="DIALOG_X_ORIGIN"/>
+		<item value="612" key="DIALOG_HEIGHT"/>
+		<item value="1|Segoe UI|9.0|0|WINDOWS|1|-24|0|0|0|400|0|0|0|1|0|0|0|0|Segoe UI" key="DIALOG_FONT_NAME"/>
 	</section>
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
 		<item value="true" key="wrap"/>
-		<item value="false" key="isRegEx"/>
 		<item value="false" key="casesensitive"/>
+		<item value="false" key="isRegEx"/>
 		<item value="false" key="incremental"/>
 		<item value="false" key="wholeword"/>
-		<item value="" key="selection"/>
+		<item value="TRIG_RECORD_EXT" key="selection"/>
 		<list key="findhistory">
-			<item value="MINISCOPE_V4_606X606"/>
-			<item value="recording"/>
-			<item value="FRAME_OUT"/>
-			<item value="OUT"/>
 			<item value="TRIG_RECORD_EXT"/>
-			<item value="todo"/>
-			<item value="switch"/>
-			<item value="dframeNumber"/>
+			<item value="CyU3PI2cReceiveBytes"/>
+			<item value="0x30"/>
+			<item value="0x35"/>
+			<item value="bnoEnabled"/>
+			<item value="readMC"/>
+			<item value="read"/>
+			<item value="BNO"/>
 		</list>
 		<list key="replacehistory">
 		</list>

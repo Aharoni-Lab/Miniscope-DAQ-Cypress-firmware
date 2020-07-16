@@ -43,4 +43,6 @@ extern void handleDAQConfigCommand (uint8_t);
 
 extern CyU3PReturnStatus_t readBNO(void);
 
+extern CyU3PReturnStatus_t readMCUPID_VID(void);
+
 #endif /* MINISCOPE_H_ */
