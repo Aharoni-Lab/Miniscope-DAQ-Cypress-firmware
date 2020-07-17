@@ -26,6 +26,8 @@
  */
 #include "definitions.h"
 #include "uvc.h"
+#include <cyu3utils.h>
+
 
 /* Standard Device Descriptor */
 const uint8_t CyFxUSBDeviceDscr[] =
@@ -605,14 +607,15 @@ const uint8_t CyFxUSBSSConfigDscr[] =
 #ifdef FX3_UVC_1_0_SUPPORT
         0xD9,0x00,                      /* Length of this descriptor and all sub descriptors */
 #else
-        0xDA,0x00,                      /* Length of this descriptor and all sub descriptors */
+        SS_TOTAL_SIZE_CONFIG_DSCR_L,
+        SS_TOTAL_SIZE_CONFIG_DSCR_H,// 0xDA,0x00,   /* Length of this descriptor and all sub descriptors */ //TODO: Change this to include new frames
 #endif
         0x02,                           /* Number of interfaces */
 #endif
         0x01,                           /* Configuration number */
         0x00,                           /* Configuration string index */
         0x80,                           /* Config characteristics - Bus powered */
-        0x32,                           /* Max power consumption of device (in 8mA unit) : 400mA */
+        0x32,                           /* Max power consumption of device (in 8mA unit) : 400mA */ //TODO: possibly increase the max current to USB3 max of up to 900mA
 
         /* Interface Association Descriptor */
         0x08,                           /* Descriptor Size */
@@ -807,11 +810,12 @@ const uint8_t CyFxUSBSSConfigDscr[] =
         0x24,                           /* Class-specific VS I/f Type */
         0x01,                           /* Descriptotor Subtype : Input Header */
         0x01,                           /* 1 format desciptor follows */
-        0x47,0x00,                      /* Total size of Class specific VS descr */
+        SS_FC_TOTAL_SIZE_CLASS_DSCR_L,	/* Total size of Class specific VS descr Low*/
+        SS_FC_TOTAL_SIZE_CLASS_DSCR_H,  /* Total size of Class specific VS descr High*/
         CY_FX_EP_BULK_VIDEO,            /* EP address for BULK video data */
         0x00,                           /* No dynamic format change supported */
         0x04,                           /* Output terminal ID : 4 */
-        0x01,                           /* Still image capture method 1 supported */
+        0x01,                           /* Still image capture method 1 supported */ //TODO: maybe change this to 0?
         0x00,                           /* Hardware trigger NOT supported */
         0x00,                           /* Hardware to initiate still image capture NOT supported */
         0x01,                           /* Size of controls field : 1 byte */
@@ -822,32 +826,109 @@ const uint8_t CyFxUSBSSConfigDscr[] =
         0x24,                           /* Class-specific VS I/f Type */
         0x04,                           /* Subtype : uncompressed format I/F */
         0x01,                           /* Format desciptor index */
-        0x01,                           /* Number of frame descriptor followed */
+        SS_FC_UYVY_TOTAL_NO_OF_RES,     /* Number of frame descriptor followed */ // TODO: Update this to number of resolutions supported
         0x59,0x55,0x59,0x32,            /* GUID used to identify streaming-encoding format: YUY2  */
         0x00,0x00,0x10,0x00,
         0x80,0x00,0x00,0xAA,
         0x00,0x38,0x9B,0x71,
         0x10,                           /* Number of bits per pixel */
         0x01,                           /* Optimum Frame Index for this stream: 1 */
-        X_ASPECT_RATIO,                 /* X dimension of the picture aspect ratio; Non-interlaced */
-        Y_ASPECT_RATIO,                 /* Y dimension of the picture aspect ratio: Non-interlaced */
+        0x01, //X_ASPECT_RATIO,         /* X dimension of the picture aspect ratio; Non-interlaced */ // TODO: Maybe set aspect values to 0 as per the CX3 example
+        0x01, //Y_ASPECT_RATIO,         /* Y dimension of the picture aspect ratio: Non-interlaced */
         0x00,                           /* Interlace Flags: Progressive scanning, no interlace */
         0x00,                           /* duplication of the video stream restriction: 0 - no restriction */
 
-        /* Class specific Uncompressed VS frame descriptor */
+        // -------- MINISCOPE: Here we define all our different resolutions as different frame descriptors ----------
+        /* Class specific Uncompressed VS frame descriptor: 1 */
         0x1E,                           /* Descriptor size */
         0x24,                           /* Descriptor type*/
         0x05,                           /* Subtype: uncompressed frame I/F */
-        0x01,                           /* Frame Descriptor Index */
+        FRAME_INDEX_608X608,            /* Frame Descriptor Index */
         0x01,                           /* Still image capture method 1 supported */
-        WIDTH_L, WIDTH_H,               /* Width in pixel */
-        HEIGHT_L, HEIGHT_H,             /* Height in pixel */
+        0x60, 0x02,               /* Width in pixel */
+        0x60, 0x02,             /* Height in pixel */
         0x01,0x00,0x00,0x00,            /* Min bit rate bits/s. */
         0xFF,0xFF,0xFF,0xFF,            /* Max bit rate bits/s. */
         0xFF,0xFF,0xFF,0xFF,            /* Maximum video or still frame size in bytes(Deprecated)*/
         0x15, 0x16, 0x05, 0x00,         /* 30fps */
         0x01,
         0x15,0x16,0x05,0x00,
+
+        /* Class specific Uncompressed VS frame descriptor: 2 */
+		0x1E,                           /* Descriptor size */
+		0x24,                           /* Descriptor type*/
+		0x05,                           /* Subtype: uncompressed frame I/F */
+		FRAME_INDEX_2592X1944,            /* Frame Descriptor Index */
+		0x01,                           /* Still image capture method 1 supported */
+		0x20, 0x0A,               /* Width in pixel */
+		0x98, 0x07,             /* Height in pixel */
+		0x01,0x00,0x00,0x00,            /* Min bit rate bits/s. */
+		0xFF,0xFF,0xFF,0xFF,            /* Max bit rate bits/s. */
+		0xFF,0xFF,0xFF,0xFF,            /* Maximum video or still frame size in bytes(Deprecated)*/
+		0x15, 0x16, 0x05, 0x00,         /* 30fps */
+		0x01,
+		0x15,0x16,0x05,0x00,
+
+		/* Class specific Uncompressed VS frame descriptor: 3 */
+		0x1E,                           /* Descriptor size */
+		0x24,                           /* Descriptor type*/
+		0x05,                           /* Subtype: uncompressed frame I/F */
+		FRAME_INDEX_1296X972,            /* Frame Descriptor Index */
+		0x01,                           /* Still image capture method 1 supported */
+		0x10, 0x05,               /* Width in pixel */
+		0xCC, 0x03,             /* Height in pixel */
+		0x01,0x00,0x00,0x00,            /* Min bit rate bits/s. */
+		0xFF,0xFF,0xFF,0xFF,            /* Max bit rate bits/s. */
+		0xFF,0xFF,0xFF,0xFF,            /* Maximum video or still frame size in bytes(Deprecated)*/
+		0x15, 0x16, 0x05, 0x00,         /* 30fps */
+		0x01,
+		0x15,0x16,0x05,0x00,
+
+		/* Class specific Uncompressed VS frame descriptor: 4 */
+		0x1E,                           /* Descriptor size */
+		0x24,                           /* Descriptor type*/
+		0x05,                           /* Subtype: uncompressed frame I/F */
+		FRAME_INDEX_752X480,            /* Frame Descriptor Index */
+		0x01,                           /* Still image capture method 1 supported */
+		0xF0, 0x02,               /* Width in pixel */
+		0xE0, 0x01,             /* Height in pixel */
+		0x01,0x00,0x00,0x00,            /* Min bit rate bits/s. */
+		0xFF,0xFF,0xFF,0xFF,            /* Max bit rate bits/s. */
+		0xFF,0xFF,0xFF,0xFF,            /* Maximum video or still frame size in bytes(Deprecated)*/
+		0x15, 0x16, 0x05, 0x00,         /* 30fps */
+		0x01,
+		0x15,0x16,0x05,0x00,
+
+		/* Class specific Uncompressed VS frame descriptor: 5 */
+		0x1E,                           /* Descriptor size */
+		0x24,                           /* Descriptor type*/
+		0x05,                           /* Subtype: uncompressed frame I/F */
+		FRAME_INDEX_1024X768,            /* Frame Descriptor Index */
+		0x01,                           /* Still image capture method 1 supported */
+		0x00, 0x04,               /* Width in pixel */
+		0x00, 0x03,             /* Height in pixel */
+		0x01,0x00,0x00,0x00,            /* Min bit rate bits/s. */
+		0xFF,0xFF,0xFF,0xFF,            /* Max bit rate bits/s. */
+		0xFF,0xFF,0xFF,0xFF,            /* Maximum video or still frame size in bytes(Deprecated)*/
+		0x15, 0x16, 0x05, 0x00,         /* 30fps */
+		0x01,
+		0x15,0x16,0x05,0x00,
+
+		/* Class specific Uncompressed VS frame descriptor: 6 */
+		0x1E,                           /* Descriptor size */
+		0x24,                           /* Descriptor type*/
+		0x05,                           /* Subtype: uncompressed frame I/F */
+		FRAME_INDEX_800X800,            /* Frame Descriptor Index */
+		0x01,                           /* Still image capture method 1 supported */
+		0x20, 0x03,               /* Width in pixel */
+		0x20, 0x03,             /* Height in pixel */
+		0x01,0x00,0x00,0x00,            /* Min bit rate bits/s. */
+		0xFF,0xFF,0xFF,0xFF,            /* Max bit rate bits/s. */
+		0xFF,0xFF,0xFF,0xFF,            /* Maximum video or still frame size in bytes(Deprecated)*/
+		0x15, 0x16, 0x05, 0x00,         /* 30fps */
+		0x01,
+		0x15,0x16,0x05,0x00,
+        // ---------------------------------------------------------------------------------------------------------
 
         /* Endpoint Descriptor for BULK Streaming Video Data */
         0x07,                           /* Descriptor size */

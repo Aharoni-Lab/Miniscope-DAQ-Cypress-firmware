@@ -1,15 +1,5 @@
-12:15:36 **** Incremental Build of configuration Release for project Minisceop_DAQ ****
+20:53:12 **** Incremental Build of configuration Release for project Minisceop_DAQ ****
 cs-make all 
-'Building file: ../cyfxuvcdscr.c'
-'Invoking: Cross ARM C Compiler'
-arm-none-eabi-gcc -mcpu=arm926ej-s -marm -mthumb-interwork -O3 -fmessage-length=0 -fsigned-char -ffunction-sections -fdata-sections -Wall  -g -D__CYU3P_TX__=1 -I"C:\Program Files (x86)\Cypress\EZ-USB FX3 SDK\1.3\/fw_lib/1_3_3/inc" -std=gnu11 -MMD -MP -MF"cyfxuvcdscr.d" -MT"cyfxuvcdscr.o" -c -o "cyfxuvcdscr.o" "../cyfxuvcdscr.c"
-'Finished building: ../cyfxuvcdscr.c'
-' '
-'Building file: ../miniscope.c'
-'Invoking: Cross ARM C Compiler'
-arm-none-eabi-gcc -mcpu=arm926ej-s -marm -mthumb-interwork -O3 -fmessage-length=0 -fsigned-char -ffunction-sections -fdata-sections -Wall  -g -D__CYU3P_TX__=1 -I"C:\Program Files (x86)\Cypress\EZ-USB FX3 SDK\1.3\/fw_lib/1_3_3/inc" -std=gnu11 -MMD -MP -MF"miniscope.d" -MT"miniscope.o" -c -o "miniscope.o" "../miniscope.c"
-'Finished building: ../miniscope.c'
-' '
 'Building file: ../uvc.c'
 'Invoking: Cross ARM C Compiler'
 arm-none-eabi-gcc -mcpu=arm926ej-s -marm -mthumb-interwork -O3 -fmessage-length=0 -fsigned-char -ffunction-sections -fdata-sections -Wall  -g -D__CYU3P_TX__=1 -I"C:\Program Files (x86)\Cypress\EZ-USB FX3 SDK\1.3\/fw_lib/1_3_3/inc" -std=gnu11 -MMD -MP -MF"uvc.d" -MT"uvc.o" -c -o "uvc.o" "../uvc.c"
@@ -21,12 +11,12 @@ arm-none-eabi-gcc -mcpu=arm926ej-s -marm -mthumb-interwork -O3 -fmessage-length=
 'Finished building target: Minisceop_DAQ.elf'
 ' '
 cs-make --no-print-directory post-build
-'Generate boot-loadable binary image'
-'C:\Program Files (x86)\Cypress\EZ-USB FX3 SDK\1.3\/util/elf2img/elf2img.exe' -i Minisceop_DAQ.elf -o Minisceop_DAQ.img -i2cconf 0x1E
+'Generate boot-loadable binary image for 128K (using 0x1E) /256K EEPROMs (using 0x1C)'
+'C:\Program Files (x86)\Cypress\EZ-USB FX3 SDK\1.3\/util/elf2img/elf2img.exe' -i Minisceop_DAQ.elf -o Minisceop_DAQ_256K_EEPROM.img -i2cconf 0x1C
 Note: 256 bytes of interrupt vector code have been removed from the image.
       Use the "-vectorload yes" option to retain this code.
 
 ' '
 
-12:15:40 Build Finished (took 4s.229ms)
+20:53:14 Build Finished (took 2s.248ms)
 
