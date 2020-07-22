@@ -2126,3 +2126,22 @@ Binding(CTRL+SHIFT+H,
 
 !ENTRY org.eclipse.cdt.core 4 0 2020-07-20 17:16:53.583
 !MESSAGE no spawner in java.library.path
+!SESSION 2020-07-21 19:02:27.078 -----------------------------------------------
+eclipse.buildId=unknown
+java.version=1.7.0_05
+java.vendor=Oracle Corporation
+BootLoader constants: OS=win32, ARCH=x86, WS=win32, NL=en_US
+Command-line arguments:  -os win32 -ws win32 -arch x86
+
+!ENTRY org.eclipse.core.resources 2 10035 2020-07-21 19:02:27.941
+!MESSAGE The workspace exited with unsaved changes in the previous session; refreshing workspace to recover changes.
+
+!ENTRY org.eclipse.egit.ui 2 0 2020-07-21 19:02:31.790
+!MESSAGE Warning: The environment variable HOME is not set. The following directory will be used to store the Git
+user global configuration and to define the default location to store repositories: 'C:\Users\DBAharoni'. If this is
+not correct please set the HOME environment variable and restart Eclipse. Otherwise Git for Windows and
+EGit might behave differently since they see different configuration options.
+This warning can be switched off on the Team > Git > Confirmations and Warnings preference page.
+
+!ENTRY org.eclipse.cdt.core 4 0 2020-07-21 19:02:44.347
+!MESSAGE no spawner in java.library.path
