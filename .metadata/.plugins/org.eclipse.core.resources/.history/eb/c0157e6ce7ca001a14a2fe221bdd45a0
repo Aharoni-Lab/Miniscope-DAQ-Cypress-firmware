@@ -8,7 +8,6 @@
 #ifndef DEFINITIONS_H_
 #define DEFINITIONS_H_
 
-#include "uvc.h"
 
 /* ========= Pick your image sensor for the list below ====== */
 #define MINISCOPE_V4_606X606
@@ -101,7 +100,7 @@
    * TOTAL_SIZE_CLASS_DSCR - Video Streaming class specific descriptor
    */
 #ifdef USB_DEBUG_INTERFACE
-#define SS_TOTAL_SIZE_CONFIG_DSCR        (0x09 + 0x8A + SS_FC_TOTAL_SIZE_CLASS_DSCR + 35) //SS_TOTAL_SIZE_CLASS_DSCR)
+SS_TOTAL_SIZE_CONFIG_DSCR        (0x09 + 0x8A + SS_FC_TOTAL_SIZE_CLASS_DSCR + 35) //SS_TOTAL_SIZE_CLASS_DSCR)
 #else
 #define	SS_TOTAL_SIZE_CONFIG_DSCR        (0x09 + 0x8A + SS_FC_TOTAL_SIZE_CLASS_DSCR) //SS_TOTAL_SIZE_CLASS_DSCR)
 #endif

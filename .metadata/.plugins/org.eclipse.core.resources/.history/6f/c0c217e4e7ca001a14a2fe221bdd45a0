@@ -2067,30 +2067,30 @@ UVCAppEP0Thread_Entry (
                  * registers in sequence. Response first byte is status (0=Pass, !0=Fail) followed by N pairs of
                  * register value high byte and register value low byte.
                  */
-//                if (dmaInfo.buffer[0] == 0)
-//                {
-//                    if (dmaInfo.count == 3)
-//                    {
-//                        glDebugRspBuffer[0] = SensorRead2B (SENSOR_ADDR_RD, dmaInfo.buffer[1], dmaInfo.buffer[2],
-//                        		(glDebugRspBuffer+1));
-//                        dmaInfo.count = 3;
-//                    }
-//                    else if (dmaInfo.count == 4)
-//                    {
-//                        if (dmaInfo.buffer[3] > 0)
-//                        {
-//                                glDebugRspBuffer[0] = SensorRead (SENSOR_ADDR_RD, dmaInfo.buffer[1], dmaInfo.buffer[2],
-//                                		(dmaInfo.buffer[3]*2), (glDebugRspBuffer+1));
-//                        }
-//                        dmaInfo.count = dmaInfo.buffer[3]*2+1;
-//                    }
-//                }
-//                /*  For write commands, the register address is followed by N pairs (N>0) of register value high byte
-//                 *  and register value low byte to write in sequence. Response first byte is status (0=Pass, !0=Fail)
-//                 *  followed by N pairs of register value high byte and register value low byte after modification.
-//                 */
-//                else if (dmaInfo.buffer[0] == 1)
-//                {
+                if (dmaInfo.buffer[0] == 0)
+                {
+                    if (dmaInfo.count == 3)
+                    {
+                        //glDebugRspBuffer[0] = SensorRead2B (SENSOR_ADDR_RD, dmaInfo.buffer[1], dmaInfo.buffer[2],
+                        //		(glDebugRspBuffer+1));
+                        dmaInfo.count = 3;
+                    }
+                    else if (dmaInfo.count == 4)
+                    {
+                        if (dmaInfo.buffer[3] > 0)
+                        {
+                        //        glDebugRspBuffer[0] = SensorRead (SENSOR_ADDR_RD, dmaInfo.buffer[1], dmaInfo.buffer[2],
+                         //       		(dmaInfo.buffer[3]*2), (glDebugRspBuffer+1));
+                        }
+                        dmaInfo.count = dmaInfo.buffer[3]*2+1;
+                    }
+                }
+                /*  For write commands, the register address is followed by N pairs (N>0) of register value high byte
+                 *  and register value low byte to write in sequence. Response first byte is status (0=Pass, !0=Fail)
+                 *  followed by N pairs of register value high byte and register value low byte after modification.
+                 */
+                else if (dmaInfo.buffer[0] == 1)
+                {
 //                        glDebugRspBuffer[0] = SensorWrite (SENSOR_ADDR_WR, dmaInfo.buffer[1], dmaInfo.buffer[2],
 //                        		(dmaInfo.count-3), (dmaInfo.buffer+3));
 //                        if (glDebugRspBuffer[0] != CY_U3P_SUCCESS)
@@ -2099,15 +2099,15 @@ UVCAppEP0Thread_Entry (
 //                        		(dmaInfo.count-3), (glDebugRspBuffer+1));
 //                        if (glDebugRspBuffer[0] != CY_U3P_SUCCESS)
 //                        	break;
-//                    dmaInfo.count -= 2;
-//                }
-//                /* Default case, prepare buffer for loop back command in response */
-//                else
-//                {
+                    dmaInfo.count -= 2;
+                }
+                /* Default case, prepare buffer for loop back command in response */
+                else
+                {
                    /* For now, we just copy the command into the response buffer; and send it back to the
                       USB host. This can be expanded to include I2C transfers. */
                     CyU3PMemCopy (glDebugRspBuffer, dmaInfo.buffer, dmaInfo.count);
-//                }
+                }
 
                 dmaInfo.buffer = glDebugRspBuffer;
                 dmaInfo.size   = 1024;

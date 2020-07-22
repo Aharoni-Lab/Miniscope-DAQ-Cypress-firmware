@@ -600,8 +600,7 @@ const uint8_t CyFxUSBSSConfigDscr[] =
 #ifdef FX3_UVC_1_0_SUPPORT
         0xFC,0x00,                      /* Total length of this and all sub-descriptors. */
 #else
-        SS_TOTAL_SIZE_CONFIG_DSCR_L,
-        SS_TOTAL_SIZE_CONFIG_DSCR_H,// 0xFD,0x00,                      /* Total length of this and all sub-descriptors. */
+        0xFD,0x00,                      /* Total length of this and all sub-descriptors. */
 #endif
         0x03,                           /* Number of interfaces */
 #else

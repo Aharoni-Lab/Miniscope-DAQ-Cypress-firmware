@@ -1,4 +1,4 @@
-20:53:12 **** Incremental Build of configuration Release for project Minisceop_DAQ ****
+17:19:57 **** Incremental Build of configuration Release for project Minisceop_DAQ ****
 cs-make all 
 'Building file: ../uvc.c'
 'Invoking: Cross ARM C Compiler'
@@ -18,5 +18,5 @@ Note: 256 bytes of interrupt vector code have been removed from the image.
 
 ' '
 
-20:53:14 Build Finished (took 2s.248ms)
+17:20:00 Build Finished (took 2s.709ms)
 
