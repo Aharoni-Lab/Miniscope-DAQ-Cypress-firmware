@@ -27,65 +27,110 @@ CyBool_t endOfFrame = CyFalse;
 
 CyBool_t bnoEnabled = CyFalse;
 
-uint8_t pendingI2CPacket[I2C_PACKET_BUFFER_SIZE][6]; //circular buffer
-uint8_t	I2CNumPacketsPending = 0;
-uint8_t	I2CPacketNextReadIdx = 0;
-uint8_t	I2CPacketNextWriteIdx = 0;
-uint8_t	I2CPacketState = 0; // 0 is no no packet incoming. 5 is full packet to trigger packetsPending++
-
 uint8_t quatBNO[8] = {0,0,0,0,0,0,0,0};
+
+/**
+ *  Initializes our I2C packet ringbuffer using a preallocated structure.
+ *  @return 0 on success.
+ */
+int i2c_packet_queue_init (I2CPacketQueue *pq)
+{
+    pq->pendingCount = 0;
+    pq->idxRD = 0;
+    pq->idxWR = 0;
+    pq->curPacketParts = I2C_PACKET_PART_NONE;
+
+    if (CyU3PMutexCreate (&pq->lock, CYU3P_NO_INHERIT) != CY_U3P_SUCCESS)
+        return -1;
+    return 0;
+}
+
+void i2c_packet_queue_free (I2CPacketQueue *pq)
+{
+    CyU3PMutexPut(&pq->lock);
+    CyU3PMutexDestroy(&pq->lock);
+}
+
+void i2c_packet_queue_lock (I2CPacketQueue *pq)
+{
+    CyU3PMutexGet (&(pq->lock), CYU3P_WAIT_FOREVER);
+}
+
+void i2c_packet_queue_unlock (I2CPacketQueue *pq)
+{
+    CyU3PMutexPut (&(pq->lock));
+}
+
+void i2c_packet_queue_wrnext_if_complete (I2CPacketQueue *pq, I2CPacketPartFlags flag_added)
+{
+    pq->curPacketParts = pq->curPacketParts | flag_added;
+    if (pq->curPacketParts != (I2C_PACKET_PART_HEAD | I2C_PACKET_PART_BODY | I2C_PACKET_PART_TAIL))
+        return; /* we don't have a complete packet yet */
+
+    /* advance in the write buffer */
+    pq->idxWR = (pq->idxWR + 1) % I2C_PACKET_BUFFER_SIZE;
+    pq->pendingCount++;
+
+    /* we have no parts registered yet */
+    pq->curPacketParts = I2C_PACKET_PART_NONE;
+}
 
 //----------------------------------
 
-void I2CProcessAndSendPendingPacket (void) {
+void I2CProcessAndSendPendingPacket (I2CPacketQueue *pq)
+{
 	CyU3PReturnStatus_t apiRetStatus = CY_U3P_SUCCESS;
 	CyU3PI2cPreamble_t preamble;
 	uint8_t dataBuff[9];
 	uint8_t packetLength;
 	int i;
 
-	while (I2CNumPacketsPending > 0) {
-		if (pendingI2CPacket[I2CPacketNextReadIdx][0] == 0xFE) {
+	if (pq->pendingCount == 0)
+		return;
+	i2c_packet_queue_lock (pq);
+
+	while (pq->pendingCount > 0) {
+		if (pq->buffer[pq->idxRD][0] == 0xFE) {
 			// User for configuring DAQ and not as I2C pass through
-			handleDAQConfigCommand(pendingI2CPacket[I2CPacketNextReadIdx][2]);
-		}
-		else {
-			if (pendingI2CPacket[I2CPacketNextReadIdx][0]&0x01) {
+			handleDAQConfigCommand(pq->buffer[pq->idxRD][2]);
+		} else {
+			if (pq->buffer[pq->idxRD][0] & 0x01) {
 				// This denotes a full packet of 6 bytes.
 				packetLength = 6; // Number of bytes in packet
-				preamble.buffer[0] = pendingI2CPacket[I2CPacketNextReadIdx][0]&0xFE; // I2C Address
-				preamble.buffer[1] = pendingI2CPacket[I2CPacketNextReadIdx][1]; // usual reg byte
+				preamble.buffer[0] = pq->buffer[pq->idxRD][0]&0xFE; // I2C Address
+				preamble.buffer[1] = pq->buffer[pq->idxRD][1]; // usual reg byte
 				preamble.length    = 2; //register length + 1 (for address)
 				preamble.ctrlMask  = 0x0000;
 
 				for (i=0; i< (packetLength-2);i++){
-					dataBuff[i] = pendingI2CPacket[I2CPacketNextReadIdx][i+2];
+					dataBuff[i] = pq->buffer[pq->idxRD][i+2];
 				}
 			}
 			else {
 				// less than 6 bytes in packet
-				packetLength = pendingI2CPacket[I2CPacketNextReadIdx][1]; // Number of bytes in packet
-				preamble.buffer[0] = pendingI2CPacket[I2CPacketNextReadIdx][0]; // I2C Address
-				preamble.buffer[1] = pendingI2CPacket[I2CPacketNextReadIdx][2]; // usual reg byte
+				packetLength = pq->buffer[pq->idxRD][1]; // Number of bytes in packet
+				preamble.buffer[0] = pq->buffer[pq->idxRD][0]; // I2C Address
+				preamble.buffer[1] = pq->buffer[pq->idxRD][2]; // usual reg byte
 				preamble.length    = 2; //register length + 1 (for address)
 				preamble.ctrlMask  = 0x0000;
 
 				for (i=0; i< (packetLength-2);i++){
-					dataBuff[i] = pendingI2CPacket[I2CPacketNextReadIdx][i+3];
+					dataBuff[i] = pq->buffer[pq->idxRD][i+3];
 				}
 			}
 
-
-			apiRetStatus = CyU3PI2cTransmitBytes (&preamble, dataBuff, packetLength-2, 0);
-
+			apiRetStatus = CyU3PI2cTransmitBytes (&preamble, dataBuff, packetLength - 2, 0);
 			if (apiRetStatus == CY_U3P_SUCCESS)
 				CyU3PBusyWait (100);
 			else
 				CyU3PDebugPrint (2, "I2C DAC WRITE command failed\r\n");
 		}
-		I2CPacketNextReadIdx = (I2CPacketNextReadIdx + 1) % I2C_PACKET_BUFFER_SIZE;
-		I2CNumPacketsPending--;
+		pq->idxRD = (pq->idxRD + 1) % I2C_PACKET_BUFFER_SIZE;
+		pq->pendingCount--;
 	}
+
+	/* release lock on the queue */
+	i2c_packet_queue_unlock (pq);
 }
 
 void handleDAQConfigCommand(uint8_t command) {

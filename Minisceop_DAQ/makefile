@@ -23,9 +23,8 @@ include $(FX3FWROOT)/fw_build/fx3_fw/fx3_build_config.mak
 MODULE = cyfx_uvc_an75779
 
 SOURCE= uvc.c 			\
-	camera_ptzcontrol.c	\
+	miniscope.c		\
 	cyfxuvcdscr.c		\
-	sensor.c		\
 	cyfxtx.c
 
 ifeq ($(CYFXBUILD),arm)
