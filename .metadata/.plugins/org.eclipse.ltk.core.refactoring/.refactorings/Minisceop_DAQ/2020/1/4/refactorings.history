@@ -1,4 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<session version="1.0">
-<refactoring comment="Rename resource &apos;Minisceop_DAQ/definitions&apos; to &apos;definitions.h&apos;" description="Rename resource &apos;definitions&apos;" flags="7" id="org.eclipse.ltk.core.refactoring.rename.resource" input="definitions" name="definitions.h" stamp="1579567316288" updateReferences="true"/>
-</session>
