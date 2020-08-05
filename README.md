@@ -7,6 +7,9 @@ This firmware should work on all previously released Miniscope DAQ Boards and Bo
 
 This Miniscope DAQ firmware will support all released versions of the Miniscope and Miniscope related devices. No need to reprogram your DAQ anymore when switching between devices! (More information about the Miniscope project can be found on the [Miniscope-v4 repository](https://github.com/Aharoni-Lab/Miniscope-v4)
 
+## Software requirements
+You must use at least version v0.171 of the [Miniscope DAQ Software](https://github.com/Aharoni-Lab/Miniscope-DAQ-QT-Software) for this new firmware to function properly.
+
 ## Currently supported devices
 * V3 Miniscope 
   * Resolution: 752px X 480px
