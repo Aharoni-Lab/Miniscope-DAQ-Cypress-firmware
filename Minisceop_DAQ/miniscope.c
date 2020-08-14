@@ -209,6 +209,6 @@ void configureGPIOs(void) {
 #endif
 #ifdef LED_GREEN
 	// Input trigger
-	configurePin(LED_GREEN,CyFalse,CyTrue);
+	configurePin(LED_GREEN,CyFalse,CyFalse);
 #endif
 }

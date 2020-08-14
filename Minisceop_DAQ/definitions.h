@@ -76,8 +76,8 @@
 
 // DAQ GPIO
 #ifdef MINIDAQ
-	#define LED_GREEN		25
-	#define LED_RED			26
+	#define LED_GREEN		26
+	#define LED_RED			25
 	#define LOCK_IN			27
 	#define GPIO1			18
 	#define GPIO2			23
