@@ -74,4 +74,7 @@ extern CyU3PReturnStatus_t readBNO(void);
 
 extern CyU3PReturnStatus_t readMCUPID_VID(void);
 
+extern void configureGPIO(void);
+extern void configurePin(uint8_t pinNum, CyBool_t inputEn, CyBool_t outValue);
+
 #endif /* MINISCOPE_H_ */

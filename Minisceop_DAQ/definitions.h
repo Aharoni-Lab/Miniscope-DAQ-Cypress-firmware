@@ -10,52 +10,57 @@
 
 #include "uvc.h"
 
-/* ========= Pick your image sensor for the list below ====== */
-#define MINISCOPE_V4_606X606
-//#define SIMINISCOPE_2592_1944
-//#define SIMINISCOPE_2XBIN_1296_972
-//#define MINISCOPE_V3_752X480
+/* ============= WHICH DAQ WE ARE COMPILING FOR ============== */
+#define MINIDAQ
+//#define MINISCOPEDAQ_V3
+/* =========================================================== */
 
+///* ========= Pick your image sensor for the list below ====== */
+//#define MINISCOPE_V4_606X606
+////#define SIMINISCOPE_2592_1944
+////#define SIMINISCOPE_2XBIN_1296_972
+////#define MINISCOPE_V3_752X480
+//
 #define SS_FC_UYVY_TOTAL_NO_OF_RES        	6 /*  No. of resolutions supported */
-
+//
 #define FRAME_INDEX_608X608					1 // Used for standard Miniscope V4
 #define FRAME_INDEX_2592X1944				2 // Used for full res MT9P031 (MiniLFM, Minicam, LFOV)
 #define FRAME_INDEX_1296X972				3 // Used for 2xbinned MT9P031 (Minicam, LFOV)
 #define FRAME_INDEX_752X480					4 // Used for Miniscope V3
 #define FRAME_INDEX_1024X768				5 // Used for Minicam
 #define FRAME_INDEX_800X800					6 // Used for LFOV scope
-/* ========================================================== */
-
-//Sets specs of image sensor being use sensors is being used.
-#ifdef MINISCOPE_V4_606X606
-	#define X_ASPECT_RATIO	1
-	#define Y_ASPECT_RATIO	1
-	#define WIDTH			608
-	#define HEIGHT			608
-#endif
-#ifdef SIMINISCOPE_2592_1944
-	#define X_ASPECT_RATIO	0x04
-	#define Y_ASPECT_RATIO	0x03
-	#define WIDTH			2592
-	#define HEIGHT			1944
-#endif
-#ifdef SIMINISCOPE_2XBIN_1296_972
-	#define X_ASPECT_RATIO	0x04
-	#define Y_ASPECT_RATIO	0x03
-	#define WIDTH			1296
-	#define HEIGHT			972
-#endif
-#ifdef MINISCOPE_V3_752X480
-	#define X_ASPECT_RATIO	0x2F
-	#define Y_ASPECT_RATIO	0x1E
-	#define WIDTH			752
-	#define HEIGHT			480
-#endif
-
-#define WIDTH_L			(uint8_t)(WIDTH&0xFF)
-#define WIDTH_H			(uint8_t)((WIDTH>>8)&0xFF)
-#define HEIGHT_L		(uint8_t)(HEIGHT&0xFF)
-#define HEIGHT_H		(uint8_t)((HEIGHT>>8)&0xFF)
+///* ========================================================== */
+//
+////Sets specs of image sensor being use sensors is being used.
+//#ifdef MINISCOPE_V4_606X606
+//	#define X_ASPECT_RATIO	1
+//	#define Y_ASPECT_RATIO	1
+//	#define WIDTH			608
+//	#define HEIGHT			608
+//#endif
+//#ifdef SIMINISCOPE_2592_1944
+//	#define X_ASPECT_RATIO	0x04
+//	#define Y_ASPECT_RATIO	0x03
+//	#define WIDTH			2592
+//	#define HEIGHT			1944
+//#endif
+//#ifdef SIMINISCOPE_2XBIN_1296_972
+//	#define X_ASPECT_RATIO	0x04
+//	#define Y_ASPECT_RATIO	0x03
+//	#define WIDTH			1296
+//	#define HEIGHT			972
+//#endif
+//#ifdef MINISCOPE_V3_752X480
+//	#define X_ASPECT_RATIO	0x2F
+//	#define Y_ASPECT_RATIO	0x1E
+//	#define WIDTH			752
+//	#define HEIGHT			480
+//#endif
+//
+//#define WIDTH_L			(uint8_t)(WIDTH&0xFF)
+//#define WIDTH_H			(uint8_t)((WIDTH>>8)&0xFF)
+//#define HEIGHT_L		(uint8_t)(HEIGHT&0xFF)
+//#define HEIGHT_H		(uint8_t)((HEIGHT>>8)&0xFF)
 
 
 //Communication over saturation channel
@@ -70,8 +75,17 @@
 #define CONFIG_BNO055_TO_NDOF	0xF0
 
 // DAQ GPIO
-#define FRAME_OUT			20
-#define TRIG_RECORD_EXT		21
+#ifdef MINIDAQ
+	#define LED_GREEN		25
+	#define LED_RED			26
+	#define LOCK_IN			27
+	#define GPIO1			18
+	#define GPIO2			23
+#endif
+#ifdef MINISCOPEDAQ_V3
+	#define FRAME_OUT			20
+	#define TRIG_RECORD_EXT		21
+#endif
 
 #define GPIO_SHIFT		20
 #define GPIO_MASK		0b00000111

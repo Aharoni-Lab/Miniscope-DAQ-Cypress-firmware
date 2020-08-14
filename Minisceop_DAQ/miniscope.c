@@ -161,3 +161,54 @@ CyU3PReturnStatus_t readBNO(void) {
 
 	return apiRetStatus;
 }
+
+void configurePin(uint8_t pinNum, CyBool_t inputEn, CyBool_t outValue) {
+	CyU3PGpioSimpleConfig_t     gpioConfig;
+	CyU3PReturnStatus_t 		apiRetStatus;
+
+	apiRetStatus = CyU3PDeviceGpioOverride (pinNum, CyTrue);
+	if (apiRetStatus != 0)
+	{
+		CyU3PDebugPrint (4, "GPIO Override failed, Error Code = %d\n", apiRetStatus);
+		CyFxAppErrorHandler (apiRetStatus);
+	}
+
+	gpioConfig.outValue    = outValue;
+	gpioConfig.driveLowEn  = !inputEn;
+	gpioConfig.driveHighEn = !inputEn;
+	gpioConfig.inputEn     = inputEn;
+	gpioConfig.intrMode    = CY_U3P_GPIO_NO_INTR;
+	apiRetStatus           = CyU3PGpioSetSimpleConfig (pinNum, &gpioConfig);
+	if (apiRetStatus != CY_U3P_SUCCESS)
+	{
+		CyU3PDebugPrint (4, "GPIO Set Config Error, Error Code = %d\n", apiRetStatus);
+		CyFxAppErrorHandler (apiRetStatus);
+	}
+//	if (inputEn) {
+		apiRetStatus = CyU3PGpioSetIoMode (pinNum, CY_U3P_GPIO_IO_MODE_WPD);
+		if (apiRetStatus != CY_U3P_SUCCESS)
+		{
+			CyU3PDebugPrint (4, "GPIO Set IO Mode Error, Error Code = %d\n", apiRetStatus);
+			CyFxAppErrorHandler (apiRetStatus);
+		}
+//	}
+}
+void configureGPIOs(void) {
+
+#ifdef FRAME_OUT
+	//Output frame sync signal
+	configurePin(FRAME_OUT,CyFalse,CyTrue);
+#endif
+#ifdef TRIG_RECORD_EXT
+	// Input trigger
+	configurePin(TRIG_RECORD_EXT,CyTrue,CyFalse);
+#endif
+#ifdef LED_RED
+	// Input trigger
+	configurePin(LED_RED,CyFalse,CyTrue);
+#endif
+#ifdef LED_GREEN
+	// Input trigger
+	configurePin(LED_GREEN,CyFalse,CyTrue);
+#endif
+}

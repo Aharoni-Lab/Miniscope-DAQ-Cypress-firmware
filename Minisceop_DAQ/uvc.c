@@ -678,6 +678,7 @@ CyFxUvcApplnDmaCallback (
 
         	// Toggle GPO output sync signal
         	if (recording == CyTrue) {
+#ifdef FRAME_OUT
 				CyU3PReturnStatus_t status;
 				CyBool_t pinState;
 				CyU3PGpioGetValue(FRAME_OUT,&pinState);
@@ -695,6 +696,7 @@ CyFxUvcApplnDmaCallback (
 								status);
 					}
 				}
+#endif
 			}
         	// TODO: handle external record trigger
 
@@ -929,53 +931,8 @@ CyFxUVCApplnInit (void)
     }
 
     // MINISCOPE
-    // SMA output of frame sync signal
-	apiRetStatus = CyU3PDeviceGpioOverride (FRAME_OUT, CyTrue);
-	if (apiRetStatus != 0)
-	{
-		CyU3PDebugPrint (4, "GPIO Override failed, Error Code = %d\n", apiRetStatus);
-		CyFxAppErrorHandler (apiRetStatus);
-	}
-	gpioConfig.outValue    = CyTrue;
-	gpioConfig.driveLowEn  = CyTrue;
-	gpioConfig.driveHighEn = CyTrue;
-	gpioConfig.inputEn     = CyFalse;
-	gpioConfig.intrMode    = CY_U3P_GPIO_NO_INTR;
-	apiRetStatus           = CyU3PGpioSetSimpleConfig (FRAME_OUT, &gpioConfig);
-	if (apiRetStatus != CY_U3P_SUCCESS)
-	{
-		CyU3PDebugPrint (4, "GPIO Set Config Error, Error Code = %d\n", apiRetStatus);
-		CyFxAppErrorHandler (apiRetStatus);
-	}
+    configureGPIOs();
 
-	// MINISCOPE
-	// SMA input of record trigger
-	// SMA Input of record trigger (Added by Daniel 10_30_2015)
-	apiRetStatus = CyU3PDeviceGpioOverride (TRIG_RECORD_EXT, CyTrue);
-	if (apiRetStatus != 0)
-	{
-		CyU3PDebugPrint (4, "GPIO Override failed, Error Code = %d\n", apiRetStatus);
-		CyFxAppErrorHandler (apiRetStatus);
-	}
-
-	/* Record Trigger Settings */
-	gpioConfig.outValue    = CyFalse;
-	gpioConfig.driveLowEn  = CyFalse;
-	gpioConfig.driveHighEn = CyFalse;
-	gpioConfig.inputEn     = CyTrue;
-	gpioConfig.intrMode    = CY_U3P_GPIO_NO_INTR;
-	apiRetStatus           = CyU3PGpioSetSimpleConfig (TRIG_RECORD_EXT, &gpioConfig);
-	if (apiRetStatus != CY_U3P_SUCCESS)
-	{
-		CyU3PDebugPrint (4, "GPIO Set Config Error, Error Code = %d\n", apiRetStatus);
-		CyFxAppErrorHandler (apiRetStatus);
-	}
-	apiRetStatus = CyU3PGpioSetIoMode (TRIG_RECORD_EXT,CY_U3P_GPIO_IO_MODE_WPD);
-	if (apiRetStatus != CY_U3P_SUCCESS)
-	{
-		CyU3PDebugPrint (4, "GPIO Set IO Mode Error, Error Code = %d\n", apiRetStatus);
-		CyFxAppErrorHandler (apiRetStatus);
-	}
 
     /* Initialize the P-port. */
     pibclock.clkDiv      = 2;
@@ -1462,7 +1419,9 @@ UVCHandleProcessingUnitRqts (void)
                     }
                     else if (wValue == CY_FX_UVC_PU_GAMMA_CONTROL) {
                     	// Handles external trigger
+#ifdef TRIG_RECORD_EXT
                     	CyU3PGpioSimpleGetValue(TRIG_RECORD_EXT,&GPIOState);
+#endif
 						glEp0Buffer[0] = GPIOState;
 						glEp0Buffer[1] = 0;
 						CyU3PUsbSendEP0Data (2, (uint8_t *)glEp0Buffer);

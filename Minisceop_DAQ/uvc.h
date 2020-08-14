@@ -33,7 +33,7 @@
 /* #define UVC_PTZ_SUPPORT */           /* Enable if Pan, Tilt and Zoom controls are to be implemented. */
 /* #define BACKFLOW_DETECT */           /* Enable if buffer overflow conditions are to be detected. */
 /* #define DEBUG_PRINT_FRAME_COUNT */   /* Enable UART debug prints to print the frame count every end of frame */
-// #define USB_DEBUG_INTERFACE        /* Enable custom USB interface for sensor interface debugging. */
+//#define USB_DEBUG_INTERFACE        /* Enable custom USB interface for sensor interface debugging. */
 /* #define FX3_UVC_1_0_SUPPORT */       /* Enable to run as UVC 1.0 device. Default is UVC 1.1 device */
 /* #define UVC_EXTENSION_UNIT */        /* Enable to add a sample UVC extension unit that communicates with
                                          * the host application associated with this firmware */
