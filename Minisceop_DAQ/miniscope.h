@@ -10,6 +10,7 @@
 
 #include "definitions.h"
 #include <cyu3types.h>
+#include <cyu3gpio.h>
 
 // ------- Globals ---------------------
 #define BNO055_ADDR            0b01010000
@@ -75,6 +76,7 @@ extern CyU3PReturnStatus_t readBNO(void);
 extern CyU3PReturnStatus_t readMCUPID_VID(void);
 
 extern void configureGPIO(void);
-extern void configurePin(uint8_t pinNum, CyBool_t inputEn, CyBool_t outValue);
+extern void configurePin(uint8_t pinNum, CyBool_t inputEn, CyBool_t outValue, CyU3PGpioIntrMode_t intMode);
+
 
 #endif /* MINISCOPE_H_ */

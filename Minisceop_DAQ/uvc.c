@@ -885,6 +885,31 @@ CyFxUVCAppLPMRqtCB (
 {
     return CyTrue;
 }
+static void gpioCB( uint8_t gpioId  )
+{
+	// Used to make sure a low LOCK signal from the deser is visible by the user. Will toggle the green LED low and delay turning back high for a bit
+//	CyU3PReturnStatus_t status;
+	CyBool_t pinState;
+	CyBool_t outputState;
+	CyU3PGpioGetValue(LOCK_IN, &pinState);
+	if (gpioId == LOCK_IN) {
+		// Can be a pin toggle or a timer threshold
+		if (pinState == CyFalse) {
+			// Deser LOCK is off
+			CyU3PGpioSetValue(LED_GREEN, CyFalse);
+		}
+
+	}
+	else if (gpioId == TIMER ) {
+		// Will turn the LED back on after a delay
+		// This is done to make sure brief instability in LOCK is still visible by eye
+		CyU3PGpioGetValue(LED_GREEN, &outputState);
+
+		if (outputState == CyFalse && pinState == CyTrue) {
+			CyU3PGpioSetValue(LED_GREEN, CyTrue) ;
+		}
+	}
+}
 
 /* This function initializes the USB Module, creates event group,
    sets the enumeration descriptors, configures the Endpoints and
@@ -923,7 +948,9 @@ CyFxUVCApplnInit (void)
     gpioClock.halfDiv    = 0;
 
     /* Initialize Gpio interface */
-    apiRetStatus = CyU3PGpioInit (&gpioClock, NULL);
+
+    apiRetStatus = CyU3PGpioInit (&gpioClock, gpioCB);
+//    apiRetStatus = CyU3PGpioInit (&gpioClock, NULL);
     if (apiRetStatus != 0)
     {
         CyU3PDebugPrint (4, "GPIO Init failed, Error Code = %d\n", apiRetStatus);
@@ -932,6 +959,7 @@ CyFxUVCApplnInit (void)
 
     // MINISCOPE
     configureGPIOs();
+    CyU3PGpioSetValue(LED_RED, CyTrue);
 
 
     /* Initialize the P-port. */

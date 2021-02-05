@@ -162,7 +162,7 @@ CyU3PReturnStatus_t readBNO(void) {
 	return apiRetStatus;
 }
 
-void configurePin(uint8_t pinNum, CyBool_t inputEn, CyBool_t outValue) {
+void configurePin(uint8_t pinNum, CyBool_t inputEn, CyBool_t outValue, CyU3PGpioIntrMode_t intMode) {
 	CyU3PGpioSimpleConfig_t     gpioConfig;
 	CyU3PReturnStatus_t 		apiRetStatus;
 
@@ -177,7 +177,7 @@ void configurePin(uint8_t pinNum, CyBool_t inputEn, CyBool_t outValue) {
 	gpioConfig.driveLowEn  = !inputEn;
 	gpioConfig.driveHighEn = !inputEn;
 	gpioConfig.inputEn     = inputEn;
-	gpioConfig.intrMode    = CY_U3P_GPIO_NO_INTR;
+	gpioConfig.intrMode    = intMode;
 	apiRetStatus           = CyU3PGpioSetSimpleConfig (pinNum, &gpioConfig);
 	if (apiRetStatus != CY_U3P_SUCCESS)
 	{
@@ -185,12 +185,12 @@ void configurePin(uint8_t pinNum, CyBool_t inputEn, CyBool_t outValue) {
 		CyFxAppErrorHandler (apiRetStatus);
 	}
 //	if (inputEn) {
-		apiRetStatus = CyU3PGpioSetIoMode (pinNum, CY_U3P_GPIO_IO_MODE_WPD);
-		if (apiRetStatus != CY_U3P_SUCCESS)
-		{
-			CyU3PDebugPrint (4, "GPIO Set IO Mode Error, Error Code = %d\n", apiRetStatus);
-			CyFxAppErrorHandler (apiRetStatus);
-		}
+	apiRetStatus = CyU3PGpioSetIoMode (pinNum, CY_U3P_GPIO_IO_MODE_WPD);
+	if (apiRetStatus != CY_U3P_SUCCESS)
+	{
+		CyU3PDebugPrint (4, "GPIO Set IO Mode Error, Error Code = %d\n", apiRetStatus);
+		CyFxAppErrorHandler (apiRetStatus);
+	}
 //	}
 }
 void configureGPIOs(void) {
@@ -203,12 +203,36 @@ void configureGPIOs(void) {
 	// Input trigger
 	configurePin(TRIG_RECORD_EXT,CyTrue,CyFalse);
 #endif
+
+#ifdef TIMER
+	// Configure as a complex GPIO to be able to use timer as well for GPIO interrupt
+	CyU3PGpioComplexConfig_t gpioConfig;
+	CyU3PReturnStatus_t 		apiRetStatus;
+
+	apiRetStatus = CyU3PDeviceGpioOverride (TIMER, CyFalse);
+	gpioConfig.outValue    = CyFalse;
+	gpioConfig.driveLowEn  = CyFalse;
+	gpioConfig.driveHighEn = CyFalse;
+	gpioConfig.inputEn     = CyFalse;
+	gpioConfig.intrMode    = CY_U3P_GPIO_INTR_TIMER_THRES; // CY_U3P_GPIO_INTR_NEG_EDGE, CY_U3P_GPIO_INTR_BOTH_EDGE
+	gpioConfig.timerMode   = CY_U3P_GPIO_TIMER_HIGH_FREQ; // CY_U3P_GPIO_TIMER_HIGH_FREQ
+	gpioConfig.pinMode	   = CY_U3P_GPIO_MODE_STATIC;
+	gpioConfig.timer       = 0;
+	gpioConfig.period	   = 192000000;
+	gpioConfig.threshold   = 192000000;
+
+	CyU3PGpioSetComplexConfig(TIMER, &gpioConfig);
+#endif
+
+#ifdef LOCK_IN
+	configurePin(LOCK_IN,CyTrue,CyFalse, CY_U3P_GPIO_INTR_NEG_EDGE);
+#endif
 #ifdef LED_RED
 	// Input trigger
-	configurePin(LED_RED,CyFalse,CyTrue);
+	configurePin(LED_RED,CyFalse,CyFalse, CY_U3P_GPIO_NO_INTR);
 #endif
 #ifdef LED_GREEN
 	// Input trigger
-	configurePin(LED_GREEN,CyFalse,CyFalse);
+	configurePin(LED_GREEN,CyFalse,CyFalse, CY_U3P_GPIO_NO_INTR);
 #endif
 }

@@ -81,6 +81,7 @@
 	#define LOCK_IN			27
 	#define GPIO1			18
 	#define GPIO2			23
+	#define TIMER			56 // Last GPIO pin and we aren't actually using the pin input/output... just using the timer
 #endif
 #ifdef MINISCOPEDAQ_V3
 	#define FRAME_OUT			20
