@@ -1544,7 +1544,7 @@ UVCHandleProcessingUnitRqts (void)
                         }
 
                         else if (wValue == CY_FX_UVC_PU_SATURATION_CONTROL) {
-                            recording = ((glEp0Buffer[0]&RECORD_STATUS_MASK) == 1);
+                            recording = ((glEp0Buffer[0]&RECORD_STATUS_MASK) == 1) ;
                         }
 
                         /* release the queue mutex */
