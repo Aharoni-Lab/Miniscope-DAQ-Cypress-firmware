@@ -67,9 +67,17 @@ extern uint32_t dFrameNumber;
 extern uint32_t currentTime;
 //----------------------------------
 
+// For EWL focal plane jumping
+extern uint8_t ewlPlaneNumber;
+extern uint8_t ewlNumPlanes;
+extern uint8_t ewlPlaneValue[3];
+// ----------
+
 // Handles the processing and sending of generic I2C packets that have built up since previous End of Frame event
 extern void I2CProcessAndSendPendingPacket (I2CPacketQueue *pq);
 extern void handleDAQConfigCommand (uint8_t);
+extern void handleEWLPlaneJumping(void);
+extern uint8_t getNumPlanes(void);
 
 extern CyU3PReturnStatus_t readBNO(void);
 

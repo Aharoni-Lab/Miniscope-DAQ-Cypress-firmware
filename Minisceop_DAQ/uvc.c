@@ -83,6 +83,7 @@ static CyU3PEvent    glFxUVCEvent;                      /* Event group used to s
 CyU3PDmaMultiChannel glChHandleUVCStream;               /* DMA multi-channel handle. */
 I2CPacketQueue       i2cPQueue;                         /* pending I2C packet ringbuffer */
 
+
 /* Current UVC control request fields. See USB specification for definition. */
 uint8_t  bmReqType, bRequest;                           /* bmReqType and bRequest fields. */
 uint16_t wValue, wIndex, wLength;                       /* wValue, wIndex and wLength fields. */
@@ -633,6 +634,15 @@ CyFxUvcApplnDmaCallback (
                 CyFxUVCAddHeader (dmaBuffer.buffer - CY_FX_UVC_MAX_HEADER, CY_FX_UVC_HEADER_EOF);
 
                 endOfFrame = CyTrue;
+                if (getNumPlanes() > 0) {
+					// Overwrite last pixel(s) with ewl value
+					dmaBuffer.buffer[dmaBuffer.count - 4] = ewlPlaneNumber * 100;
+					dmaBuffer.buffer[dmaBuffer.count - 3] = 0x80;
+					dmaBuffer.buffer[dmaBuffer.count - 2] = ewlPlaneValue[ewlPlaneNumber];
+					dmaBuffer.buffer[dmaBuffer.count - 1] = 0x80;
+
+				}
+
 #ifdef DEBUG_PRINT_FRAME_COUNT
                 glFrameCount++;
                 glDmaDone = 0;
@@ -640,6 +650,7 @@ CyFxUvcApplnDmaCallback (
             }
 
             /* Commit Buffer to USB*/
+
             status = CyU3PDmaMultiChannelCommitBuffer (chHandle, (dmaBuffer.count + CY_FX_UVC_MAX_HEADER), 0);
             if (status == CY_U3P_SUCCESS)
             {
@@ -665,6 +676,9 @@ CyFxUvcApplnDmaCallback (
         	// Run code at end of each frame
         	dFrameNumber++;
         	currentTime = CyU3PGetTime();
+
+        	// Handle EWL plane jumping
+        	handleEWLPlaneJumping();
 
         	// Send I2C packets
         	I2CProcessAndSendPendingPacket(&i2cPQueue);

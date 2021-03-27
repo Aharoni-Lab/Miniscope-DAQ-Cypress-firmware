@@ -29,6 +29,12 @@ CyBool_t bnoEnabled = CyFalse;
 
 uint8_t quatBNO[8] = {0,0,0,0,0,0,0,0};
 
+// For EWL focal plane jumping
+uint8_t ewlPlaneNumber = 0;
+uint8_t ewlNumPlanes = 0;
+uint8_t ewlPlaneValue[3] = {0,0,0};
+// ----------
+
 /**
  *  Initializes our I2C packet ringbuffer using a preallocated structure.
  *  @return 0 on success.
@@ -77,6 +83,37 @@ void i2c_packet_queue_wrnext_if_complete (I2CPacketQueue *pq, I2CPacketPartFlags
 
 //----------------------------------
 
+void handleEWLPlaneJumping(void) {
+
+	if (ewlNumPlanes > 0) {
+
+		CyU3PReturnStatus_t apiRetStatus = CY_U3P_SUCCESS;
+		CyU3PI2cPreamble_t preamble;
+		uint8_t dataBuff[2];
+
+		ewlPlaneNumber = (ewlPlaneNumber + 1) % ewlNumPlanes;
+
+		preamble.buffer[0] = 0b11101110; // I2C Address
+		preamble.buffer[1] = 0x08; // usual reg byte
+		preamble.length    = 2; //register length + 1 (for address)
+		preamble.ctrlMask  = 0x0000;
+
+		dataBuff[0] = ewlPlaneValue[ewlPlaneNumber];
+		dataBuff[1] = 0x02;
+
+		apiRetStatus = CyU3PI2cTransmitBytes (&preamble, dataBuff, 2, 0);
+		if (apiRetStatus == CY_U3P_SUCCESS)
+			CyU3PBusyWait (100);
+		else
+			CyU3PDebugPrint (2, "I2C DAC WRITE command failed\r\n");
+
+	}
+}
+
+uint8_t getNumPlanes(void) {
+	return ewlNumPlanes;
+}
+
 void I2CProcessAndSendPendingPacket (I2CPacketQueue *pq)
 {
 	CyU3PReturnStatus_t apiRetStatus = CY_U3P_SUCCESS;
@@ -91,8 +128,19 @@ void I2CProcessAndSendPendingPacket (I2CPacketQueue *pq)
 
 	while (pq->pendingCount > 0) {
 		if (pq->buffer[pq->idxRD][0] == 0xFE) {
-			// User for configuring DAQ and not as I2C pass through
-			handleDAQConfigCommand(pq->buffer[pq->idxRD][2]);
+			if (pq->buffer[pq->idxRD][1] == 2) {
+				// User for configuring DAQ and not as I2C pass through
+				handleDAQConfigCommand(pq->buffer[pq->idxRD][2]);
+			}
+			else if (pq->buffer[pq->idxRD][1] > 2 && pq->buffer[pq->idxRD][2] == 0x01){
+				// Used for ewl focal plane jumping settings
+				ewlPlaneNumber = 0;
+				ewlNumPlanes = pq->buffer[pq->idxRD][1] - 2;
+				for (uint8_t i = 0; i < ewlNumPlanes; i++) {
+					ewlPlaneValue[i] = pq->buffer[pq->idxRD][3 + i];
+				}
+
+			}
 		} else {
 			if (pq->buffer[pq->idxRD][0] & 0x01) {
 				// This denotes a full packet of 6 bytes.
@@ -138,6 +186,7 @@ void handleDAQConfigCommand(uint8_t command) {
 		case(0x00):
 			bnoEnabled = CyTrue;
 			break;
+
 		default:
 			break;
 	}
