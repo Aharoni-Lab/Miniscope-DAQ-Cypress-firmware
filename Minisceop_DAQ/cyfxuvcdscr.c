@@ -929,6 +929,21 @@ const uint8_t CyFxUSBSSConfigDscr[] =
 		0x15, 0x16, 0x05, 0x00,         /* 30fps */
 		0x01,
 		0x15,0x16,0x05,0x00,
+
+		/* Class specific Uncompressed VS frame descriptor: 7 */
+		0x1E,                           /* Descriptor size */
+		0x24,                           /* Descriptor type*/
+		0x05,                           /* Subtype: uncompressed frame I/F */
+		FRAME_INDEX_1000X1000,            /* Frame Descriptor Index */
+		0x01,                           /* Still image capture method 1 supported */
+		0xE8, 0x03,               /* Width in pixel */
+		0xE8, 0x03,             /* Height in pixel */
+		0x01,0x00,0x00,0x00,            /* Min bit rate bits/s. */
+		0xFF,0xFF,0xFF,0xFF,            /* Max bit rate bits/s. */
+		0xFF,0xFF,0xFF,0xFF,            /* Maximum video or still frame size in bytes(Deprecated)*/
+		0x15, 0x16, 0x05, 0x00,         /* 30fps */
+		0x01,
+		0x15,0x16,0x05,0x00,
         // ---------------------------------------------------------------------------------------------------------
 
         /* Endpoint Descriptor for BULK Streaming Video Data */
