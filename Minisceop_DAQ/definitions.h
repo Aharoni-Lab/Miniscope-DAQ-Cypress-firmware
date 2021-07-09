@@ -16,7 +16,7 @@
 //#define SIMINISCOPE_2XBIN_1296_972
 //#define MINISCOPE_V3_752X480
 
-#define SS_FC_UYVY_TOTAL_NO_OF_RES        	7 /*  No. of resolutions supported */
+#define SS_FC_UYVY_TOTAL_NO_OF_RES        	9 /*  No. of resolutions supported */
 
 #define FRAME_INDEX_608X608					1 // Used for standard Miniscope V4
 #define FRAME_INDEX_2592X1944				2 // Used for full res MT9P031 (MiniLFM, Minicam, LFOV)
@@ -24,7 +24,9 @@
 #define FRAME_INDEX_752X480					4 // Used for Miniscope V3
 #define FRAME_INDEX_1024X768				5 // Used for Minicam
 #define FRAME_INDEX_800X800					6 // Used for LFOV scope
-#define FRAME_INDEX_1000X1000				7 // Used for non-binned LFOV Miniscope
+#define FRAME_INDEX_1000X1000				7 // Used for LFOV Miniscope / MiniCAM
+#define FRAME_INDEX_1500X1500				8 // Used for LFOV Miniscope / MiniCAM
+#define FRAME_INDEX_1800X1800				9 // Used for LFOV Miniscope / MiniCAM
 /* ========================================================== */
 
 //Sets specs of image sensor being use sensors is being used.

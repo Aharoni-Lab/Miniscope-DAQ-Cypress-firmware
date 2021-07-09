@@ -329,6 +329,62 @@ uint8_t glProbeCtrl_1000X1000[CY_FX_UVC_MAX_PROBE_SETTING] = {
     0x00                                /* Maximum payload format version */
 #endif
 };
+
+// Frame Index: 8
+uint8_t glProbeCtrl_1500X1500[CY_FX_UVC_MAX_PROBE_SETTING] = {
+    0x00, 0x00,                 /* bmHint : no hit */
+    0x01,                       /* Use 1st Video format index */
+    0x08,                       /* Use 7st Video frame index */
+    0x15, 0x16, 0x05, 0x00,     /* Desired frame interval in the unit of 100ns: 30 fps */
+    0x00, 0x00,                 /* Key frame rate in key frame/video frame units: only applicable
+                                   to video streaming with adjustable compression parameters */
+    0x00, 0x00,                 /* PFrame rate in PFrame / key frame units: only applicable to
+                                   video streaming with adjustable compression parameters */
+    0x00, 0x00,                 /* Compression quality control: only applicable to video streaming
+                                   with adjustable compression parameters */
+    0x00, 0x00,                 /* Window size for average bit rate: only applicable to video
+                                   streaming with adjustable compression parameters */
+    0x00, 0x00,                 /* Internal video streaming i/f latency in ms */
+    0x00, 0xC6, 0x99, 0x00,     /* Max video frame size in bytes */ /* MINISCOPE: Set this to ~5MP. Will need to be set higher for even larger image sensors*/
+    0x00, 0x40, 0x00, 0x00,      /* No. of bytes device can rx in single payload = 16 KB */
+
+#ifndef FX3_UVC_1_0_SUPPORT
+    /* UVC 1.1 Probe Control has additional fields from UVC 1.0 */
+    0x00, 0x60, 0xE3, 0x16,             /* Device Clock */
+    0x00,                               /* Framing Information - Ignored for uncompressed format*/
+    0x00,                               /* Preferred payload format version */
+    0x00,                               /* Minimum payload format version */
+    0x00                                /* Maximum payload format version */
+#endif
+};
+
+// Frame Index: 9
+uint8_t glProbeCtrl_1800X1800[CY_FX_UVC_MAX_PROBE_SETTING] = {
+    0x00, 0x00,                 /* bmHint : no hit */
+    0x01,                       /* Use 1st Video format index */
+    0x09,                       /* Use 7st Video frame index */
+    0x15, 0x16, 0x05, 0x00,     /* Desired frame interval in the unit of 100ns: 30 fps */
+    0x00, 0x00,                 /* Key frame rate in key frame/video frame units: only applicable
+                                   to video streaming with adjustable compression parameters */
+    0x00, 0x00,                 /* PFrame rate in PFrame / key frame units: only applicable to
+                                   video streaming with adjustable compression parameters */
+    0x00, 0x00,                 /* Compression quality control: only applicable to video streaming
+                                   with adjustable compression parameters */
+    0x00, 0x00,                 /* Window size for average bit rate: only applicable to video
+                                   streaming with adjustable compression parameters */
+    0x00, 0x00,                 /* Internal video streaming i/f latency in ms */
+    0x00, 0xC6, 0x99, 0x00,     /* Max video frame size in bytes */ /* MINISCOPE: Set this to ~5MP. Will need to be set higher for even larger image sensors*/
+    0x00, 0x40, 0x00, 0x00,      /* No. of bytes device can rx in single payload = 16 KB */
+
+#ifndef FX3_UVC_1_0_SUPPORT
+    /* UVC 1.1 Probe Control has additional fields from UVC 1.0 */
+    0x00, 0x60, 0xE3, 0x16,             /* Device Clock */
+    0x00,                               /* Framing Information - Ignored for uncompressed format*/
+    0x00,                               /* Preferred payload format version */
+    0x00,                               /* Minimum payload format version */
+    0x00                                /* Maximum payload format version */
+#endif
+};
 // --------------------------------------------------------------------------------------------
 
 // MINISCOPE: We don't use USB2.0.
@@ -1915,6 +1971,12 @@ UVCHandleVideoStreamingRqts (
 							case (FRAME_INDEX_1000X1000):
 								CyU3PUsbSendEP0Data (CY_FX_UVC_MAX_PROBE_SETTING, (uint8_t *)glProbeCtrl_1000X1000);
 								break;
+							case (FRAME_INDEX_1500X1500):
+								CyU3PUsbSendEP0Data (CY_FX_UVC_MAX_PROBE_SETTING, (uint8_t *)glProbeCtrl_1500X1500);
+								break;
+							case (FRAME_INDEX_1800X1800):
+								CyU3PUsbSendEP0Data (CY_FX_UVC_MAX_PROBE_SETTING, (uint8_t *)glProbeCtrl_1800X1800);
+								break;
 							default:
 								// We shouldn't ever get into here. Probably should throw some error...
 								break;
@@ -1985,6 +2047,12 @@ UVCHandleVideoStreamingRqts (
 								break;
 							case (FRAME_INDEX_1000X1000):
 								CyU3PUsbSendEP0Data (CY_FX_UVC_MAX_PROBE_SETTING, (uint8_t *)glProbeCtrl_1000X1000);
+								break;
+							case (FRAME_INDEX_1500X1500):
+								CyU3PUsbSendEP0Data (CY_FX_UVC_MAX_PROBE_SETTING, (uint8_t *)glProbeCtrl_1500X1500);
+								break;
+							case (FRAME_INDEX_1800X1800):
+								CyU3PUsbSendEP0Data (CY_FX_UVC_MAX_PROBE_SETTING, (uint8_t *)glProbeCtrl_1800X1800);
 								break;
 							default:
 								// We shouldn't ever get into here. Probably should throw some error...

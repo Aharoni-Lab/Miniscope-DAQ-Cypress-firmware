@@ -944,6 +944,36 @@ const uint8_t CyFxUSBSSConfigDscr[] =
 		0x15, 0x16, 0x05, 0x00,         /* 30fps */
 		0x01,
 		0x15,0x16,0x05,0x00,
+
+		/* Class specific Uncompressed VS frame descriptor: 8 */
+		0x1E,                           /* Descriptor size */
+		0x24,                           /* Descriptor type*/
+		0x05,                           /* Subtype: uncompressed frame I/F */
+		FRAME_INDEX_1500X1500,            /* Frame Descriptor Index */
+		0x01,                           /* Still image capture method 1 supported */
+		0xDC, 0x05,               /* Width in pixel */
+		0xDC, 0x05,             /* Height in pixel */
+		0x01,0x00,0x00,0x00,            /* Min bit rate bits/s. */
+		0xFF,0xFF,0xFF,0xFF,            /* Max bit rate bits/s. */
+		0xFF,0xFF,0xFF,0xFF,            /* Maximum video or still frame size in bytes(Deprecated)*/
+		0x15, 0x16, 0x05, 0x00,         /* 30fps */
+		0x01,
+		0x15,0x16,0x05,0x00,
+
+		/* Class specific Uncompressed VS frame descriptor: 9 */
+		0x1E,                           /* Descriptor size */
+		0x24,                           /* Descriptor type*/
+		0x05,                           /* Subtype: uncompressed frame I/F */
+		FRAME_INDEX_1800X1800,            /* Frame Descriptor Index */
+		0x01,                           /* Still image capture method 1 supported */
+		0x08, 0x07,               /* Width in pixel */
+		0x08, 0x07,             /* Height in pixel */
+		0x01,0x00,0x00,0x00,            /* Min bit rate bits/s. */
+		0xFF,0xFF,0xFF,0xFF,            /* Max bit rate bits/s. */
+		0xFF,0xFF,0xFF,0xFF,            /* Maximum video or still frame size in bytes(Deprecated)*/
+		0x15, 0x16, 0x05, 0x00,         /* 30fps */
+		0x01,
+		0x15,0x16,0x05,0x00,
         // ---------------------------------------------------------------------------------------------------------
 
         /* Endpoint Descriptor for BULK Streaming Video Data */
