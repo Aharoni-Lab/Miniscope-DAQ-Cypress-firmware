@@ -14,7 +14,9 @@
 ## installation root directory path.
 ##
 
-FX3FWROOT=../../..
+ifeq ($(FX3FWROOT),)
+FX3FWROOT = ../../..
+endif
 
 all:compile
 
@@ -61,7 +63,6 @@ clean:
 	rm -f ./$(MODULE).map
 	rm -f ./*.o
 	rm -f cyfxtx.c cyfx_startup.S cyfx_gcc_startup.S
-
 
 compile: $(C_OBJECT) $(A_OBJECT) $(EXES)
 

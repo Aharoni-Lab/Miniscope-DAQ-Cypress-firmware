@@ -2,7 +2,7 @@
  ## Cypress FX3 Firmware Source File (cyfxtx.c)
  ## ===========================
  ##
- ##  Copyright Cypress Semiconductor Corporation, 2010-2014,
+ ##  Copyright Cypress Semiconductor Corporation, 2010-2018,
  ##  All Rights Reserved
  ##  UNPUBLISHED, LICENSED SOFTWARE.
  ##
