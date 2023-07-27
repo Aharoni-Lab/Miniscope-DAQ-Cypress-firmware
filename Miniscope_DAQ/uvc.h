@@ -20,6 +20,7 @@
  ## ===========================
 */
 
+/* clang-format off */
 /* This header file defines the UVC application constants and the Video Frame configurations */
 
 #ifndef _INCLUDED_CYFXUVCAPP_H_

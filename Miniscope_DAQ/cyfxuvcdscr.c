@@ -20,6 +20,8 @@
  ## ===========================
 */
 
+/* clang-format off */
+
 /*
  * This file contains the USB descriptors for the FX3 HD 720p camera kit
  * application.
