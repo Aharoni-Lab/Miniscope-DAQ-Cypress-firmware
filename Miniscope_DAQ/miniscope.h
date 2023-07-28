@@ -14,6 +14,7 @@
 #include <cyu3types.h>
 
 // ------- Globals ---------------------
+#define FIRMWARE_ABI_VERSION   2
 #define BNO055_ADDR            0b01010000
 #define I2C_PACKET_BUFFER_SIZE 64
 
@@ -44,6 +45,11 @@ typedef struct {
     CyU3PMutex         lock;
 } I2CPacketQueue;
 
+/**
+ * Firmware information query kinds
+ */
+typedef enum { FW_INFO_KIND_NONE, FW_INFO_KIND_ABI_VERSION } FwInfoKind;
+
 extern int  i2c_packet_queue_init (I2CPacketQueue *pq);
 extern void i2c_packet_queue_free (I2CPacketQueue *pq);
 
@@ -52,10 +58,10 @@ extern void i2c_packet_queue_unlock (I2CPacketQueue *pq);
 extern void i2c_packet_queue_wrnext_if_complete (I2CPacketQueue *pq, I2CPacketPartFlags flag_added);
 
 extern CyBool_t recording;
-
 extern CyBool_t endOfFrame;
-
 extern CyBool_t bnoEnabled;
+
+extern FwInfoKind fwInfoQuery;
 
 // For BNO head orientation sensor
 extern uint8_t quatBNO[8];

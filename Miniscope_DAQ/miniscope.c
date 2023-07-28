@@ -21,11 +21,11 @@
 uint32_t dFrameNumber = 0;
 uint32_t currentTime  = 0;
 
-CyBool_t recording = CyFalse;
-
+CyBool_t recording  = CyFalse;
 CyBool_t endOfFrame = CyFalse;
-
 CyBool_t bnoEnabled = CyFalse;
+
+FwInfoKind fwInfoQuery = FW_INFO_KIND_NONE;
 
 uint8_t quatBNO[8] = { 0, 0, 0, 0, 0, 0, 0, 0 };
 
@@ -142,7 +142,7 @@ void
 handleDAQConfigCommand (uint8_t command)
 {
     switch (command) {
-        case (0x00):
+        case 0x00:
             bnoEnabled = CyTrue;
             break;
         default:
