@@ -15,7 +15,11 @@
 ##
 
 ifeq ($(FX3FWROOT),)
-FX3FWROOT = ../../..
+	FX3FWROOT = ../../..
+endif
+
+ifeq ($(CYCONFOPT),)
+	CYCONFOPT=fx3_release
 endif
 
 all:compile

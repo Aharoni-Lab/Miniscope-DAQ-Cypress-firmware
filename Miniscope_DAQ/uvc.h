@@ -31,7 +31,7 @@
 #include <cyu3externcstart.h>
 
 /* Definitions to enable/disable special features in this UVC application. */
-/* #define UVC_PTZ_SUPPORT */           /* Enable if Pan, Tilt and Zoom controls are to be implemented. */
+#define UVC_PTZ_SUPPORT                 /* Enable if Pan, Tilt and Zoom controls are to be implemented. */
 /* #define BACKFLOW_DETECT */           /* Enable if buffer overflow conditions are to be detected. */
 /* #define DEBUG_PRINT_FRAME_COUNT */   /* Enable UART debug prints to print the frame count every end of frame */
 // #define USB_DEBUG_INTERFACE        /* Enable custom USB interface for sensor interface debugging. */

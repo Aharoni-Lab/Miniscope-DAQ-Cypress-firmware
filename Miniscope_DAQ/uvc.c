@@ -934,10 +934,6 @@ CyFxUVCApplnInit (void)
         CyFxAppErrorHandler (apiRetStatus);
     }
 
-#ifdef UVC_PTZ_SUPPORT
-    CyFxUvcAppPTZInit ();
-#endif
-
     /* Init the GPIO module */
     gpioClock.fastClkDiv = 2;
     gpioClock.slowClkDiv = 2;
@@ -1442,11 +1438,11 @@ UVCHandleProcessingUnitRqts (void)
     CyBool_t            GPIOState;
 
     switch (wValue) {
-        case CY_FX_UVC_PU_SATURATION_CONTROL: // Used to send out BNO values
-        case CY_FX_UVC_PU_HUE_CONTROL:        // Used to send out BNO values
-        case CY_FX_UVC_PU_GAIN_CONTROL:       // Used to send out BNO values
-        case CY_FX_UVC_PU_BRIGHTNESS_CONTROL: // Used to send out BNO values
-        case CY_FX_UVC_PU_CONTRAST_CONTROL:
+        case CY_FX_UVC_PU_SATURATION_CONTROL: // Used to send out BNO values (legacy)
+        case CY_FX_UVC_PU_GAIN_CONTROL:       // Used to send out BNO values (legacy)
+        case CY_FX_UVC_PU_BRIGHTNESS_CONTROL: // Used to send out BNO values (legacy)
+        case CY_FX_UVC_PU_CONTRAST_CONTROL:   // Frame number (legacy)
+        case CY_FX_UVC_PU_HUE_CONTROL:        // Query results (or BNO values)
         case CY_FX_UVC_PU_GAMMA_CONTROL:
         case CY_FX_UVC_PU_SHARPNESS_CONTROL:
 
@@ -1459,8 +1455,6 @@ UVCHandleProcessingUnitRqts (void)
                 case CY_FX_USB_UVC_GET_CUR_REQ: /* Current value. */
                     if (wValue == CY_FX_UVC_PU_SATURATION_CONTROL)
                         CyU3PUsbSendEP0Data (2, &quatBNO[0]);
-                    else if (wValue == CY_FX_UVC_PU_HUE_CONTROL)
-                        CyU3PUsbSendEP0Data (2, &quatBNO[2]);
                     else if (wValue == CY_FX_UVC_PU_GAIN_CONTROL)
                         CyU3PUsbSendEP0Data (2, &quatBNO[4]);
                     else if (wValue == CY_FX_UVC_PU_BRIGHTNESS_CONTROL)
@@ -1469,6 +1463,16 @@ UVCHandleProcessingUnitRqts (void)
                         glEp0Buffer[0] = CY_U3P_DWORD_GET_BYTE0 (dFrameNumber);
                         glEp0Buffer[1] = CY_U3P_DWORD_GET_BYTE1 (dFrameNumber);
                         CyU3PUsbSendEP0Data (2, (uint8_t *)glEp0Buffer);
+                    } else if (wValue == CY_FX_UVC_PU_HUE_CONTROL) {
+                        if (fwInfoQuery == FW_INFO_KIND_ABI_VERSION) {
+                            glEp0Buffer[0] = FIRMWARE_ABI_VERSION;
+                            glEp0Buffer[1] = 0;
+                            CyU3PUsbSendEP0Data (2, (uint8_t *)glEp0Buffer);
+                            fwInfoQuery = FW_INFO_KIND_NONE;
+                        } else {
+                            /* support for older clients */
+                            CyU3PUsbSendEP0Data (2, &quatBNO[2]);
+                        }
                     } else if (wValue == CY_FX_UVC_PU_GAMMA_CONTROL) {
                         // Handles external trigger
                         CyU3PGpioSimpleGetValue (TRIG_RECORD_EXT, &GPIOState);
@@ -1563,7 +1567,13 @@ UVCHandleProcessingUnitRqts (void)
                         }
 
                         else if (wValue == CY_FX_UVC_PU_SATURATION_CONTROL) {
-                            recording = ((glEp0Buffer[0] & RECORD_STATUS_MASK) == 1);
+                            uint8_t qCommand = glEp0Buffer[0];
+                            /* recording toggle */
+                            recording = ((qCommand & RECORD_STATUS_MASK) == 1);
+
+                            /* firmware ABI request */
+                            if (qCommand == CMD_QUERY_FW_ABI)
+                                fwInfoQuery = FW_INFO_KIND_ABI_VERSION;
                         }
 
                         /* release the queue mutex */
@@ -1598,61 +1608,103 @@ UVCHandleCameraTerminalRqts (void)
 #ifdef UVC_PTZ_SUPPORT
     CyU3PReturnStatus_t apiRetStatus = CY_U3P_SUCCESS;
     uint16_t            readCount;
-    uint16_t            zoomVal;
-    int32_t             panVal, tiltVal;
-    CyBool_t            sendData = CyFalse;
 #endif
 
     switch (wValue) {
 #ifdef UVC_PTZ_SUPPORT
-        case CY_FX_UVC_CT_ZOOM_ABSOLUTE_CONTROL:
+        case CY_FX_UVC_CT_EXPOSURE_TIME_ABSOLUTE_CONTROL: // Frame counter
+        case CY_FX_UVC_CT_PANTILT_ABSOLUTE_CONTROL:       // Used to send out BNO values
+        case CY_FX_UVC_CT_FOCUS_ABSOLUTE_CONTROL:         // Unused
+        case CY_FX_UVC_CT_IRIS_ABSOLUTE_CONTROL:          // Unused
+        case CY_FX_UVC_CT_ZOOM_ABSOLUTE_CONTROL:          // Unused
             switch (bRequest) {
                 case CY_FX_USB_UVC_GET_INFO_REQ:
                     glEp0Buffer[0] = 3; /* Support GET/SET queries. */
                     CyU3PUsbSendEP0Data (1, (uint8_t *)glEp0Buffer);
+
                     break;
-                case CY_FX_USB_UVC_GET_CUR_REQ: /* Current zoom control value. */
-                    zoomVal  = CyFxUvcAppGetCurrentZoom ();
-                    sendData = CyTrue;
+                case CY_FX_USB_UVC_GET_CUR_REQ: /* Current control value. */
+                    if (wValue == CY_FX_UVC_CT_PANTILT_ABSOLUTE_CONTROL) {
+                        CyU3PUsbSendEP0Data (8, &quatBNO[0]);
+                    } else if (wValue == CY_FX_UVC_CT_EXPOSURE_TIME_ABSOLUTE_CONTROL) {
+                        glEp0Buffer[0] = CY_U3P_GET_LSB (dFrameNumber);
+                        glEp0Buffer[1] = CY_U3P_GET_MSB (dFrameNumber);
+                        glEp0Buffer[2] = 0;
+                        glEp0Buffer[3] = 0;
+                        CyU3PUsbSendEP0Data (4, (uint8_t *)glEp0Buffer);
+                    } else {
+                        // send zero in any other case
+                        glEp0Buffer[0] = 0;
+                        glEp0Buffer[1] = 0;
+                        CyU3PUsbSendEP0Data (2, (uint8_t *)glEp0Buffer);
+                    }
+
                     break;
-                case CY_FX_USB_UVC_GET_MIN_REQ: /* Minimum zoom control value. */
-                    zoomVal  = CyFxUvcAppGetMinimumZoom ();
-                    sendData = CyTrue;
+                case CY_FX_USB_UVC_GET_MIN_REQ: /* Minimum control value. */
+                    for (uint8_t i = 0; i < 8; ++i)
+                        glEp0Buffer[i] = 0;
+
+                    if (wValue == CY_FX_UVC_CT_PANTILT_ABSOLUTE_CONTROL)
+                        CyU3PUsbSendEP0Data (8, (uint8_t *)glEp0Buffer);
+                    else if (wValue == CY_FX_UVC_CT_EXPOSURE_TIME_ABSOLUTE_CONTROL)
+                        CyU3PUsbSendEP0Data (4, (uint8_t *)glEp0Buffer);
+                    else
+                        CyU3PUsbSendEP0Data (2, (uint8_t *)glEp0Buffer);
+
                     break;
-                case CY_FX_USB_UVC_GET_MAX_REQ: /* Maximum zoom control value. */
-                    zoomVal  = CyFxUvcAppGetMaximumZoom ();
-                    sendData = CyTrue;
+                case CY_FX_USB_UVC_GET_MAX_REQ: /* Maximum control value. */
+                    for (uint8_t i = 0; i < 8; ++i)
+                        glEp0Buffer[i] = 0xFF;
+
+                    if (wValue == CY_FX_UVC_CT_PANTILT_ABSOLUTE_CONTROL)
+                        CyU3PUsbSendEP0Data (8, (uint8_t *)glEp0Buffer);
+                    else if (wValue == CY_FX_UVC_CT_EXPOSURE_TIME_ABSOLUTE_CONTROL)
+                        CyU3PUsbSendEP0Data (4, (uint8_t *)glEp0Buffer);
+                    else
+                        CyU3PUsbSendEP0Data (2, (uint8_t *)glEp0Buffer);
+
                     break;
                 case CY_FX_USB_UVC_GET_RES_REQ: /* Resolution is one unit. */
-                    zoomVal  = CyFxUvcAppGetZoomResolution ();
-                    sendData = CyTrue;
+                    for (uint8_t i = 0; i < 8; ++i)
+                        glEp0Buffer[i] = 0;
+
+                    glEp0Buffer[0] = 1;
+                    glEp0Buffer[1] = 0;
+
+                    if (wValue == CY_FX_UVC_CT_PANTILT_ABSOLUTE_CONTROL)
+                        CyU3PUsbSendEP0Data (8, (uint8_t *)glEp0Buffer);
+                    else if (wValue == CY_FX_UVC_CT_EXPOSURE_TIME_ABSOLUTE_CONTROL)
+                        CyU3PUsbSendEP0Data (4, (uint8_t *)glEp0Buffer);
+                    else
+                        CyU3PUsbSendEP0Data (2, (uint8_t *)glEp0Buffer);
+
                     break;
-                case CY_FX_USB_UVC_GET_DEF_REQ: /* Default zoom setting. */
-                    zoomVal  = CyFxUvcAppGetDefaultZoom ();
-                    sendData = CyTrue;
+                case CY_FX_USB_UVC_GET_DEF_REQ: /* Default is zero. */
+                    glEp0Buffer[0] = 0;
+                    glEp0Buffer[1] = 0;
+                    CyU3PUsbSendEP0Data (wLength, (uint8_t *)glEp0Buffer);
+
                     break;
                 case CY_FX_USB_UVC_SET_CUR_REQ:
                     apiRetStatus =
                       CyU3PUsbGetEP0Data (CY_FX_UVC_MAX_PROBE_SETTING_ALIGNED, glEp0Buffer, &readCount);
                     if (apiRetStatus == CY_U3P_SUCCESS) {
-                        zoomVal = (glEp0Buffer[0]) | (glEp0Buffer[1] << 8);
-                        CyFxUvcAppModifyZoom (zoomVal);
+                        //! CyFxUvcAppModifyZoom ((glEp0Buffer[0]) | (glEp0Buffer[1] << 8));
                     }
+
                     break;
                 default:
                     glUvcVcErrorCode = CY_FX_UVC_VC_ERROR_CODE_INVALID_REQUEST;
                     CyU3PUsbStall (0, CyTrue, CyFalse);
+
                     break;
             }
 
-            if (sendData) {
-                /* Send the 2-byte data in zoomVal back to the USB host. */
-                glEp0Buffer[0] = CY_U3P_GET_LSB (zoomVal);
-                glEp0Buffer[1] = CY_U3P_GET_MSB (zoomVal);
-                CyU3PUsbSendEP0Data (wLength, (uint8_t *)glEp0Buffer);
-            }
             break;
 
+#if 0
+        int32_t             panVal, tiltVal;
+        CyBool_t            sendData = CyFalse;
         case CY_FX_UVC_CT_PANTILT_ABSOLUTE_CONTROL:
             switch (bRequest) {
                 case CY_FX_USB_UVC_GET_INFO_REQ:
@@ -1716,6 +1768,7 @@ UVCHandleCameraTerminalRqts (void)
                 CyU3PUsbSendEP0Data (wLength, (uint8_t *)glEp0Buffer);
             }
             break;
+#endif
 #endif
 
         default:

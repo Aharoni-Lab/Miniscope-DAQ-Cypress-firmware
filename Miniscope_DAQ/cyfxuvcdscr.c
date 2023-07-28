@@ -137,19 +137,16 @@ const uint8_t CyFxUSBFSConfigDscr[] =
         0x00,                           /* No association terminal */
         0x00,                           /* String desc index : Not used */
 #ifdef UVC_PTZ_SUPPORT
-        (uint8_t)(wObjectiveFocalLengthMin&0xFF),
-        (uint8_t)((wObjectiveFocalLengthMin>>8)&0xFF),
-        (uint8_t)(wObjectiveFocalLengthMax&0xFF),
-        (uint8_t)((wObjectiveFocalLengthMax>>8)&0xFF),
-        (uint8_t)(wOcularFocalLength&0xFF),
-        (uint8_t)((wOcularFocalLength>>8)&0xFF),
+        0x00,0x00,                      /* wObjectiveFocalLengthMin */
+        0xFF,0xFF,                      /* wObjectiveFocalLengthMax */
+        0x00,0xFF,                      /* wOcularFocalLength */
 #else
         0x00,0x00,                      /* No optical zoom supported */
         0x00,0x00,                      /* No optical zoom supported */
         0x00,0x00,                      /* No optical zoom supported */
 #endif
         0x03,                           /* Size of controls field for this terminal : 3 bytes */
-        0x00,0x00,0x00,                 /* bmControls field of camera terminal: No controls supported */
+        0xA8,0x2A,0x00,                 /* bmControls field of camera terminal: No controls supported */
 
         /* Processing Unit Descriptor */
         0x0D,                           /* Descriptor size */
@@ -311,12 +308,9 @@ const uint8_t CyFxUSBHSConfigDscr[] =
         0x00,                           /* No association terminal */
         0x00,                           /* String desc index : Not used */
 #ifdef UVC_PTZ_SUPPORT
-        (uint8_t)(wObjectiveFocalLengthMin&0xFF),
-        (uint8_t)((wObjectiveFocalLengthMin>>8)&0xFF),
-        (uint8_t)(wObjectiveFocalLengthMax&0xFF),
-        (uint8_t)((wObjectiveFocalLengthMax>>8)&0xFF),
-        (uint8_t)(wOcularFocalLength&0xFF),
-        (uint8_t)((wOcularFocalLength>>8)&0xFF),
+        0x00,0x00,                      /* wObjectiveFocalLengthMin */
+        0xFF,0xFF,                      /* wObjectiveFocalLengthMax */
+        0x00,0xFF,                      /* wOcularFocalLength */
 #else
         0x00,0x00,                      /* No optical zoom supported */
         0x00,0x00,                      /* No optical zoom supported */
@@ -350,7 +344,7 @@ const uint8_t CyFxUSBHSConfigDscr[] =
                                          * D22 � D23: Reserved, set to zero
                                          */
 #ifdef UVC_PTZ_SUPPORT
-        0x00,0x0A,0x00,                 /* bmControls field of camera terminal: PTZ supported */
+        0xA8,0x2A,0x00,                 /* bmControls field of camera terminal: PTZ supported */
 #else
         0x00,0x00,0x00,                 /* bmControls field of camera terminal: No controls supported */
 #endif
@@ -666,12 +660,9 @@ const uint8_t CyFxUSBSSConfigDscr[] =
         0x00,                           /* No association terminal */
         0x00,                           /* String desc index : Not used */
 #ifdef UVC_PTZ_SUPPORT
-        (uint8_t)(wObjectiveFocalLengthMin&0xFF),
-        (uint8_t)((wObjectiveFocalLengthMin>>8)&0xFF),
-        (uint8_t)(wObjectiveFocalLengthMax&0xFF),
-        (uint8_t)((wObjectiveFocalLengthMax>>8)&0xFF),
-        (uint8_t)(wOcularFocalLength&0xFF),
-        (uint8_t)((wOcularFocalLength>>8)&0xFF),
+        0x00,0x00,                      /* wObjectiveFocalLengthMin */
+        0xFF,0xFF,                      /* wObjectiveFocalLengthMax */
+        0x00,0xFF,                      /* wOcularFocalLength */
 #else
         0x00,0x00,                      /* No optical zoom supported */
         0x00,0x00,                      /* No optical zoom supported */
@@ -705,7 +696,7 @@ const uint8_t CyFxUSBSSConfigDscr[] =
                                          * D22 � D23: Reserved, set to zero
                                          */
 #ifdef UVC_PTZ_SUPPORT
-        0x00,0x0A,0x00,                 /* bmControls field of camera terminal: PTZ supported */
+        0xA8,0x2A,0x00,                 /* bmControls field of camera terminal: PTZ supported */
 #else
         0x00,0x00,0x00,                 /* bmControls field of camera terminal: No controls supported */
 #endif

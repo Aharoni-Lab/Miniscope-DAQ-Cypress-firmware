@@ -61,9 +61,8 @@
 #define HEIGHT_H (uint8_t) ((HEIGHT >> 8) & 0xFF)
 
 // Communication over saturation channel
-#define RECORD_START      0x01
-#define RECORD_END        0x02
-#define SET_CMOS_SETTINGS 0x03
+#define RECORD_STATUS_MASK 0x01
+#define CMD_QUERY_FW_ABI   0x02
 
 #define MODE_V4_MINISCOPE 0x20
 #define MODE_DEMO_2_COLOR 0x21
@@ -77,8 +76,6 @@
 
 #define GPIO_SHIFT 20
 #define GPIO_MASK  0b00000111
-
-#define RECORD_STATUS_MASK 0x01
 
 #define MCU_SET_MODE 0x04
 
