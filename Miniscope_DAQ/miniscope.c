@@ -9,12 +9,14 @@
 
 #include <cyu3dma.h>
 #include <cyu3error.h>
+#include <cyu3gpif.h>
 #include <cyu3gpio.h>
 #include <cyu3i2c.h>
 #include <cyu3os.h>
 #include <cyu3system.h>
 #include <cyu3types.h>
 #include <cyu3uart.h>
+#include <cyu3usb.h>
 #include <cyu3utils.h>
 
 // ------------- Initialize globals ----
@@ -138,12 +140,34 @@ I2CProcessAndSendPendingPacket (I2CPacketQueue *pq)
     i2c_packet_queue_unlock (pq);
 }
 
+static void
+deviceHardReset (void)
+{
+    /* Disable the GPIF state machine. */
+    CyU3PGpifDisable (CyFalse);
+
+    /* Place the EP in NAK mode before cleaning up the pipe. */
+    CyU3PUsbSetEpNak (CY_FX_EP_BULK_VIDEO, CyTrue);
+    CyU3PBusyWait (125);
+
+    /* Reset and flush the endpoint pipe. */
+    CyU3PUsbFlushEp (CY_FX_EP_BULK_VIDEO);
+    CyU3PUsbSetEpNak (CY_FX_EP_BULK_VIDEO, CyFalse);
+    CyU3PBusyWait (125);
+
+    /* execute hard reset */
+    CyU3PDeviceReset (CyFalse);
+}
+
 void
 handleDAQConfigCommand (uint8_t command)
 {
     switch (command) {
         case 0x00:
             bnoEnabled = CyTrue;
+            break;
+        case 0x01:
+            deviceHardReset ();
             break;
         default:
             break;

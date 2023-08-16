@@ -91,8 +91,8 @@ uint16_t wValue, wIndex, wLength; /* wValue, wIndex and wLength fields. */
 CyU3PUSBSpeed_t usbSpeed         = CY_U3P_NOT_CONNECTED; /* Current USB connection speed. */
 CyBool_t        streamingStarted = CyFalse;              /* Whether USB host has started streaming data */
 CyBool_t        glIsApplnActive =
-  CyFalse; /* When CLEAR_FEATURE (stop streaming) request is sent this variable is reset and set when start
-              streaming request is sent by Host. This is used during commit buffer failure event. */
+    CyFalse; /* When CLEAR_FEATURE (stop streaming) request is sent this variable is reset and set when start
+                streaming request is sent by Host. This is used during commit buffer failure event. */
 static CyBool_t glIsConfigured = CyFalse; /* Whether Application is in configured state or not */
 
 /* Mac OS does not send EP Clear feature when the app is closed. It just stops issuing IN tokens. So buffer
@@ -569,8 +569,9 @@ CyFxUVCApplnUSBSetupCB (uint32_t setupdat0, /* SETUP Data 0 */
             switch (wIndex & 0xFF) {
                 case CY_FX_UVC_CONTROL_INTERFACE: {
                     uvcHandleReq = CyTrue;
-                    status =
-                      CyU3PEventSet (&glFxUVCEvent, CY_FX_UVC_VIDEO_CONTROL_REQUEST_EVENT, CYU3P_EVENT_OR);
+                    status       = CyU3PEventSet (&glFxUVCEvent,
+                                            CY_FX_UVC_VIDEO_CONTROL_REQUEST_EVENT,
+                                            CYU3P_EVENT_OR);
                     if (status != CY_U3P_SUCCESS) {
                         CyU3PDebugPrint (4,
                                          "Set CY_FX_UVC_VIDEO_CONTROL_REQUEST_EVENT Failed %x\r\n",
@@ -581,8 +582,9 @@ CyFxUVCApplnUSBSetupCB (uint32_t setupdat0, /* SETUP Data 0 */
 
                 case CY_FX_UVC_STREAM_INTERFACE: {
                     uvcHandleReq = CyTrue;
-                    status =
-                      CyU3PEventSet (&glFxUVCEvent, CY_FX_UVC_VIDEO_STREAM_REQUEST_EVENT, CYU3P_EVENT_OR);
+                    status       = CyU3PEventSet (&glFxUVCEvent,
+                                            CY_FX_UVC_VIDEO_STREAM_REQUEST_EVENT,
+                                            CYU3P_EVENT_OR);
                     if (status != CY_U3P_SUCCESS) {
                         /* Error handling */
                         CyU3PDebugPrint (4, "Set CY_FX_UVC_VIDEO_STREAM_REQUEST_EVENT Failed %x\r\n", status);
@@ -1096,8 +1098,9 @@ CyFxUVCApplnInit (void)
     dmaMultiConfig.dmaMode        = CY_U3P_DMA_MODE_BYTE;
     dmaMultiConfig.notification   = CY_U3P_DMA_CB_PROD_EVENT | CY_U3P_DMA_CB_CONS_EVENT;
     dmaMultiConfig.cb             = CyFxUvcApplnDmaCallback;
-    apiRetStatus =
-      CyU3PDmaMultiChannelCreate (&glChHandleUVCStream, CY_U3P_DMA_TYPE_MANUAL_MANY_TO_ONE, &dmaMultiConfig);
+    apiRetStatus                  = CyU3PDmaMultiChannelCreate (&glChHandleUVCStream,
+                                               CY_U3P_DMA_TYPE_MANUAL_MANY_TO_ONE,
+                                               &dmaMultiConfig);
     if (apiRetStatus != CY_U3P_SUCCESS) {
         /* Error handling */
         CyU3PDebugPrint (4, "DMA Channel Creation Failed, Error Code = %d\n", apiRetStatus);
@@ -1335,7 +1338,7 @@ UVCAppThread_Entry (uint32_t input)
     for (;;) {
         apiRetStatus = CyU3PEventGet (&glFxUVCEvent,
                                       CY_FX_UVC_STREAM_ABORT_EVENT | CY_FX_UVC_STREAM_EVENT |
-                                        CY_FX_UVC_DMA_RESET_EVENT | CY_FX_USB_SUSPEND_EVENT_HANDLER,
+                                          CY_FX_UVC_DMA_RESET_EVENT | CY_FX_USB_SUSPEND_EVENT_HANDLER,
                                       CYU3P_EVENT_OR_CLEAR,
                                       &flag,
                                       LOOP_TIMEOUT);
@@ -1396,8 +1399,9 @@ UVCAppThread_Entry (uint32_t input)
                  * State. If the link layer is not in U3 state, CX3 device will wake up else it will enter
                  * suspend mode */
                 do {
-                    apiRetStatus =
-                      CyU3PSysEnterSuspendMode (CY_U3P_SYS_USB_BUS_ACTVTY_WAKEUP_SRC, 0, &wakeReason);
+                    apiRetStatus = CyU3PSysEnterSuspendMode (CY_U3P_SYS_USB_BUS_ACTVTY_WAKEUP_SRC,
+                                                             0,
+                                                             &wakeReason);
                     if ((apiRetStatus != CY_U3P_SUCCESS) || (CyU3PUsbGetSpeed () != CY_U3P_SUPER_SPEED))
                         break;
 
@@ -1536,8 +1540,9 @@ UVCHandleProcessingUnitRqts (void)
                     CyU3PUsbSendEP0Data (2, (uint8_t *)glEp0Buffer);
                     break;
                 case CY_FX_USB_UVC_SET_CUR_REQ:
-                    apiRetStatus =
-                      CyU3PUsbGetEP0Data (CY_FX_UVC_MAX_PROBE_SETTING_ALIGNED, glEp0Buffer, &readCount);
+                    apiRetStatus = CyU3PUsbGetEP0Data (CY_FX_UVC_MAX_PROBE_SETTING_ALIGNED,
+                                                       glEp0Buffer,
+                                                       &readCount);
 
                     if (apiRetStatus == CY_U3P_SUCCESS) {
                         i2c_packet_queue_lock (&i2cPQueue);
@@ -1686,8 +1691,9 @@ UVCHandleCameraTerminalRqts (void)
 
                     break;
                 case CY_FX_USB_UVC_SET_CUR_REQ:
-                    apiRetStatus =
-                      CyU3PUsbGetEP0Data (CY_FX_UVC_MAX_PROBE_SETTING_ALIGNED, glEp0Buffer, &readCount);
+                    apiRetStatus = CyU3PUsbGetEP0Data (CY_FX_UVC_MAX_PROBE_SETTING_ALIGNED,
+                                                       glEp0Buffer,
+                                                       &readCount);
                     if (apiRetStatus == CY_U3P_SUCCESS) {
                         //! CyFxUvcAppModifyZoom ((glEp0Buffer[0]) | (glEp0Buffer[1] << 8));
                     }
@@ -1853,8 +1859,9 @@ UVCHandleExtensionUnitRqts (void)
                     sendData = CyTrue;
                     break;
                 case CY_FX_USB_UVC_SET_CUR_REQ:
-                    apiRetStatus =
-                      CyU3PUsbGetEP0Data (CY_FX_UVC_MAX_PROBE_SETTING_ALIGNED, glEp0Buffer, &readCount);
+                    apiRetStatus = CyU3PUsbGetEP0Data (CY_FX_UVC_MAX_PROBE_SETTING_ALIGNED,
+                                                       glEp0Buffer,
+                                                       &readCount);
                     if (apiRetStatus == CY_U3P_SUCCESS) {
                         /* Copy firmware version sent by Host application */
                         CyU3PMemCopy (glFxUvcFirmwareVersion, glEp0Buffer, 5);
@@ -1952,8 +1959,9 @@ UVCHandleVideoStreamingRqts (void)
                     }
                     break;
                 case CY_FX_USB_UVC_SET_CUR_REQ:
-                    apiRetStatus =
-                      CyU3PUsbGetEP0Data (CY_FX_UVC_MAX_PROBE_SETTING_ALIGNED, glCommitCtrl, &readCount);
+                    apiRetStatus = CyU3PUsbGetEP0Data (CY_FX_UVC_MAX_PROBE_SETTING_ALIGNED,
+                                                       glCommitCtrl,
+                                                       &readCount);
                     if (apiRetStatus == CY_U3P_SUCCESS) {
                         /* Copy the relevant settings from the host provided data into the
                            active data structure. */
@@ -2035,8 +2043,9 @@ UVCHandleVideoStreamingRqts (void)
                     /* The host has selected the parameters for the video stream. Check the desired
                        resolution settings, configure the sensor and start the video stream.
                        */
-                    apiRetStatus =
-                      CyU3PUsbGetEP0Data (CY_FX_UVC_MAX_PROBE_SETTING_ALIGNED, glCommitCtrl, &readCount);
+                    apiRetStatus = CyU3PUsbGetEP0Data (CY_FX_UVC_MAX_PROBE_SETTING_ALIGNED,
+                                                       glCommitCtrl,
+                                                       &readCount);
                     if (apiRetStatus == CY_U3P_SUCCESS) {
                         currentVideoFrameIndex = glCommitCtrl[3]; // Maybe remove this???
 
@@ -2249,18 +2258,18 @@ CyFxApplicationDefine (void)
     }
 
     /* Create the control request handling thread. */
-    retThrdCreate =
-      CyU3PThreadCreate (&uvcAppEP0Thread,            /* UVC Thread structure */
-                         "31:UVC App EP0 Thread",     /* Thread Id and name */
-                         UVCAppEP0Thread_Entry,       /* UVC Application EP0 Thread Entry function */
-                         0,                           /* No input parameter to thread */
-                         ptr2,                        /* Pointer to the allocated thread stack */
-                         UVC_APP_EP0_THREAD_STACK,    /* UVC Application Thread stack size */
-                         UVC_APP_EP0_THREAD_PRIORITY, /* UVC Application Thread priority */
-                         UVC_APP_EP0_THREAD_PRIORITY, /* Threshold value for thread pre-emption. */
-                         CYU3P_NO_TIME_SLICE,         /* No time slice for the application thread */
-                         CYU3P_AUTO_START             /* Start the Thread immediately */
-      );
+    retThrdCreate = CyU3PThreadCreate (
+        &uvcAppEP0Thread,            /* UVC Thread structure */
+        "31:UVC App EP0 Thread",     /* Thread Id and name */
+        UVCAppEP0Thread_Entry,       /* UVC Application EP0 Thread Entry function */
+        0,                           /* No input parameter to thread */
+        ptr2,                        /* Pointer to the allocated thread stack */
+        UVC_APP_EP0_THREAD_STACK,    /* UVC Application Thread stack size */
+        UVC_APP_EP0_THREAD_PRIORITY, /* UVC Application Thread priority */
+        UVC_APP_EP0_THREAD_PRIORITY, /* Threshold value for thread pre-emption. */
+        CYU3P_NO_TIME_SLICE,         /* No time slice for the application thread */
+        CYU3P_AUTO_START             /* Start the Thread immediately */
+    );
     if (retThrdCreate != 0) {
         goto fatalErrorHandler;
     }

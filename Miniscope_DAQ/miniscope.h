@@ -48,7 +48,10 @@ typedef struct {
 /**
  * Firmware information query kinds
  */
-typedef enum { FW_INFO_KIND_NONE, FW_INFO_KIND_ABI_VERSION } FwInfoKind;
+typedef enum {
+    FW_INFO_KIND_NONE,
+    FW_INFO_KIND_ABI_VERSION
+} FwInfoKind;
 
 extern int  i2c_packet_queue_init (I2CPacketQueue *pq);
 extern void i2c_packet_queue_free (I2CPacketQueue *pq);
