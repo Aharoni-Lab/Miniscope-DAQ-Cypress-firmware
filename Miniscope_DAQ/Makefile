@@ -26,6 +26,12 @@ all:compile
 
 include $(FX3FWROOT)/fw_build/fx3_fw/fx3_build_config.mak
 
+ifeq ($(MS_FW_VARIANT),128k)
+# remember to also pass `-i2cconf 0x1E` to `elf2img`!
+CFLAGS += -Wl,--entry,CyU3PFirmwareEntry -Xlinker --gc-sections
+LDFLAGS += -d --gc-sections
+endif
+
 MODULE = cyfx_uvc_an75779
 
 SOURCE= uvc.c 			\
